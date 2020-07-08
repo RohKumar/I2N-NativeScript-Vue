@@ -6,7 +6,7 @@
 
             <GridLayout row="0" ref="navStatusBar" class="navStatusBar"
                 backgroundColor="#bd2122" verticalAlignment="top" height="40"
-                width="100%" rows="auto" columns="*,auto,auto,auto,auto">
+                width="100%" rows="auto" columns="*,auto,auto,auto">
                 <Label col="0" row="0" text="Home" class="status-title">
                 </Label>
                 <Image col="1" row="0" @tap="search"
@@ -15,12 +15,12 @@
                 <Image col="2" row="0" @tap="bell" horizontalAlignment="right"
                     class="status-img" src="~/assets/images/bell.png" />
                 <Image horizontalAlignment="right" stretch="aspectFill"
-                    col="3" row="0" class="status-profile"
+                    col="3" row="0" class="status-profile"  
                     src="~/assets/images/me.jpg" />
-                <Image horizontalAlignment="right" stretch="aspectFill"
-                    col="4" row="0" @tap="" class="status-img"
-                    src="~/assets/images/promos.png" />
-                <Button text="Button" @tap="onButtonTap" class ="vue-app" />
+		
+                <button @click="LoginCall">Click Me</button>
+          
+
 
             </GridLayout>
 
@@ -86,7 +86,9 @@
         </GridLayout>
     </page>
 </template>
-<script src="app/assets/jsbarcode/dist/JsBarcode.all.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js">
+</script>
+<script>
     // import { SwissArmyKnife } from "nativescript-swiss-army-knife";
     import {
         isIOS,
@@ -96,7 +98,8 @@
     import Item from "./custom/item";
     import Category from "./custom/category";
     import ItemDetails from "./ItemDetails";
-    import JsBarcode from "../jsbarcode/dist/JsBarcode.all.min.js";
+    import Vue from "../vue";
+
     const gestures = require("ui/gestures");
     const app = require("application");
 
@@ -104,7 +107,6 @@
         components: {
             navBottom,
             Item,
-            JsBarcode,
             Category
         },
         computed: {
@@ -238,10 +240,7 @@
         },
         methods: {
             onButtonTap() {
-                // console.log("Button was pressed");
-                JsBarcode("#vue-app", "Hi!");
-                $("#barcode").JsBarcode("Hi!");
-				
+                console.log("Button was pressed");
             },
 
             search() {
@@ -250,6 +249,11 @@
             bell() {
                 console.log("bell");
             },
+            LoginCall()
+            {
+                    router.push({ name: 'LoginDetails' })
+            },
+
             showItem(payload) {
                 this.$navigateTo(ItemDetails, {
                     props: {
