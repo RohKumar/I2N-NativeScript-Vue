@@ -25,6 +25,7 @@
     "nativescript-ui-listview": "8.0.1",
     "nativescript-ui-sidedrawer": "8.0.0",
     "nativescript-vue": "2.5.0",
+    "tedious": "^8.3.0",
     "tns-core-modules": "6.5.0",
     "vue": "^2.6.11",
     "vue-hot-reload-api": "^2.3.4",
@@ -71,6 +72,16 @@
       "version": "6.5.0"
     }
   },
-  "readme": "NativeScript Application",
-  "repository": "<fill-your-repository-here>"
+  "repository": {
+    "type": "git",
+    "url": "<fill-your-repository-here>"
+  },
+  "name": "I2N-NativeScript-Vue",
+  "version": "1.0.0",
+  "main": "babel.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": ""
 }

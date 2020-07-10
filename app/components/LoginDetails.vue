@@ -3,7 +3,7 @@
 		<FlexboxLayout class="page">
 			<StackLayout class="form">
 				<Image class="logo" src="app/assets/images/NativeScript-Vue.png" />
-				<Label class="header" text="IDEA2NETWORK hji APP" />
+				<Label class="header" text="LittiChokha App" />
 
 				<StackLayout class="input-field" marginBottom="25">
 					<TextField class="input" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" v-model="user.email"
@@ -38,6 +38,60 @@
 </template>
 
 <script>
+
+// trying to build the connection
+const { Connection, Request } = require("tedious");
+
+// Create connection to database
+const config = {
+  authentication: {
+    options: {
+      userName: "aman", // update me
+      password: "Jaimatadi#1" // update me
+    },
+    type: "default"
+  },
+  server: "littichokha.database.windows.net", //changed to our server
+  options: {
+    database: "LittiChokhaDb", //update me
+    encrypt: true
+  }
+};
+
+const connection = new Connection(config);
+
+// Attempt to connect and execute queries if connection goes through
+connection.on("connect", err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    queryDatabase();
+  }
+});
+
+function queryDatabase() {
+  console.log("Reading rows from the Table...");
+
+  // Read all rows from table
+  const request = new Request(
+    `select * from users`,
+    (err, rowCount) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log(`${rowCount} row(s) returned`);
+      }
+    }
+  );
+
+  request.on("row", columns => {
+    columns.forEach(column => {
+      console.log("%s\t%s", column.metadata.colName, column.value);
+    });
+  });
+
+  connection.execSql(request);
+}
 // A stub for a service that authenticates users.
 const userService = {
     register(user) {
