@@ -90,7 +90,7 @@ export default {
 	},
 	computed: {
 		itemsCategory(){
-			return this.category.slice().reverse();
+			return this.category ? this.category.slice().reverse() : [];
 		}
 	},
 
@@ -198,7 +198,6 @@ export default {
 			console.log('bell')
 		},
 		offer() {
-			console.log('QR')
 			this.$showModal(QrModal)
 		},
 		showItem(payload) {
