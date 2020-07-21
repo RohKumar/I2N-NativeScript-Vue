@@ -1,4 +1,5 @@
 <template>
+
 	<page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
 		<!-- @loaded="onLoaded" -->
 
@@ -207,11 +208,24 @@ export default {
 			this.$showModal(QrModal)
 		},
 		goToLogin() {
-			   this.$navigateTo(Login);
+			// //    this.$navigateTo(Login);
+			// frames.topmost().navigate(() => { return Login});
+
+			// console.log('Login')
+			// // this.$showModal(QrModal)
+			// //   router.push({ name: 'LoginDetails' })
+		 		this.$navigateTo(Login,{
+					//  props:{
+					//  item : 'test'
+					//  },
+				// animated: true,
+				// transition: {
+				// 	name: "slideTop",
+				// 	duration: 380,
+				// 	curve: "easeIn"
+				// }
+			})
 			console.log('Login')
-			// this.$showModal(QrModal)
-			//   router.push({ name: 'LoginDetails' })
-		 
 		},
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{
