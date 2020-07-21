@@ -13,8 +13,10 @@
 							src="~/assets/images/bell.png" />
 					<Image col="2" row="0" @tap="offer" horizontalAlignment="right" class="status-img"
 							src="~/assets/images/offer.png" />
-					<Image horizontalAlignment="right" stretch="aspectFill" col="3"
-							row="0" class="status-profile" src="~/assets/images/me.jpg" />
+					<!-- <Image  @tap="login" horizontalAlignment="right"  stretch="aspectFill" col="3"
+							row="0" class="status-profile" src="~/assets/images/me.jpg" /> -->
+						      <!-- <Button text='Log' @tap="login('login')" row="0" col="3" /> -->
+							 <Button @tap="goToLogin" text="GO TO PAGE 2" col="0" row="1" />
 			</GridLayout>
 
 			<GridLayout  row="1" ref="navTab" class="navTab" verticalAlignment="top" height="50"
@@ -78,7 +80,7 @@
 	import Category from "./custom/category";
 	import QrModal from "./custom/offerQrModal";
 	import ItemDetails from "./ItemDetails";
-
+	import Login from './custom/login';
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
 
@@ -86,7 +88,7 @@ export default {
 	components: {
 		navBottom,
 		Item,
-		Category
+		Category,
 	},
 	computed: {
 		itemsCategory(){
@@ -99,6 +101,9 @@ export default {
 	},
 	data() {
 		return {
+			routes: {
+                login: Login
+            },
 			lastDelY: 0,
 			headerCollapsed: false,
 			selectedTab: 0,
@@ -200,6 +205,13 @@ export default {
 		offer() {
 			console.log('QR')
 			this.$showModal(QrModal)
+		},
+		goToLogin() {
+			   this.$navigateTo(Login);
+			console.log('Login')
+			// this.$showModal(QrModal)
+			//   router.push({ name: 'LoginDetails' })
+		 
 		},
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{

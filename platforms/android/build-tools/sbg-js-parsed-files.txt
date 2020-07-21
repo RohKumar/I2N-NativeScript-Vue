@@ -1,0 +1,4 @@
+D:\Learning projects\VueNewProj\platforms\android\app\src\main\assets\app\bundle.js
+D:\Learning projects\VueNewProj\platforms\android\app\src\main\assets\app\runtime.js
+D:\Learning projects\VueNewProj\platforms\android\app\src\main\assets\app\tns-java-classes.js
+D:\Learning projects\VueNewProj\platforms\android\app\src\main\assets\app\vendor.js

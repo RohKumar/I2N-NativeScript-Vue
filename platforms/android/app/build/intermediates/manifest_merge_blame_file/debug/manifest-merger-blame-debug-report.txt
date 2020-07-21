@@ -1,0 +1,141 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.nativescript.playvue"
+4    android:versionCode="10000"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+7-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:5-84
+8        android:minSdkVersion="21"
+8-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
+9        android:targetSdkVersion="30" />
+9-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:42-81
+10
+11    <supports-screens
+11-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:4:5-139
+12        android:largeScreens="true"
+12-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:4:80-107
+13        android:normalScreens="true"
+13-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:4:51-79
+14        android:smallScreens="true"
+14-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:4:23-50
+15        android:xlargeScreens="true" />
+15-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:4:108-136
+16
+17    <uses-permission android:name="android.permission.INTERNET" />
+17-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:6:5-67
+17-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:6:22-64
+18    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+18-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:7:5-80
+18-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:7:22-77
+19    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+19-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:8:5-81
+19-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:8:22-78
+20    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+20-->[:kinvey_nativescript_sdk:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\8f1c12d89c173b5d52e00840aa0ffdea\kinvey_nativescript_sdk\AndroidManifest.xml:9:5-79
+20-->[:kinvey_nativescript_sdk:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\8f1c12d89c173b5d52e00840aa0ffdea\kinvey_nativescript_sdk\AndroidManifest.xml:9:22-76
+21    <uses-permission android:name="android.permission.WAKE_LOCK" />
+21-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:14:5-68
+21-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:14:22-65
+22    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+22-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:15:5-77
+22-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:15:22-74
+23    <uses-permission android:name="android.permission.CAMERA" />
+23-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:10:5-65
+23-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:10:22-62
+24    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+24-->[:nativescript_geolocation:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\3441c0749c4818700285b0116d76c358\nativescript_geolocation\AndroidManifest.xml:9:5-79
+24-->[:nativescript_geolocation:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\3441c0749c4818700285b0116d76c358\nativescript_geolocation\AndroidManifest.xml:9:22-76
+25
+26    <application
+26-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:5-18:19
+27        android:name="com.tns.NativeScriptApplication"
+27-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:18-64
+28        android:allowBackup="true"
+28-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:65-91
+29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+29-->[androidx.core:core:1.0.1] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\eeb5da7c8c0996fbc1c9cdf4633c58bb\core-1.0.1\AndroidManifest.xml:22:18-86
+30        android:debuggable="true"
+31        android:icon="@drawable/icon"
+31-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:92-121
+32        android:label="@string/app_name"
+32-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:122-154
+33        android:theme="@style/AppTheme" >
+33-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:9:155-186
+34        <activity
+34-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:10:9-16:20
+35            android:name="com.tns.NativeScriptActivity"
+35-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:10:19-62
+36            android:configChanges="keyboardHidden|orientation|screenSize"
+36-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:10:109-170
+37            android:label="@string/title_activity_kimera"
+37-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:10:63-108
+38            android:theme="@style/LaunchScreenTheme" >
+38-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:10:171-211
+39            <meta-data
+39-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:11:13-96
+40                android:name="SET_THEME_ON_LAUNCH"
+40-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:11:24-58
+41                android:resource="@style/AppTheme" />
+41-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:11:59-93
+42
+43            <intent-filter>
+43-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:12:13-15:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:13:17-69
+44-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:13:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:14:17-77
+46-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:14:27-74
+47            </intent-filter>
+48        </activity>
+49        <activity android:name="com.tns.ErrorReportActivity" />
+49-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:17:9-64
+49-->D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:17:19-61
+50        <activity
+50-->[com.google.android.gms:play-services-base:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\93b6dc0d3e773275ade044701602ac2b\jetified-play-services-base-11.4.0\AndroidManifest.xml:19:9-172
+51            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+51-->[com.google.android.gms:play-services-base:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\93b6dc0d3e773275ade044701602ac2b\jetified-play-services-base-11.4.0\AndroidManifest.xml:19:19-85
+52            android:exported="false"
+52-->[com.google.android.gms:play-services-base:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\93b6dc0d3e773275ade044701602ac2b\jetified-play-services-base-11.4.0\AndroidManifest.xml:19:146-170
+53            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+53-->[com.google.android.gms:play-services-base:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\93b6dc0d3e773275ade044701602ac2b\jetified-play-services-base-11.4.0\AndroidManifest.xml:19:86-145
+54
+55        <meta-data
+55-->[com.google.android.gms:play-services-basement:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\ca9955439cd301cac9c6fefe570f3da9\jetified-play-services-basement-11.4.0\AndroidManifest.xml:20:9-121
+56            android:name="com.google.android.gms.version"
+56-->[com.google.android.gms:play-services-basement:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\ca9955439cd301cac9c6fefe570f3da9\jetified-play-services-basement-11.4.0\AndroidManifest.xml:20:20-65
+57            android:value="@integer/google_play_services_version" />
+57-->[com.google.android.gms:play-services-basement:11.4.0] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\ca9955439cd301cac9c6fefe570f3da9\jetified-play-services-basement-11.4.0\AndroidManifest.xml:20:66-119
+58
+59        <service
+59-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:18:9-22:19
+60            android:name="net.gotev.uploadservice.UploadService"
+60-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:19:13-65
+61            android:enabled="true"
+61-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:20:13-35
+62            android:exported="false" >
+62-->[:uploadservice-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\746be1cd9bc24303352945b2eea4219d\uploadservice-release\AndroidManifest.xml:21:13-37
+63        </service>
+64
+65        <provider
+65-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:13:9-22:20
+66            android:name="androidx.core.content.FileProvider"
+66-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:14:13-62
+67            android:authorities="org.nativescript.playvue.provider"
+67-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:15:13-60
+68            android:exported="false"
+68-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:16:13-37
+69            android:grantUriPermissions="true" >
+69-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:17:13-47
+70            <meta-data
+70-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:18:13-21:52
+71                android:name="android.support.FILE_PROVIDER_PATHS"
+71-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:19:17-67
+72                android:resource="@xml/provider_paths" />
+72-->[:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\552ef175e44ee38ef9600620841eadf1\jetified-nativescript_camera\AndroidManifest.xml:20:17-55
+73        </provider>
+74    </application>
+75
+76</manifest>
