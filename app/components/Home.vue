@@ -160,6 +160,8 @@ import Login from "./custom/login";
 const gestures = require("ui/gestures");
 const app = require("application");
 
+
+
 export default {
   components: {
     navBottom,
@@ -375,4 +377,5 @@ export default {
   horizontal-align: left;
   vertical-align: center;
 }
+
 </style>

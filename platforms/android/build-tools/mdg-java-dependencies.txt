@@ -73,4 +73,3 @@ D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencie
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\f89c38f12d82da22169f64a04466f703\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\fbbd3709dec2b25a9bc123ae85c630a2\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\febfc9d0b00df5acb427ee379bb7de02\classes.jar
-D:\Learning projects\VueNewProj\platforms\android\app\build\intermediates\javac\debug
