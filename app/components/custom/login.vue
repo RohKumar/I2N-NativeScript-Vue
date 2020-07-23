@@ -12,14 +12,13 @@
             ref="username"
             class="input"
             hint="User Name"
-         
             v-model="user.name"
             returnKeyType="done"
             fontSize="18"
           />
 
           <StackLayout class="hr-light" />
-            <label :text="error.username" ></label>
+          <label :text="error.username"></label>
         </StackLayout>
 
         <StackLayout v-show="!isLoggingIn" class="input-field">
@@ -27,7 +26,8 @@
             ref="contactNumber"
             class="input"
             hint="Contact Number"
-          
+            keyboardType="number"
+            minLength="10"
             v-model="user.contactNumber"
             returnKeyType="done"
             fontSize="18"
@@ -92,8 +92,7 @@
 
 <script>
 // var auth_service_1 = require("../auth-service");
-// const axios = require('axios');
-import axios from 'axios';
+import Axios from "axios";
 import Home from "../Home";
 export default {
   data() {
@@ -101,17 +100,17 @@ export default {
       errors: [],
       isLoggingIn: true,
       user: {
-        name: "",
-        contactNumber: null,
-        email: "",
-        password: ""
+        name: "parth",
+        contactNumber: 213333,
+        email: "parth@gmail.com",
+        password: 123334,
       },
       error: {
         username: "",
         contactnumber: "",
         email: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   },
   methods: {
@@ -128,7 +127,7 @@ export default {
         username: "",
         contactnumber: "",
         email: "",
-        password: ""
+        password: "",
       };
 
       if (!this.user.email) {
@@ -138,8 +137,8 @@ export default {
       }
       if (!this.user.password) {
         this.error.password = "Password required.";
-      } else if(!this.user.password.length <8) {
-          this.error.password = "Password Length Must Be Greater Then 8.";
+      } else if (!this.user.password.length < 8) {
+        this.error.password = "Password Length Must Be Greater Then 8.";
       }
       if (
         !this.error.email &&
@@ -156,29 +155,36 @@ export default {
         username: "",
         contactnumber: "",
         email: "",
-        password: ""
+        password: "",
       };
       if (!this.user.email) {
-      this.error.email = "Email required.";
+        this.error.email = "Email required.";
       } else if (!this.validEmail(this.user.email)) {
-       this.error.email = "Email is invalid.";
+        this.error.email = "Email is invalid.";
       }
-      if (!this.user.password ) {
+      if (!this.user.password) {
         this.error.password = "Password required.";
       }
       if (!this.user.name) {
-      this.error.username = "Username required.";
+        this.error.username = "Username required.";
       }
       if (!this.user.contactNumber) {
-       this.error.contactnumber = "Contact Number required.";
+        this.error.contactnumber = "Contact Number required.";
       }
-      if (!this.error) {
-        this.axios.
-        axios.post('http://localhost:5000/api/user',this.user)
-        .then(function (response) {
-           console.log(response);
-       })
-        // this.$navigateTo(Home);
+      const isEmpty = Object.values(this.error).every(
+        (x) => x === null || x === ""
+      );
+      if (isEmpty) {
+        Axios.post("http://localhost:5000/api/user", this.user, {
+          headers: { "content-type": "application/json" },
+        })
+          .then(function (response) {
+            console.log(response);
+            this.$navigateTo(Home);
+          })
+          .catch((error) => {
+            console.log("error==", error);
+          });
       }
     },
 
@@ -191,7 +197,7 @@ export default {
         username: "",
         contactnumber: "",
         email: "",
-        password: ""
+        password: "",
       };
       this.isLoggingIn = !this.isLoggingIn;
     },
@@ -204,11 +210,9 @@ export default {
     async logInWithFacebook() {
       await this.loadFacebookSDK(document, "script", "facebook-jssdk");
       await this.initFacebook();
-      console.log("login not");
-      window.FB.login(function(response) {
+      window.FB.login(function (response) {
         if (response.authResponse) {
           alert("You are logged in &amp; cookie set!");
-
         } else {
           alert("User cancelled login or did not fully authorize.");
         }
@@ -218,11 +222,11 @@ export default {
 
     async initFacebook() {
       console.log("login");
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         window.FB.init({
-          appId: "8220179XXXXXXXXX", //You will need to change this
-          cookie: true, // This is important, it's not enabled by default
-          version: "v13.0"
+          appId: "8220179XXXXXXXXX", 
+          cookie: true, 
+          version: "v13.0",
         });
       };
     },
@@ -236,9 +240,9 @@ export default {
       js.id = id;
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
-    }
+    },
   },
-  init() {}
+  init() {},
 };
 const userService = {
   register(user) {
@@ -247,11 +251,11 @@ const userService = {
   login(user) {
     console.log("login");
     return Promise.resolve(user);
-  }
+  },
 };
 const user = {
   email: "parth@gmail.com",
-  password: 1234
+  password: 1234,
 };
 </script>
 <style scoped>
@@ -316,6 +320,5 @@ const user = {
 
 .bold {
   color: #000000;
-} 
-
+}
 </style>
