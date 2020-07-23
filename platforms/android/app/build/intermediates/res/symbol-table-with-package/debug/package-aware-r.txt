@@ -2442,4 +2442,5 @@ xml chart_palettes_dark_selected
 xml chart_palettes_default_dark
 xml chart_palettes_default_light
 xml chart_palettes_light_selected
+xml network_security_config
 xml provider_paths

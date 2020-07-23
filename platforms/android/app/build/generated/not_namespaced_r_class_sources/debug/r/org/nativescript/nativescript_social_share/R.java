@@ -12,6 +12,6 @@ public final class R {
     public static final class xml {
         private xml() {}
 
-        public static final int provider_paths = 0x7f0f0004;
+        public static final int provider_paths = 0x7f0f0005;
     }
 }

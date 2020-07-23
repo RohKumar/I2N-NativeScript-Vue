@@ -22213,6 +22213,7 @@ public final class R {
     public static final int chart_palettes_default_dark=0x7f0f0001;
     public static final int chart_palettes_default_light=0x7f0f0002;
     public static final int chart_palettes_light_selected=0x7f0f0003;
-    public static final int provider_paths=0x7f0f0004;
+    public static final int network_security_config=0x7f0f0004;
+    public static final int provider_paths=0x7f0f0005;
   }
 }

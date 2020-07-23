@@ -27,7 +27,7 @@
             class="input"
             hint="Contact Number"
             keyboardType="number"
-            minLength="10"
+            minlength="10"
             v-model="user.contactNumber"
             returnKeyType="done"
             fontSize="18"
@@ -82,8 +82,8 @@
 
       <Button
         v-show="!isLoggingIn"
-        text="Facebook Login"
-        @tap="logInWithFacebook()"
+        text="google Login"
+        @tap="onLoginTap()"
         class="btn btn-info btn-active"
       />
     </FlexboxLayout>
@@ -91,9 +91,13 @@
 </template>
 
 <script>
-// var auth_service_1 = require("../auth-service");
-import Axios from "axios";
+var auth_service_1 = require("../../auth-service");
+import * as application from "tns-core-modules/application";
+import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
+import * as http from "tns-core-modules/http";
+configureOAuthProviders();
+
 export default {
   data() {
     return {
@@ -113,6 +117,9 @@ export default {
       },
     };
   },
+
+  mounted() {},
+
   methods: {
     submit() {
       if (this.isLoggingIn) {
@@ -137,17 +144,25 @@ export default {
       }
       if (!this.user.password) {
         this.error.password = "Password required.";
-      } else if (!this.user.password.length < 8) {
-        this.error.password = "Password Length Must Be Greater Then 8.";
-      }
-      if (
-        !this.error.email &&
-        !this.error.password &&
-        this.user.email == user.email &&
-        this.user.password == user.password
-      ) {
-        this.$navigateTo(Home);
-      }
+       } 
+      http.request({
+          url: "http://172.16.9.77:5000/api/user/login",
+          method: "POST",
+          content: JSON.stringify({email:this.user.email,password:this.user.password}),
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(
+          (response) => {
+            console.log("response==", response);
+
+            if (response.content.toJSON().status == 200) {
+              this.$navigateTo(Home);
+            }
+          },
+          (e) => {
+            console.log("error", e);
+          }
+        );
     },
 
     register() {
@@ -175,16 +190,24 @@ export default {
         (x) => x === null || x === ""
       );
       if (isEmpty) {
-        Axios.post("http://localhost:5000/api/user", this.user, {
-          headers: { "content-type": "application/json" },
-        })
-          .then(function (response) {
-            console.log(response);
-            this.$navigateTo(Home);
+        http
+          .request({
+            url: "http://172.16.9.77:5000/api/user",
+            method: "POST",
+            content: JSON.stringify(this.user),
+            headers: { "Content-Type": "application/json" },
           })
-          .catch((error) => {
-            console.log("error==", error);
-          });
+          .then(
+            (response) => {
+              console.log("response==", response.content.toJSON().status);
+              if (response.content.toJSON().status == 201) {
+                this.isLoggingIn = !this.isLoggingIn;
+              }
+            },
+            (e) => {
+              console.log("error", e);
+            }
+          );
       }
     },
 
@@ -192,6 +215,7 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
+
     toggleForm() {
       this.error = {
         username: "",
@@ -201,61 +225,16 @@ export default {
       };
       this.isLoggingIn = !this.isLoggingIn;
     },
+
     onLoginTap() {
-      auth_service_1.tnsOauthLogin("facebook");
+      auth_service_1.tnsOauthLogin("google");
     },
+
     onLogoutTap() {
       auth_service_1.tnsOauthLogout();
     },
-    async logInWithFacebook() {
-      await this.loadFacebookSDK(document, "script", "facebook-jssdk");
-      await this.initFacebook();
-      window.FB.login(function (response) {
-        if (response.authResponse) {
-          alert("You are logged in &amp; cookie set!");
-        } else {
-          alert("User cancelled login or did not fully authorize.");
-        }
-      });
-      return false;
-    },
 
-    async initFacebook() {
-      console.log("login");
-      window.fbAsyncInit = function () {
-        window.FB.init({
-          appId: "8220179XXXXXXXXX", 
-          cookie: true, 
-          version: "v13.0",
-        });
-      };
-    },
-    async loadFacebookSDK(d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    },
   },
-  init() {},
-};
-const userService = {
-  register(user) {
-    return Promise.resolve(user);
-  },
-  login(user) {
-    console.log("login");
-    return Promise.resolve(user);
-  },
-};
-const user = {
-  email: "parth@gmail.com",
-  password: 1234,
 };
 </script>
 <style scoped>

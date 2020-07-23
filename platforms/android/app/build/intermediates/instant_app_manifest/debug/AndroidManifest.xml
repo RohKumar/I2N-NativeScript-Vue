@@ -31,7 +31,8 @@
         android:debuggable="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.tns.NativeScriptActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -45,6 +46,16 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:path="/"
+                    android:scheme="com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu" />
             </intent-filter>
         </activity>
         <activity android:name="com.tns.ErrorReportActivity" />

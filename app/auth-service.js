@@ -1,7 +1,8 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
-// var nativescript_oauth2_1 = require('nativescript-oauth2')
-// var providers_1 = require("nativescript-oauth2/providers");
+var nativescript_oauth2_1 = require('nativescript-oauth2')
+var providers_1 = require("nativescript-oauth2/providers");
+var http = require('tns-core-modules/http');
 var client = null;
 function configureOAuthProviders() {
     var microsoftProvider = configureOAuthProviderMicrosoft();
@@ -13,9 +14,9 @@ exports.configureOAuthProviders = configureOAuthProviders;
 function configureOAuthProviderGoogle() {
     var googleProviderOptions = {
         openIdSupport: "oid-full",
-        clientId: "932931520457-buv2dnhgo7jjjjv5fckqltn367psbrlb.apps.googleusercontent.com",
-        redirectUri: "com.googleusercontent.apps.932931520457-buv2dnhgo7jjjjv5fckqltn367psbrlb:/auth",
-        urlScheme: "com.googleusercontent.apps.932931520457-buv2dnhgo7jjjjv5fckqltn367psbrlb",
+        clientId: "990767074610-num24b8pb9fqnse32ku32ep4d153q4gu.apps.googleusercontent.com",
+        redirectUri: "com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu:/auth",
+        urlScheme: "com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu",
         scopes: ["email"]
     };
     var googleProvider = new providers_1.TnsOaProviderGoogle(googleProviderOptions);
@@ -57,10 +58,12 @@ function tnsOauthLogin(providerType) {
         }
     });
 }
-exports.tnsOauthLogin = tnsOauthLogin;
+
 function tnsOauthLogout() {
     if (client) {
         client.logout();
     }
 }
+
+exports.tnsOauthLogin = tnsOauthLogin;
 exports.tnsOauthLogout = tnsOauthLogout;

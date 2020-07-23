@@ -20,16 +20,16 @@
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\b319f7801efb628452576a256f46d047\\TNSChart-release\\res\\layout\\default_tooltip_scatter_content.xml"
     },
     {
-        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
-        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-xxxhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png"
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
+        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\93b6dc0d3e773275ade044701602ac2b\\jetified-play-services-base-11.4.0\\res\\drawable-hdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media.xml.flat",
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\08edb29a57f38059e60f29b32cf295b4\\media-1.0.0\\res\\layout\\notification_template_big_media.xml"
     },
     {
-        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
-        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\93b6dc0d3e773275ade044701602ac2b\\jetified-play-services-base-11.4.0\\res\\drawable-hdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
+        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-xxxhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_googleg_standard_color_18.png.flat",
@@ -56,20 +56,20 @@
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
-        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_avd_hide_password.xml.flat",
-        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\fc1beab5ac12a5804cd872db4efad5e0\\material-1.0.0\\res\\drawable-v21\\avd_hide_password.xml"
-    },
-    {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_pressable_item_background.xml.flat",
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\9bf5159fbeceb165080503825f9c6882\\TNSListView-release\\res\\drawable-v21\\pressable_item_background.xml"
     },
     {
-        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light.xml.flat",
-        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\93b6dc0d3e773275ade044701602ac2b\\jetified-play-services-base-11.4.0\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_avd_hide_password.xml.flat",
+        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\fc1beab5ac12a5804cd872db4efad5e0\\material-1.0.0\\res\\drawable-v21\\avd_hide_password.xml"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_support_simple_spinner_dropdown_item.xml.flat",
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light.xml.flat",
+        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\93b6dc0d3e773275ade044701602ac2b\\jetified-play-services-base-11.4.0\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
@@ -100,12 +100,12 @@
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\cc8fb598395ce3b1504ad3d7a783015b\\TNSSideDrawer-release\\res\\drawable-hdpi-v4\\hmb.png"
     },
     {
-        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
-        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-xhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
-    },
-    {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_ic_expand.png.flat",
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\9bf5159fbeceb165080503825f9c6882\\TNSListView-release\\res\\drawable-xxxhdpi-v4\\ic_expand.png"
+    },
+    {
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
+        "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-xhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_abc_btn_colored_material.xml.flat",
@@ -258,6 +258,10 @@
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_list_pressed_holo_light.9.png.flat",
         "source": "C:\\Users\\parth.soni\\.gradle\\caches\\transforms-2\\files-2.1\\48b229e147a4dca9b4b961003e452a83\\appcompat-1.0.2\\res\\drawable-hdpi-v4\\abc_list_pressed_holo_light.9.png"
+    },
+    {
+        "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\xml_network_security_config.xml.flat",
+        "source": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\src\\main\\res\\xml\\network_security_config.xml"
     },
     {
         "merged": "D:\\Learning projects\\VueNewProj\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_scrubber_primary_mtrl_alpha.9.png.flat",
