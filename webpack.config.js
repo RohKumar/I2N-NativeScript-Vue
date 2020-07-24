@@ -14,20 +14,6 @@ const nativescriptTarget = require("nativescript-dev-webpack/nativescript-target
 const { NativeScriptWorkerPlugin } = require("nativescript-worker-loader/NativeScriptWorkerPlugin");
 const hashSalt = Date.now().toString();
 
-
-const CopyPlugin = require('copy-webpack-plugin');
- 
-module.exports = {
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: 'source', to: 'dest' },
-        { from: 'other', to: 'public' },
-      ],
-    }),
-  ],
-};
-
 module.exports = env => {
     // Add your custom Activities, Services and other android app components here.
     const appComponents = env.appComponents || [];
