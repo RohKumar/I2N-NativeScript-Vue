@@ -8,6 +8,7 @@ Vue.config.silent = false;
 
 
 import { TNSFontIcon, fonticon } from './nativescript-fonticon';
+
 TNSFontIcon.debug = false;
 TNSFontIcon.paths = {
     'fa': './fonts/font-awesome.css',
@@ -15,6 +16,8 @@ TNSFontIcon.paths = {
 };
 TNSFontIcon.loadCss();
 Vue.filter('fonticon', fonticon);
+Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown);
+
 
 new Vue({
 

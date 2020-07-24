@@ -21,20 +21,31 @@
           <label :text="error.username"></label>
         </StackLayout>
 
-        <StackLayout v-show="!isLoggingIn" class="input-field">
+       <GridLayout columns="*,2*" horizontalAlignment="left" verticalAlignment="top"  v-show="!isLoggingIn">
+          <DropDown col="0"
+            ref="dropDownList1"
+            selectedIndex="0"
+            :items="countryCode"
+            @selectedIndexChanged="dropDownSelectedCountryChanged"
+            class="input-field"
+          ></DropDown>
+ 
+        <StackLayout v-show="!isLoggingIn" class="input-field" col="1">
           <TextField
             ref="contactNumber"
             class="input"
             hint="Contact Number"
             keyboardType="number"
             minlength="10"
-            v-model="user.contactNumber"
+            v-model="tempContactNumber"
             returnKeyType="done"
             fontSize="18"
           />
           <StackLayout class="hr-light" />
+           <label :text="error.countryCode"></label>
           <label :text="error.contactnumber"></label>
         </StackLayout>
+       </GridLayout>
 
         <StackLayout class="input-field" marginBottom="25">
           <TextField
@@ -67,6 +78,16 @@
           <label :text="error.password"></label>
         </StackLayout>
 
+        <StackLayout v-show="!isLoggingIn">
+          <DropDown
+            ref="dropDownList2"
+            selectedIndex="0"
+            :items="roleListByName"
+            @selectedIndexChanged="dropDownSelectedIndexChanged"
+            class="input-field"
+          ></DropDown>
+          <label :text="error.role"></label>
+        </StackLayout>
         <Button
           :text="isLoggingIn ? 'Log In' : 'Sign Up'"
           @tap="submit"
@@ -92,35 +113,81 @@
 
 <script>
 var auth_service_1 = require("../../auth-service");
+var Toast = require("nativescript-toast");
+var countryCode = require("../../assets/countryCode.json");
 import * as application from "tns-core-modules/application";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
+import GeoTracker from "../custom/geo-tracker";
+import Admin from "../custom/admin";
+import VueTelInput from "vue-tel-input";
 import * as http from "tns-core-modules/http";
+import { Telephony } from "nativescript-telephony";
+
 configureOAuthProviders();
 
 export default {
+  components: {
+    VueTelInput,
+  },
   data() {
     return {
+      countryCode: [],
+      roleListByName: [],
       errors: [],
+      roleList: [],
+      tempCountryCode:null,
+      tempContactNumber:null,
       isLoggingIn: true,
       user: {
-        name: "parth",
-        contactNumber: 213333,
-        email: "parth@gmail.com",
-        password: 123334,
+        role: "",
+        name: "",
+        contactNumber: null,
+        email: "",
+        password: null,
       },
       error: {
         username: "",
         contactnumber: "",
         email: "",
         password: "",
+        role: "",
+        countryCode:""
       },
     };
   },
 
-  mounted() {},
+  mounted() {
+    http
+      .request({
+        url: "http://172.16.9.77:5000/api/role",
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(
+        (response) => {
+          this.roleListByName = response.content
+            .toJSON()
+            .payload.map((e) => e.name);
+          this.roleList = response.content.toJSON().payload;
+        },
+        (e) => {
+          console.log("error", e);
+        }
+      );
+  this.countryCode = countryCode.map(e=>e.name);
+  console.log('===================', this.countryCode );
+  },
 
   methods: {
+    dropDownSelectedIndexChanged() {
+      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+      this.user.role = this.roleList[index].value;
+    },
+      dropDownSelectedCountryChanged() {
+      const index = this.$refs.dropDownList1.nativeView.selectedIndex;
+      this.tempCountryCode = countryCode[index].dial_code;
+    },
     submit() {
       if (this.isLoggingIn) {
         this.login();
@@ -144,34 +211,61 @@ export default {
       }
       if (!this.user.password) {
         this.error.password = "Password required.";
-       } 
-      http.request({
-          url: "http://172.16.9.77:5000/api/user/login",
-          method: "POST",
-          content: JSON.stringify({email:this.user.email,password:this.user.password}),
-          headers: { "Content-Type": "application/json" },
-        })
-        .then(
-          (response) => {
-            console.log("response==", response);
+      } else if (this.user.password.length < 9) {
+        this.error.password = "Password Length Must Be Greater then 8.";
+      }
 
-            if (response.content.toJSON().status == 200) {
-              this.$navigateTo(Home);
+      if (this.user.email && this.user.password) {
+        http
+          .request({
+            url: "http://172.16.9.77:5000/api/user/login",
+            method: "POST",
+            content: JSON.stringify({
+              email: this.user.email,
+              password: this.user.password,
+            }),
+            headers: { "Content-Type": "application/json" },
+          })
+          .then(
+            (response) => {
+              console.log("response==", response.content.toJSON().payload);
+              console.log(
+                "login success====---",
+                response.content.toJSON().payload
+              );
+              this.toastMessage(response.content.toJSON().message);
+              if (response.content.toJSON().payload !== null) {
+                this.user = {
+                  role: "",
+                  name: "",
+                  contactNumber: null,
+                  email: "",
+                  password: null,
+                };
+                if (response.content.toJSON().payload.role == 1) {
+                  this.$navigateTo(Home);
+                } else if (response.content.toJSON().payload.role == 2) {
+                  this.$navigateTo(Admin);
+                } else if (response.content.toJSON().payload.role == 3)
+                  this.$navigateTo(GeoTracker);
+              }
+            },
+            (e) => {
+              console.log("error", e);
             }
-          },
-          (e) => {
-            console.log("error", e);
-          }
-        );
+          );
+      }
     },
 
     register() {
+      console.log("reg=============================");
       this.error = {
         username: "",
         contactnumber: "",
         email: "",
         password: "",
       };
+      this.user.contactNumber = this.tempCountryCode+ this.tempContactNumber; 
       if (!this.user.email) {
         this.error.email = "Email required.";
       } else if (!this.validEmail(this.user.email)) {
@@ -179,12 +273,20 @@ export default {
       }
       if (!this.user.password) {
         this.error.password = "Password required.";
+      } else if (this.user.password.length < 9) {
+        this.error.password = "Password Length Must Be Greater then 8.";
       }
       if (!this.user.name) {
         this.error.username = "Username required.";
+      } 
+      if(!this.tempCountryCode) {
+          this.countryCode = "Contry Code Require"
       }
       if (!this.user.contactNumber) {
         this.error.contactnumber = "Contact Number required.";
+      }
+      if (!this.user.role) {
+        this.error.role = "Role required.";
       }
       const isEmpty = Object.values(this.error).every(
         (x) => x === null || x === ""
@@ -199,9 +301,17 @@ export default {
           })
           .then(
             (response) => {
-              console.log("response==", response.content.toJSON().status);
-              if (response.content.toJSON().status == 201) {
-                this.isLoggingIn = !this.isLoggingIn;
+              console.log("response====", response.content.toJSON().status);
+              this.toastMessage(response.content.toJSON().message);
+              if (response.content.toJSON().payload !== null) {
+                (this.user = {
+                  role: "",
+                  name: "",
+                  contactNumber: null,
+                  email: "",
+                  password: null,
+                }),
+                  (this.isLoggingIn = !this.isLoggingIn);
               }
             },
             (e) => {
@@ -233,7 +343,10 @@ export default {
     onLogoutTap() {
       auth_service_1.tnsOauthLogout();
     },
-
+    toastMessage(message) {
+      var toast = Toast.makeText(message);
+      toast.show();
+    },
   },
 };
 </script>
@@ -266,16 +379,16 @@ export default {
 }
 
 .input-field {
-  margin-bottom: 25;
+  margin-bottom: 5;
 }
 
 .input {
-  font-size: 18;
+  font-size: 12;
   placeholder-color: #a8a8a8;
 }
 
 .input-field .input {
-  font-size: 54;
+  font-size: 10;
 }
 
 .btn-primary {

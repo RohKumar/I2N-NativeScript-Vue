@@ -73,5 +73,9 @@
 	"nativescript-ui-core": {
 		"D:\\Learning projects\\VueNewProj\\node_modules\\nativescript-ui-core\\platforms\\android\\typings\\core.d.ts": "5c032652edfa1719ef8c8190fc0f66d3b1c313c2",
 		"D:\\Learning projects\\VueNewProj\\node_modules\\nativescript-ui-core\\platforms\\android\\TNSCore-release.aar": "0e2fe0b867821ad56b8f0b9c8ac4c90f4c399e3c"
+	},
+	"nativescript-telephony": {
+		"D:\\Learning projects\\VueNewProj\\node_modules\\nativescript-telephony\\platforms\\android\\AndroidManifest.xml": "19bc7f757ef5ea28b0f7503973cd61b1a16cfbb5",
+		"D:\\Learning projects\\VueNewProj\\node_modules\\nativescript-telephony\\platforms\\android\\nativescript_telephony.aar": "ed2855b49e93b8cfd2085d54ba2baf3c0c9d24a8"
 	}
 }

@@ -20,6 +20,7 @@
         "nativescript-accelerometer": "3.0.0",
         "nativescript-background-http": "4.2.1",
         "nativescript-camera": "4.5.0",
+        "nativescript-drop-down": "^5.0.6",
         "nativescript-geolocation": "5.1.0",
         "nativescript-image": "3.0.1",
         "nativescript-imagepicker": "7.1.0",
@@ -27,7 +28,9 @@
         "nativescript-iqkeyboardmanager": "1.5.1",
         "nativescript-oauth2": "^2.4.2",
         "nativescript-social-share": "1.6.0",
+        "nativescript-telephony": "^1.0.4",
         "nativescript-theme-core": "1.0.6",
+        "nativescript-toast": "^2.0.0",
         "nativescript-ui-autocomplete": "6.0.1",
         "nativescript-ui-calendar": "6.1.0",
         "nativescript-ui-chart": "7.1.1",
@@ -36,7 +39,8 @@
         "nativescript-ui-listview": "8.0.1",
         "nativescript-ui-sidedrawer": "8.0.0",
         "nativescript-vue": "2.5.0",
-        "tns-core-modules": "6.5.0"
+        "tns-core-modules": "6.5.0",
+        "vue-tel-input": "^4.4.0"
     },
     "devDependencies": {
         "@babel/core": "7.8.7",

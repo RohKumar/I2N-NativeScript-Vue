@@ -55,6 +55,7 @@ function tnsOauthLogin(providerType) {
         else {
             console.log("back to main page with access token: ");
             console.log(tokenResult);
+            
         }
     });
 }
