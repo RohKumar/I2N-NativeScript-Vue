@@ -47,6 +47,7 @@ function configureOAuthProviderMicrosoft() {
 }
 function tnsOauthLogin(providerType) {
     client = new nativescript_oauth2_1.TnsOAuthClient(providerType);
+
     client.loginWithCompletion(function (tokenResult, error) {
         if (error) {
             console.error("back to main page with error: ");
@@ -55,7 +56,31 @@ function tnsOauthLogin(providerType) {
         else {
             console.log("back to main page with access token: ");
             console.log(tokenResult);
-            
+            http.request({
+                url: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + tokenResult.accessToken, method: "GET",
+                headers: { "Content-Type": "application/json" },
+            })
+                .then(
+                    (response) => {
+                        console.log('response==========', response.content.toJSON());
+                        http.request({
+                            url: "http://172.16.9.77:5000/api/user/googleAuthentication", method: "POST",
+                            content: JSON.stringify({ email: response.content.toJSON().email }), headers: { "Content-Type": "application/json" },
+                        })
+                            .then(
+                                (res) => {
+                                    console.log('res==========', res.content.toJSON());
+                                },
+                                (e) => {
+                                    console.log("error", e);
+                                }
+                            );
+                    },
+                    (e) => {
+                        console.log("error", e);
+                    }
+                );
+
         }
     });
 }

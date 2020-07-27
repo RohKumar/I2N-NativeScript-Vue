@@ -7,6 +7,47 @@
   >
     <FlexboxLayout class="page">
       <StackLayout class="form">
+        <StackLayout class="input-field">
+          <TextField
+            ref="username"
+            class="input"
+            hint="User Name"
+            v-model="user.name"
+            returnKeyType="done"
+            fontSize="18"
+          />
+
+          <StackLayout class="hr-light" />
+          <label :text="error.username"></label>
+        </StackLayout>
+
+        <GridLayout columns="2*,1*,*3*" horizontalAlignment="left" verticalAlignment="top">
+          <DropDown
+            col="0"
+            ref="dropDownList1"
+            selectedIndex="0"
+            :items="countryCode"
+            class="item-drop-down"
+            @selectedIndexChanged="dropDownSelectedCountryChanged"
+          ></DropDown>
+          <label col="1" class="input" :text="tempCountryCode"></label>
+          <StackLayout class="input-field" col="2">
+            <TextField
+              ref="contactNumber"
+              class="input"
+              hint="Contact Number"
+              keyboardType="number"
+              minlength="10"
+              v-model="tempContactNumber"
+              returnKeyType="done"
+              fontSize="18"
+            />
+            <StackLayout class="hr-light" />
+            <label :text="error.countryCode"></label>
+            <label :text="error.contactnumber"></label>
+          </StackLayout>
+        </GridLayout>
+
         <StackLayout class="input-field" marginBottom="25">
           <TextField
             class="input"
@@ -38,28 +79,45 @@
           <label :text="error.password"></label>
         </StackLayout>
 
-        <Button :text="logedIn" @tap="login" class="btn btn-primary m-t-20" />
+        <StackLayout>
+          <DropDown
+            ref="dropDownList2"
+            selectedIndex="0"
+            :items="roleListByName"
+            @selectedIndexChanged="dropDownSelectedIndexChanged"
+            class="item-drop-down"
+          ></DropDown>
+          <label :text="error.role"></label>
+        </StackLayout>
+        <Button :text="signIn" @tap="register" class="btn btn-primary m-t-20" />
       </StackLayout>
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
-          <Span :text="signAsk"></Span>
-          <Span :text="signUp" class="bold"></Span>
+          <Span :text="backToLogin"></Span>
+
         </FormattedString>
       </Label>
+
+      <Button text="google Login" @tap="onLoginTap()" class="btn btn-info btn-active" />
     </FlexboxLayout>
   </Page>
 </template>
 
 <script>
+var auth_service_1 = require("../../auth-service");
 var Toast = require("nativescript-toast");
+var countryCode = require("../../assets/countryCode.json");
+import * as application from "tns-core-modules/application";
+import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
-import Signup from "../custom/signup";
+import Login from "../custom/login";
 import VueTelInput from "vue-tel-input";
 import * as http from "tns-core-modules/http";
 import { Telephony } from "nativescript-telephony";
 
+configureOAuthProviders();
 
 export default {
   components: {
@@ -67,21 +125,28 @@ export default {
   },
   data() {
     return {
-      logedIn: "Log In",
-      signUp: "Sign up",
-      signAsk: "Don’t have an account?",
       countryCode: [],
       roleListByName: [],
+      errors: [],
       roleList: [],
+      signIn:'Sign Up',
+      backToLogin: "Back to Login",
       tempCountryCode: null,
       tempContactNumber: null,
       user: {
+        role: "",
+        name: "",
+        contactNumber: null,
         email: "",
         password: null,
       },
       error: {
+        username: "",
+        contactnumber: "",
         email: "",
         password: "",
+        role: "",
+        countryCode: "",
       },
     };
   },
@@ -104,17 +169,27 @@ export default {
           console.log("error", e);
         }
       );
+    this.countryCode = countryCode.map((e) => e.code + " "+ e.dial_code );
   },
 
   methods: {
-    login() {
+    dropDownSelectedIndexChanged() {
+      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+      this.user.role = this.roleList[index].value;
+      this.error.role = "";
+    },
+    dropDownSelectedCountryChanged() {
+      const index = this.$refs.dropDownList1.nativeView.selectedIndex;
+      this.tempCountryCode = countryCode[index].dial_code;
+    },
+    register() {
       this.error = {
         username: "",
         contactnumber: "",
         email: "",
         password: "",
       };
-
+      this.user.contactNumber = this.tempCountryCode + this.tempContactNumber;
       if (!this.user.email) {
         this.error.email = "Email required.";
       } else if (!this.validEmail(this.user.email)) {
@@ -125,34 +200,42 @@ export default {
       } else if (this.user.password.length < 8) {
         this.error.password = "Password Length Must Be Greater then 8.";
       }
-
-      if (this.user.email && this.user.password) {
+      if (!this.user.name) {
+        this.error.username = "Username required.";
+      }
+      if (!this.tempCountryCode) {
+        this.countryCode = "Contry Code Require";
+      }
+      if (!this.user.contactNumber) {
+        this.error.contactnumber = "Contact Number required.";
+      }
+      if (!this.user.role) {
+        this.error.role = "Role required.";
+      }
+      const isEmpty = Object.values(this.error).every(
+        (x) => x === null || x === ""
+      );
+      if (isEmpty) {
         http
           .request({
-            url: "http://172.16.9.77:5000/api/user/login",
+            url: "http://172.16.9.77:5000/api/user",
             method: "POST",
             content: JSON.stringify(this.user),
             headers: { "Content-Type": "application/json" },
           })
           .then(
             (response) => {
-              console.log("response==", response.content.toJSON().payload);
-              console.log(
-                "login success====---",
-                response.content.toJSON().payload
-              );
+              console.log("response====", response.content.toJSON().status);
               this.toastMessage(response.content.toJSON().message);
               if (response.content.toJSON().payload !== null) {
-                this.user = {
+                (this.user = {
+                  role: "",
+                  name: "",
+                  contactNumber: null,
                   email: "",
                   password: null,
-                };
-                if (response.content.toJSON().payload.role == 1) {
-                  this.$navigateTo(Home);
-                } else if (response.content.toJSON().payload.role == 2) {
-                  this.$navigateTo(Admin);
-                } else if (response.content.toJSON().payload.role == 3)
-                  this.$navigateTo(GeoTracker);
+                }),
+                  (this.isLoggingIn = !this.isLoggingIn);
               }
             },
             (e) => {
@@ -161,11 +244,19 @@ export default {
           );
       }
     },
+
     validEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
 
+    onLoginTap() {
+      auth_service_1.tnsOauthLogin("google");
+    },
+
+    onLogoutTap() {
+      auth_service_1.tnsOauthLogout();
+    },
     toggleForm() {
       this.error = {
         username: "",
@@ -173,7 +264,7 @@ export default {
         email: "",
         password: "",
       };
-      this.$navigateTo(Signup, {});
+      this.$navigateTo(Login, {});
     },
     toastMessage(message) {
       var toast = Toast.makeText(message);
@@ -244,5 +335,13 @@ export default {
 
 .bold {
   color: #000000;
+}
+.item-drop-down{
+    font-size: 15;
+    height: 40;
+    padding: 4;
+    width: 100%;
+    border: 10;
+    border-color:#000000;
 }
 </style>
