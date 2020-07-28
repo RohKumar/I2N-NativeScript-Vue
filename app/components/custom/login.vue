@@ -56,14 +56,14 @@ import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
 import Signup from "../custom/signup";
-import VueTelInput from "vue-tel-input";
-import * as http from "tns-core-modules/http";
 
+import LoginService from '../../services/loginService';
+
+
+const loginService = new LoginService();
 
 export default {
-  components: {
-    VueTelInput,
-  },
+
   data() {
     return {
       signUp: "Sign up",
@@ -79,25 +79,7 @@ export default {
     };
   },
 
-  mounted() {
-    http
-      .request({
-        url: "http://172.16.9.77:5000/api/role",
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-      .then(
-        (response) => {
-          this.roleListByName = response.content
-            .toJSON()
-            .payload.map((e) => e.name);
-          this.roleList = response.content.toJSON().payload;
-        },
-        (e) => {
-          console.log("error", e);
-        }
-      );
-  },
+  mounted() {},
 
   methods: {
     login() {
@@ -120,15 +102,9 @@ export default {
       }
 
       if (this.user.email && this.user.password) {
-        http
-          .request({
-            url: "http://172.16.9.77:5000/api/user/login",
-            method: "POST",
-            content: JSON.stringify(this.user),
-            headers: { "Content-Type": "application/json" },
-          })
-          .then(
-            (response) => {
+      return loginService.login(this.user)
+        .then((response) => {
+          console.log('response====',response);
               this.toastMessage(response.content.toJSON().message);
               if (response.content.toJSON().payload !== null) {
                 this.user = {
@@ -143,11 +119,11 @@ export default {
                   this.$navigateTo(GeoTracker);
               }
             },
-            (e) => {
-            }
+            (e) => {}
           );
       }
     },
+
     validEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -162,6 +138,7 @@ export default {
       };
       this.$navigateTo(Signup, {});
     },
+
     toastMessage(message) {
       var toast = Toast.makeText(message);
       toast.show();
@@ -232,5 +209,9 @@ export default {
 .bold {
   color: #000000;
 }
-label {background-color: #ffffff; color: #d44848; font-size: 14;}
+label {
+  background-color: #ffffff;
+  color: #d44848;
+  font-size: 14;
+}
 </style>

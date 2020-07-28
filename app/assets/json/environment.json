@@ -1,0 +1,4 @@
+{
+        "baseUrl" : "http://172.16.9.77:5000/api",
+        "googleAuthBaseUrl": "https://www.googleapis.com/oauth2/v1"
+}

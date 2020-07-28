@@ -26,7 +26,7 @@
             col="0"
             ref="dropDownList1"
             selectedIndex="0"
-            :items="countryCode"
+            :items="countryCodeList"
             class="item-drop-down"
             @selectedIndexChanged="dropDownSelectedCountryChanged"
           ></DropDown>
@@ -36,7 +36,7 @@
               class="input"
               keyboardType="number"
               minlength="10"
-              isEnable="false"
+              isEnabled="false"
               v-model="tempCountryCode"
               returnKeyType="done"
               fontSize="12"
@@ -95,6 +95,7 @@
             ref="dropDownList2"
             selectedIndex="0"
             :items="roleListByName"
+              v-model="user.role"
             @selectedIndexChanged="dropDownSelectedIndexChanged"
             class="item-drop-down"
           ></DropDown>
@@ -116,22 +117,20 @@
 <script>
 var auth_service_1 = require("../../auth-service");
 var Toast = require("nativescript-toast");
-var countryCode = require("../../assets/countryCode.json");
 import * as application from "tns-core-modules/application";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
 import Login from "../custom/login";
-import VueTelInput from "vue-tel-input";
-import * as http from "tns-core-modules/http";
-
+import constant from "../../assets/json/constant.json";
+import LoginService from '../../services/loginService';
+import CountryCode from "../../assets/json/countryCode.json";
+import Utils from "../../services/utils";
+const loginService = new LoginService();
 configureOAuthProviders();
 
 export default {
-  components: {
-    VueTelInput,
-  },
   data() {
     return {
       countryCodeList: [],
@@ -140,7 +139,7 @@ export default {
       roleList: [],
       signIn: "Sign Up",
       backToLogin: "Back to Login",
-      countryCode: null,
+      tempCountryCode: null,
       tempContactNumber: null,
       user: {
         role: "",
@@ -161,43 +160,34 @@ export default {
   },
 
   mounted() {
-    http
-      .request({
-        url: "http://172.16.9.77:5000/api/role",
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-      .then(
-        (response) => {
-          this.roleListByName = response.content
-            .toJSON()
-            .payload.map((e) => e.name);
-          this.roleList = response.content.toJSON().payload;
-        },
-        (e) => {}
-      );
-    this.countryCode = countryCode.map((e) => e.name);
+    return loginService.getRoll(this.user).then((response) => {
+      this.roleListByName = response.content
+        .toJSON()
+        .payload.map((e) => e.name);
+      this.roleList = response.content.toJSON().payload;
+    },
+        (e) => {
+          console.log("error", e);
+        });
+    this.countryCodeList = countryCode.map((e) => e.name);
+    console.log('this.countryCodeList', this.countryCodeList);
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
-      if (
-        !this.$refs.dropDownList2 &&
-        this.$refs.dropDownList2.nativeView &&
-        this.$refs.dropDownList2.nativeView.selectedIndex
-      ) {
         const index = this.$refs.dropDownList2.nativeView.selectedIndex;
         this.user.role = this.roleList[index].value;
         this.error.role = "";
-      }
+      
     },
+
     dropDownSelectedCountryChanged() {
       const index = this.$refs.dropDownList1.nativeView.selectedIndex;
       this.tempCountryCode = countryCode[index].dial_code;
     },
 
-  validateLogin() {
-    this.error = {
+    validateLogin() {
+      this.error = {
         username: "",
         contactnumber: "",
         email: "",
@@ -206,7 +196,7 @@ export default {
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!this.validEmail(this.user.email)) {
+      } else if (!Utils.validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
@@ -217,56 +207,39 @@ export default {
       if (!this.user.name) {
         this.error.username = "Username required.";
       }
-      if (!this.tempCountryCode) {
-        this.error.countryCode = "Contry Code Require";
-      }
       if (!this.user.contactNumber) {
         this.error.contactnumber = "Contact Number required.";
       }
       if (!this.user.role) {
         this.error.role = "Role required.";
-      } 
-  },
-
-    register() {
-      validateLogin()
-      this.user.contactNumber = this.tempCountryCode + this.tempContactNumber;
-      const isEmpty = Object.values(this.error).every(
-        (x) => x === null || x === ""
-      );
-      if (isEmpty) {
-        http
-          .request({
-            url: "http://172.16.9.77:5000/api/user",
-            method: "POST",
-            content: JSON.stringify(this.user),
-            headers: { "Content-Type": "application/json" },
-          })
-          .then(
-            (response) => {
-              console.log("response====", response.content.toJSON().status);
-              this.toastMessage(response.content.toJSON().message);
-              if (response.content.toJSON().payload !== null) {
-                (this.user = {
-                  role: "",
-                  name: "",
-                  contactNumber: null,
-                  email: "",
-                  password: null,
-                }),
-                  (this.isLoggingIn = !this.isLoggingIn);
-              }
-            },
-            (e) => {
-
-            }
-          );
       }
     },
 
-    validEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    register() {
+     this.user.contactNumber =this.tempContactNumber;
+      this.validateLogin();
+
+      const isEmpty = Object.values(this.error).every(
+        (x) => x === null || x === ""
+      );
+
+      if (isEmpty) {
+        return loginService.signUp(this.user).then((response) => {
+            this.toastMessage(response.content.toJSON().message);
+            if (response.content.toJSON().payload !== null) {
+              (this.user = {
+                role: "",
+                name: "",
+                contactNumber: null,
+                email: "",
+                password: null,
+              }),
+                this.$navigateTo(Login);
+            }
+          },
+          (e) => {}
+        );
+      }
     },
 
     onLoginTap() {
@@ -285,6 +258,7 @@ export default {
       };
       this.$navigateTo(Login, {});
     },
+
     toastMessage(message) {
       var toast = Toast.makeText(message);
       toast.show();
