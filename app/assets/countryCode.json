@@ -1,15 +1,14 @@
-[   
-     {
-    "name": "Albania",
-    "dial_code": "+355",
-    "code": "AL"
-  },
+[
+    {
+        "name": "Albania",
+        "dial_code": "+355",
+        "code": "AL"
+    },
     {
         "name": "Afghanistan",
         "dial_code": "+93",
         "code": "AF"
     },
-
     {
         "name": "Algeria",
         "dial_code": "+213",

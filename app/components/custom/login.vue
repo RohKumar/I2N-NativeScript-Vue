@@ -38,7 +38,7 @@
           <label :text="error.password"></label>
         </StackLayout>
 
-        <Button :text="logedIn" @tap="login" class="btn btn-primary m-t-20" />
+        <Button :text="'Login'" @tap="login" class="btn btn-primary m-t-20" />
       </StackLayout>
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
@@ -58,7 +58,6 @@ import Admin from "../custom/admin";
 import Signup from "../custom/signup";
 import VueTelInput from "vue-tel-input";
 import * as http from "tns-core-modules/http";
-import { Telephony } from "nativescript-telephony";
 
 
 export default {
@@ -67,14 +66,8 @@ export default {
   },
   data() {
     return {
-      logedIn: "Log In",
       signUp: "Sign up",
       signAsk: "Don’t have an account?",
-      countryCode: [],
-      roleListByName: [],
-      roleList: [],
-      tempCountryCode: null,
-      tempContactNumber: null,
       user: {
         email: "",
         password: null,
@@ -136,11 +129,6 @@ export default {
           })
           .then(
             (response) => {
-              console.log("response==", response.content.toJSON().payload);
-              console.log(
-                "login success====---",
-                response.content.toJSON().payload
-              );
               this.toastMessage(response.content.toJSON().message);
               if (response.content.toJSON().payload !== null) {
                 this.user = {
@@ -156,7 +144,6 @@ export default {
               }
             },
             (e) => {
-              console.log("error", e);
             }
           );
       }
@@ -245,4 +232,5 @@ export default {
 .bold {
   color: #000000;
 }
+label {background-color: #ffffff; color: #d44848; font-size: 14;}
 </style>

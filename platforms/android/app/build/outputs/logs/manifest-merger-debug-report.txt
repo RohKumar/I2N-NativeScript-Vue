@@ -25,7 +25,6 @@ MERGED from [:nativescript_camera:] C:\Users\parth.soni\.gradle\caches\transform
 MERGED from [:nativescript_geolocation:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\3441c0749c4818700285b0116d76c358\nativescript_geolocation\AndroidManifest.xml:2:1-11:12
 MERGED from [:nativescript_imagepicker:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\2395f07ac3af74866e07419d9ab5d54c\nativescript_imagepicker\AndroidManifest.xml:2:1-11:12
 MERGED from [:nativescript_social_share:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\e9e3560b959ff3f674382d1da71670e5\jetified-nativescript_social_share\AndroidManifest.xml:2:1-21:12
-MERGED from [:nativescript_telephony:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\1e35e029d67a73d93ac529e2f95eec48\nativescript_telephony\AndroidManifest.xml:2:1-11:12
 MERGED from [:TNSAutoComplete-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\c1e604840a80534373d9fef947a6ca52\TNSAutoComplete-release\AndroidManifest.xml:2:1-11:12
 MERGED from [:TNSCalendar-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\27e0278ef95bc2a32575e387404e4ed3\TNSCalendar-release\AndroidManifest.xml:2:1-11:12
 MERGED from [:TNSChart-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\b319f7801efb628452576a256f46d047\TNSChart-release\AndroidManifest.xml:2:1-11:12
@@ -146,8 +145,6 @@ MERGED from [:nativescript_imagepicker:] C:\Users\parth.soni\.gradle\caches\tran
 MERGED from [:nativescript_imagepicker:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\2395f07ac3af74866e07419d9ab5d54c\nativescript_imagepicker\AndroidManifest.xml:7:5-47
 MERGED from [:nativescript_social_share:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\e9e3560b959ff3f674382d1da71670e5\jetified-nativescript_social_share\AndroidManifest.xml:7:5-47
 MERGED from [:nativescript_social_share:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\e9e3560b959ff3f674382d1da71670e5\jetified-nativescript_social_share\AndroidManifest.xml:7:5-47
-MERGED from [:nativescript_telephony:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\1e35e029d67a73d93ac529e2f95eec48\nativescript_telephony\AndroidManifest.xml:7:5-47
-MERGED from [:nativescript_telephony:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\1e35e029d67a73d93ac529e2f95eec48\nativescript_telephony\AndroidManifest.xml:7:5-47
 MERGED from [:TNSAutoComplete-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\c1e604840a80534373d9fef947a6ca52\TNSAutoComplete-release\AndroidManifest.xml:7:5-9:41
 MERGED from [:TNSAutoComplete-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\c1e604840a80534373d9fef947a6ca52\TNSAutoComplete-release\AndroidManifest.xml:7:5-9:41
 MERGED from [:TNSCalendar-release:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\27e0278ef95bc2a32575e387404e4ed3\TNSCalendar-release\AndroidManifest.xml:7:5-9:41
@@ -251,7 +248,6 @@ INJECTED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\And
 	android:minSdkVersion
 		ADDED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
 		INJECTED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml
-		MERGED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
 		MERGED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
 		MERGED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
 		MERGED from D:\Learning projects\VueNewProj\platforms\android\app\src\main\AndroidManifest.xml:5:15-41
@@ -433,7 +429,3 @@ uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from [:nativescript_geolocation:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\3441c0749c4818700285b0116d76c358\nativescript_geolocation\AndroidManifest.xml:9:5-79
 	android:name
 		ADDED from [:nativescript_geolocation:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\3441c0749c4818700285b0116d76c358\nativescript_geolocation\AndroidManifest.xml:9:22-76
-uses-permission#android.permission.READ_PHONE_STATE
-ADDED from [:nativescript_telephony:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\1e35e029d67a73d93ac529e2f95eec48\nativescript_telephony\AndroidManifest.xml:9:5-75
-	android:name
-		ADDED from [:nativescript_telephony:] C:\Users\parth.soni\.gradle\caches\transforms-2\files-2.1\1e35e029d67a73d93ac529e2f95eec48\nativescript_telephony\AndroidManifest.xml:9:22-72

@@ -30,7 +30,19 @@
             class="item-drop-down"
             @selectedIndexChanged="dropDownSelectedCountryChanged"
           ></DropDown>
-          <label col="1" class="input" :text="tempCountryCode"></label>
+          <StackLayout class="input-field" col="1">
+            <TextField
+              ref="tempCountryCode"
+              class="input"
+              keyboardType="number"
+              minlength="10"
+              isEnable="false"
+              v-model="tempCountryCode"
+              returnKeyType="done"
+              fontSize="12"
+            />
+            <StackLayout class="hr-light" />
+          </StackLayout>
           <StackLayout class="input-field" col="2">
             <TextField
               ref="contactNumber"
@@ -43,7 +55,6 @@
               fontSize="18"
             />
             <StackLayout class="hr-light" />
-            <label :text="error.countryCode"></label>
             <label :text="error.contactnumber"></label>
           </StackLayout>
         </GridLayout>
@@ -94,7 +105,6 @@
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
           <Span :text="backToLogin"></Span>
-
         </FormattedString>
       </Label>
 
@@ -115,7 +125,6 @@ import Admin from "../custom/admin";
 import Login from "../custom/login";
 import VueTelInput from "vue-tel-input";
 import * as http from "tns-core-modules/http";
-import { Telephony } from "nativescript-telephony";
 
 configureOAuthProviders();
 
@@ -125,13 +134,13 @@ export default {
   },
   data() {
     return {
-      countryCode: [],
+      countryCodeList: [],
       roleListByName: [],
       errors: [],
       roleList: [],
-      signIn:'Sign Up',
+      signIn: "Sign Up",
       backToLogin: "Back to Login",
-      tempCountryCode: null,
+      countryCode: null,
       tempContactNumber: null,
       user: {
         role: "",
@@ -165,31 +174,36 @@ export default {
             .payload.map((e) => e.name);
           this.roleList = response.content.toJSON().payload;
         },
-        (e) => {
-          console.log("error", e);
-        }
+        (e) => {}
       );
-    this.countryCode = countryCode.map((e) => e.code + " "+ e.dial_code );
+    this.countryCode = countryCode.map((e) => e.name);
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
-      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
-      this.user.role = this.roleList[index].value;
-      this.error.role = "";
+      if (
+        !this.$refs.dropDownList2 &&
+        this.$refs.dropDownList2.nativeView &&
+        this.$refs.dropDownList2.nativeView.selectedIndex
+      ) {
+        const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+        this.user.role = this.roleList[index].value;
+        this.error.role = "";
+      }
     },
     dropDownSelectedCountryChanged() {
       const index = this.$refs.dropDownList1.nativeView.selectedIndex;
       this.tempCountryCode = countryCode[index].dial_code;
     },
-    register() {
-      this.error = {
+
+  validateLogin() {
+    this.error = {
         username: "",
         contactnumber: "",
         email: "",
         password: "",
       };
-      this.user.contactNumber = this.tempCountryCode + this.tempContactNumber;
+
       if (!this.user.email) {
         this.error.email = "Email required.";
       } else if (!this.validEmail(this.user.email)) {
@@ -204,14 +218,19 @@ export default {
         this.error.username = "Username required.";
       }
       if (!this.tempCountryCode) {
-        this.countryCode = "Contry Code Require";
+        this.error.countryCode = "Contry Code Require";
       }
       if (!this.user.contactNumber) {
         this.error.contactnumber = "Contact Number required.";
       }
       if (!this.user.role) {
         this.error.role = "Role required.";
-      }
+      } 
+  },
+
+    register() {
+      validateLogin()
+      this.user.contactNumber = this.tempCountryCode + this.tempContactNumber;
       const isEmpty = Object.values(this.error).every(
         (x) => x === null || x === ""
       );
@@ -239,7 +258,7 @@ export default {
               }
             },
             (e) => {
-              console.log("error", e);
+
             }
           );
       }
@@ -302,11 +321,11 @@ export default {
 }
 
 .input-field {
-  margin-bottom: 5;
+  margin-bottom: 0;
 }
 
 .input {
-  font-size: 12;
+  font-size: 10;
   placeholder-color: #a8a8a8;
 }
 
@@ -316,7 +335,7 @@ export default {
 
 .btn-primary {
   height: 50;
-  margin: 30 5 15 5;
+  margin: 5 5 5 5;
   background-color: #d51a1a;
   border-radius: 5;
   font-size: 20;
@@ -336,12 +355,17 @@ export default {
 .bold {
   color: #000000;
 }
-.item-drop-down{
-    font-size: 15;
-    height: 40;
-    padding: 4;
-    width: 100%;
-    border: 10;
-    border-color:#000000;
+.item-drop-down {
+  font-size: 15;
+  height: 40;
+  padding: 4;
+  width: 100%;
+  border: 10;
+  border-color: #000000;
+}
+label {
+  background-color: #ffffff;
+  color: #d44848;
+  font-size: 14;
 }
 </style>

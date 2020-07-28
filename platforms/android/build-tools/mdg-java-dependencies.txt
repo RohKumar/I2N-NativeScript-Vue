@@ -43,7 +43,6 @@ D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencie
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\86cd278db757e225bdb0e4820be7880f\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\877647f9fcc12d4c5dab5623c8c95ccf\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\88b2a6713b39e62c09f11a4196bcb60a\classes.jar
-D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\8a6bbb612a019407dd9e3b121f332dc2\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\935844758a9b5bdb835ca41761fb58d3\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\98d29e2d06387ab50f442a50940f9b71\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\9ca8d62fba07f57ae2b7ee920da64634\classes.jar
@@ -74,3 +73,4 @@ D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencie
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\f89c38f12d82da22169f64a04466f703\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\fbbd3709dec2b25a9bc123ae85c630a2\classes.jar
 D:\Learning projects\VueNewProj\platforms\android\app\build\exploded-dependencies\febfc9d0b00df5acb427ee379bb7de02\classes.jar
+D:\Learning projects\VueNewProj\platforms\android\app\build\intermediates\javac\debug
