@@ -125,7 +125,7 @@ import Admin from "../custom/admin";
 import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
 import LoginService from '../../services/loginService';
-import CountryCode from "../../assets/json/countryCode.json";
+import countryCode from "../../assets/json/countryCode.json";
 import Utils from "../../services/utils";
 const loginService = new LoginService();
 configureOAuthProviders();
@@ -160,6 +160,7 @@ export default {
   },
 
   mounted() {
+    this.countryCodeList = countryCode.map((e) => e.name);
     return loginService.getRoll(this.user).then((response) => {
       this.roleListByName = response.content
         .toJSON()
@@ -169,7 +170,6 @@ export default {
         (e) => {
           console.log("error", e);
         });
-    this.countryCodeList = countryCode.map((e) => e.name);
     console.log('this.countryCodeList', this.countryCodeList);
   },
 
@@ -216,7 +216,7 @@ export default {
     },
 
     register() {
-     this.user.contactNumber =this.tempContactNumber;
+    this.user.contactNumber =this.tempContactNumber;
       this.validateLogin();
 
       const isEmpty = Object.values(this.error).every(
