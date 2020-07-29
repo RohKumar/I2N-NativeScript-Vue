@@ -4,10 +4,15 @@ android {
   defaultConfig {
     generatedDensities = []
   }
+  project.ext {
+    googlePlayServicesVersion = "15.0.1"
+  }
   aaptOptions {
     additionalParameters "--no-version-vectors"
   }
   dependencies {
         compile 'com.github.kenglxn.QRGen:android:2.6.0'
+        def googlePlayServicesVersion = project.googlePlayServicesVersion
+        compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
     }
 }
