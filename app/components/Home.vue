@@ -149,180 +149,263 @@
   </page>
 </template>
 <script>
-// import { SwissArmyKnife } from "nativescript-swiss-army-knife";
-import { isIOS, isAndroid } from "tns-core-modules/platform";
-import navBottom from "./custom/navBottom";
-import Item from "./custom/item";
-import Category from "./custom/category";
-import QrModal from "./custom/offerQrModal";
-import ItemDetails from "./ItemDetails";
-import Login from "./custom/login";
-const gestures = require("ui/gestures");
-const app = require("application");
-
-
+	// import { SwissArmyKnife } from "nativescript-swiss-army-knife";
+	import { isIOS, isAndroid } from 'tns-core-modules/platform'
+	const appSettings = require("application-settings");
+	const geolocation = require("nativescript-geolocation");
+	import * as http from "tns-core-modules/http";
+	import navBottom from "./custom/navBottom";
+	import Item from "./custom/item";
+	import Category from "./custom/category";
+	import QrModal from "./custom/offerQrModal";
+	import Map from "./custom/map";
+	import ItemDetails from "./ItemDetails";
+	const gestures = require("ui/gestures"); 
+	const app = require("application");
 
 export default {
-  components: {
-    navBottom,
-    Item,
-    Category
-  },
-  computed: {
-    itemsCategory() {
-      return this.category.slice().reverse();
-    }
-  },
+	components: {
+		navBottom,
+		Item,
+		Category
+	},
+	computed: {
+		itemsCategory(){
+			return this.category ? this.category.slice().reverse() : [];
+		},
+		user() {
+			return this.$store.getters.user
+		}
+	},
+	mounted () {
+		this.saveUserData();
+		this.fetchLocation();
+	},
+	data() {
+		return {
+			lastDelY: 0,
+			headerCollapsed: false,
+			selectedTab: 0,
+			selectedTabview: 0,
+			location: {},
+			items: [{
+				name: "Manila Ultimate Tombstone Burger",
+				cover: "~/assets/images/food/burger640.jpg",
+				images: [
+						{src: "~/assets/images/food/burger/burger1.jpg"},
+						{src: "~/assets/images/food/burger/burger2.jpg"},
+						{src: "~/assets/images/food/burger/burger3.jpg"},
+						{src: "~/assets/images/food/burger/burger4.jpg"},
+						{src: "~/assets/images/food/burger/burger5.jpg"},
+						{src: "~/assets/images/food/burger/burger6.jpg"}
+					],
+				category: "Burger",
+				categoryTag: "#2D9CDB",
+				price: "300.00",
+				likes: 987,
+				isLike: false,
+				isFavorite: true,
+				comments: 13,
+				rating: "4.5",
+				description: "a"
+			},
+			{
+				name: "Quezon Chocolate Marble Pancake",
+				cover: "~/assets/images/food/pancake640.jpg",
+				images: [
+					{src: "~/assets/images/food/pancake/pancake1.jpg"},
+					{src: "~/assets/images/food/pancake/pancake2.jpg"},
+					{src: "~/assets/images/food/pancake/pancake3.jpg"},
+					{src: "~/assets/images/food/pancake/pancake4.jpg"},
+					{src: "~/assets/images/food/pancake/pancake5.jpg"},
+					{src: "~/assets/images/food/pancake/pancake6.jpg"}
+				],
+				category: "Pancake",
+				categoryTag: "#e4ce0d",
+				price: "230.00",
+				likes: 891,
+				isLike: true,
+				isFavorite: true,
+				comments: 7,
+				rating: "4.0",
+				description: "a"
+			},
+			{
+				name: "Binondo Black Forest Cake",
+				cover: "~/assets/images/food/cake640.jpg",
+				images: [
+					{src: "~/assets/images/food/cake/cake1.jpg"},
+					{src: "~/assets/images/food/cake/cake2.jpg"},
+					{src: "~/assets/images/food/cake/cake3.jpg"},
+					{src: "~/assets/images/food/cake/cake4.jpg"}
+				],
+				category: "Cake",
+				categoryTag: "#27AE60",
+				price: "300.00",
+				likes: 730,
+				isLike: true,
+				isFavorite: true,
+				comments: 11,
+				rating: "4.0",
+				description: "a"
+			},
+			],
+			category: [
+			{
+				cover: "~/assets/images/food/burger640.jpg",
+				category: "BURGER",
+				count: "13",
+			},
+			{
+				cover: "~/assets/images/food/pancake640.jpg",
+				category: "PANCAKE",
+				count: "5",
+			},
+			{
+				cover: "~/assets/images/food/cake640.jpg",
+				category: "CAKE",
+				count: "9",
+			},
+			{
+				cover: "~/assets/images/food/beer640.jpg",
+				category: "BEER",
+				count: "7",
+			},
+		
+			]
+		};
+	},
+	methods: {
+		search(){
+			console.log('search')
+			this.$navigateTo(Map);
+		},
+		bell(){
+			console.log('bell')
+		},
+		offer() {
+			this.$showModal(QrModal)
+		},
+		showItem(payload) {
+			this.$navigateTo(ItemDetails,{
+				props: {
+					item: payload
+				},
+				animated: true,
+				transition: {
+					name: "slideTop",
+					duration: 380,
+					curve: "easeIn"
+				}
+			})
+		},
+		
+		popular() {
+			this.selectedTabview = 0;
+		},
+		showCategory() {
+			this.selectedTabview = 1;
+		},
+		showPromos() {
+			this.selectedTabview = 2;
+		},
+		home() {
+			this.selectedTab = 0;
+		},
+		cart() {
+			this.selectedTab = 1;
+		},
+		history() {
+			this.selectedTab = 2;
+		},
+		about() {
+			this.selectedTab = 3;
+		},
+		saveUserData() {
+			const userData = {
+				contactNumber: "12345",
+				password: "fathullah",
+				isGoogleAuth: false,
+				status: 1,
+				_id: "5f1a57e76ac96d0d1cf993f0",
+				name: "Fathullah Mohammedi",
+				email: "fathullah.mohammedi@rishabhsoft.com",
+				role: 1,
+				createdAt: "2020-07-24T03:39:19.535Z",
+				updatedAt: "2020-07-24T03:40:52.461Z",
+				reward: "5f19983503a2171a743d1d84"
+			}
+			this.$store.commit("save", userData);
+		},
+		fetchLocation() {
+			let that = this
+			geolocation.isEnabled().then(function(isEnabled) {
+            if (!isEnabled) {
+                geolocation.enableLocationRequest(true, true).then(() => {
+                    geolocation
+                        .getCurrentLocation({
+                            timeout: 20000
+                        })
+                        .then(location => {
+                            if (!location) {
+                                console.log("Failed to get location!");
+                            } else {
+                                that.location.latitude = location.latitude
+								that.location.longitude = location.longitude
+								that.updateUserLocation();
+                            }
+                        });
+                }, (e) => {
+                    console.log("Error: " + (e.message || e));
+                }).catch(ex => {
+                    console.log("Unable to Enable Location", ex);
+                });
+            } else {
+                geolocation
+                    .getCurrentLocation({
+                        timeout: 20000
+                    })
+                    .then(location => {
+                        if (!location) {
+                            console.log("Failed to get location!");
+                        } else {
+                            that.location.latitude = location.latitude
+							that.location.longitude = location.longitude
+							that.updateUserLocation();
+                        }
 
-  mounted() {
-    // SwissArmyKnife.setAndroidStatusBarColor("#b51213");
-  },
-  data() {
-    return {
-      routes: {
-        login: Login
-      },
-      lastDelY: 0,
-      headerCollapsed: false,
-      selectedTab: 0,
-      selectedTabview: 0,
-      items: [
-        {
-          name: "Manila Ultimate Tombstone Burger",
-          cover: "~/assets/images/food/burger640.jpg",
-          images: [
-            { src: "~/assets/images/food/burger/burger1.jpg" },
-            { src: "~/assets/images/food/burger/burger2.jpg" },
-            { src: "~/assets/images/food/burger/burger3.jpg" },
-            { src: "~/assets/images/food/burger/burger4.jpg" },
-            { src: "~/assets/images/food/burger/burger5.jpg" },
-            { src: "~/assets/images/food/burger/burger6.jpg" }
-          ],
-          category: "Burger",
-          categoryTag: "#2D9CDB",
-          price: "300.00",
-          likes: 987,
-          isLike: false,
-          isFavorite: true,
-          comments: 13,
-          rating: "4.5",
-          description: "a"
-        },
-        {
-          name: "Quezon Chocolate Marble Pancake",
-          cover: "~/assets/images/food/pancake640.jpg",
-          images: [
-            { src: "~/assets/images/food/pancake/pancake1.jpg" },
-            { src: "~/assets/images/food/pancake/pancake2.jpg" },
-            { src: "~/assets/images/food/pancake/pancake3.jpg" },
-            { src: "~/assets/images/food/pancake/pancake4.jpg" },
-            { src: "~/assets/images/food/pancake/pancake5.jpg" },
-            { src: "~/assets/images/food/pancake/pancake6.jpg" }
-          ],
-          category: "Pancake",
-          categoryTag: "#e4ce0d",
-          price: "230.00",
-          likes: 891,
-          isLike: true,
-          isFavorite: true,
-          comments: 7,
-          rating: "4.0",
-          description: "a"
-        },
-        {
-          name: "Binondo Black Forest Cake",
-          cover: "~/assets/images/food/cake640.jpg",
-          images: [
-            { src: "~/assets/images/food/cake/cake1.jpg" },
-            { src: "~/assets/images/food/cake/cake2.jpg" },
-            { src: "~/assets/images/food/cake/cake3.jpg" },
-            { src: "~/assets/images/food/cake/cake4.jpg" }
-          ],
-          category: "Cake",
-          categoryTag: "#27AE60",
-          price: "300.00",
-          likes: 730,
-          isLike: true,
-          isFavorite: true,
-          comments: 11,
-          rating: "4.0",
-          description: "a"
-        }
-      ],
-      category: [
-        {
-          cover: "~/assets/images/food/burger640.jpg",
-          category: "BURGER",
-          count: "13"
-        },
-        {
-          cover: "~/assets/images/food/pancake640.jpg",
-          category: "PANCAKE",
-          count: "5"
-        },
-        {
-          cover: "~/assets/images/food/cake640.jpg",
-          category: "CAKE",
-          count: "9"
-        },
-        {
-          cover: "~/assets/images/food/beer640.jpg",
-          category: "BEER",
-          count: "7"
-        }
-      ]
-    };
-  },
-  methods: {
-    search() {
-      console.log("search");
-    },
-    bell() {
-      console.log("bell");
-    },
-    offer() {
-      console.log("QR");
-      this.$showModal(QrModal);
-    },
-    goToLogin() {
-      this.$navigateTo(Login, {});
-    },
-    showItem(payload) {
-      this.$navigateTo(ItemDetails, {
-        props: {
-          item: payload
-        },
-        animated: true,
-        transition: {
-          name: "slideTop",
-          duration: 380,
-          curve: "easeIn"
-        }
-      });
-    },
+                    });
 
-    popular() {
-      this.selectedTabview = 0;
-    },
-    showCategory() {
-      this.selectedTabview = 1;
-    },
-    showPromos() {
-      this.selectedTabview = 2;
-    },
-    home() {
-      this.selectedTab = 0;
-    },
-    cart() {
-      this.selectedTab = 1;
-    },
-    history() {
-      this.selectedTab = 2;
-    },
-    about() {
-      this.selectedTab = 3;
-    }
-  }
+            }
+        }, function(e) {
+            console.log("Error: " + (e.message || e));
+        });
+		},
+		updateUserLocation() {
+			if (this.user && this.location) {
+				const payload = {
+					userId: this.user._id,
+					latitude: this.location.latitude,
+					longitude: this.location.longitude
+				};
+				this.saveLocation(payload);
+			}
+		},
+		saveLocation(payload) {
+			http.request({
+					url: "http://172.17.2.113:5000/api/geoLocation",
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					content: JSON.stringify(payload)
+				}).then((response) => {
+					const result = response.content.toJSON();
+					console.log(result)
+					// setTimeout(this.updateUserLocation, 5000);
+				}, (e) => {
+					console.log("error", e);
+			});
+		}
+	}
 };
 </script>
 

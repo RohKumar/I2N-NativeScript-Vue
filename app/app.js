@@ -1,6 +1,7 @@
 import Vue from 'nativescript-vue';
-
 import Home from './components/Home';
+
+import store from './store/index';
 
 // Uncommment the following to see NativeScript-Vue output logs
 // Vue.config.silent = false;
@@ -15,12 +16,15 @@ TNSFontIcon.paths = {
     'ion': './fonts/ionicons.css',
 };
 TNSFontIcon.loadCss();
+
+Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 Vue.filter('fonticon', fonticon);
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown);
 
 
 new Vue({
 
-    render: h => h('frame', [h(Home)])
+    render: h => h('frame', [h(Home)]),
+    store: store
 
 }).$start();
