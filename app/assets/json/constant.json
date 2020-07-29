@@ -1,0 +1,7 @@
+{
+   "api": {
+      "login": "/user/login",
+      "signUp": "/user",
+      "role": "/role"
+   }
+}
