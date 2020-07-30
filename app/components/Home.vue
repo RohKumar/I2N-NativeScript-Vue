@@ -286,6 +286,9 @@ export default {
 		offer() {
 			this.$showModal(QrModal)
 		},
+		oToLogin() {      
+			this.$navigateTo(Login, {});    
+		},
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{
 				props: {
