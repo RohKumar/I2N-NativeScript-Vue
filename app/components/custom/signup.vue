@@ -20,17 +20,21 @@
           <StackLayout class="hr-light" />
           <label :text="error.username"></label>
         </StackLayout>
-
-        <GridLayout columns="2*,1*,*3*" horizontalAlignment="left" verticalAlignment="top">
+      <StackLayout class="input-field">
           <DropDown
-            col="0"
             ref="dropDownList1"
             selectedIndex="0"
             :items="countryCodeList"
             class="item-drop-down"
             @selectedIndexChanged="dropDownSelectedCountryChanged"
           ></DropDown>
-          <StackLayout class="input-field" col="1">
+
+          <StackLayout class="hr-light" />
+          <label :text="error.role"></label>
+        </StackLayout>
+        <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top">
+
+          <StackLayout class="input-field" col="0">
             <TextField
               ref="tempCountryCode"
               class="input"
@@ -43,7 +47,7 @@
             />
             <StackLayout class="hr-light" />
           </StackLayout>
-          <StackLayout class="input-field" col="2">
+          <StackLayout class="input-field" col="1">
             <TextField
               ref="contactNumber"
               class="input"
@@ -95,13 +99,13 @@
             ref="dropDownList2"
             selectedIndex="0"
             :items="roleListByName"
-              v-model="user.role"
+            v-model="user.role"
             @selectedIndexChanged="dropDownSelectedIndexChanged"
             class="item-drop-down"
           ></DropDown>
           <label :text="error.role"></label>
         </StackLayout>
-        <Button :text="signIn" @tap="register" class="btn btn-primary m-t-20" />
+        <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       </StackLayout>
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
@@ -124,7 +128,7 @@ import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
 import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
-import LoginService from '../../services/loginService';
+import LoginService from "../../services/loginService";
 import countryCode from "../../assets/json/countryCode.json";
 import Utils from "../../services/utils";
 const loginService = new LoginService();
@@ -142,7 +146,7 @@ export default {
       tempCountryCode: null,
       tempContactNumber: null,
       user: {
-        role: "",
+        role: null,
         name: "",
         contactNumber: null,
         email: "",
@@ -161,24 +165,25 @@ export default {
 
   mounted() {
     this.countryCodeList = countryCode.map((e) => e.name);
-    return loginService.getRoll(this.user).then((response) => {
-      this.roleListByName = response.content
-        .toJSON()
-        .payload.map((e) => e.name);
-      this.roleList = response.content.toJSON().payload;
-    },
-        (e) => {
-          console.log("error", e);
-        });
-    console.log('this.countryCodeList', this.countryCodeList);
+    return loginService.getRoll(this.user).then(
+      (response) => {
+        this.roleListByName = response.content
+          .toJSON()
+          .payload.map((e) => e.name);
+        this.roleList = response.content.toJSON().payload;
+      },
+      (e) => {
+        console.log("error", e);
+      }
+    );
+    console.log("this.countryCodeList", this.countryCodeList);
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
-        const index = this.$refs.dropDownList2.nativeView.selectedIndex;
-        this.user.role = this.roleList[index].value;
-        this.error.role = "";
-      
+      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+      this.user.role = this.roleList[index].value;
+      this.error.role = "";
     },
 
     dropDownSelectedCountryChanged() {
@@ -196,7 +201,7 @@ export default {
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!Utils.validEmail(this.user.email)) {
+      } else if (!this.validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
@@ -216,7 +221,7 @@ export default {
     },
 
     register() {
-    this.user.contactNumber =this.tempContactNumber;
+      this.user.contactNumber = this.tempContactNumber;
       this.validateLogin();
 
       const isEmpty = Object.values(this.error).every(
@@ -224,7 +229,8 @@ export default {
       );
 
       if (isEmpty) {
-        return loginService.signUp(this.user).then((response) => {
+        return loginService.signUp(this.user).then(
+          (response) => {
             this.toastMessage(response.content.toJSON().message);
             if (response.content.toJSON().payload !== null) {
               (this.user = {
@@ -263,6 +269,10 @@ export default {
       var toast = Toast.makeText(message);
       toast.show();
     },
+    validEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
   },
 };
 </script>
@@ -331,7 +341,7 @@ export default {
 }
 .item-drop-down {
   font-size: 15;
-  height: 40;
+  height: 25;
   padding: 4;
   width: 100%;
   border: 10;

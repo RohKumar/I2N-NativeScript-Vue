@@ -15,4 +15,7 @@ android {
         def googlePlayServicesVersion = project.googlePlayServicesVersion
         compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
     }
+    configurations {
+compile.exclude group: 'com.google.zxing'
+}
 }

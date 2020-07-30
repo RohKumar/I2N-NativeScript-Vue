@@ -19,6 +19,7 @@
         "kinvey-nativescript-sdk": "4.2.5",
         "nativescript-accelerometer": "3.0.0",
         "nativescript-background-http": "4.2.1",
+        "nativescript-barcodescanner": "^3.4.2",
         "nativescript-camera": "4.5.0",
         "nativescript-drop-down": "^5.0.6",
         "nativescript-geolocation": "^5.1.0",

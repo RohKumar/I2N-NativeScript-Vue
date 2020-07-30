@@ -20,8 +20,8 @@ TNSFontIcon.loadCss();
 Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 Vue.filter('fonticon', fonticon);
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown);
-
-
+Vue.registerElement('BarcodeScanner', () => require('nativescript-barcodescanner').BarcodeScannerView)
+// Vue.registerElement('BarcodeView', () => require('nativescript-barcodeview').BarcodeView);
 new Vue({
 
     render: h => h('frame', [h(Home)]),
