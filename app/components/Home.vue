@@ -161,8 +161,10 @@
 	import Map from "./custom/map";
 	import ItemDetails from "./ItemDetails";
 	import Login from "./custom/login";
+	import GeoLocationService from '../services/geoLocationService';
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
+	const geoLocationService = new GeoLocationService();
 
 export default {
 	components: {
@@ -396,18 +398,13 @@ export default {
 			}
 		},
 		saveLocation(payload) {
-			http.request({
-					url: "http://172.17.2.113:5000/api/geoLocation",
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					content: JSON.stringify(payload)
-				}).then((response) => {
-					const result = response.content.toJSON();
-					console.log(result)
-					// setTimeout(this.updateUserLocation, 5000);
-				}, (e) => {
-					console.log("error", e);
-			});
+			geoLocationService.addLocation(payload).then((res) => {
+				const result = res.content.toJSON();
+				console.log('result', res.content.toJSON())
+				// setTimeout(this.updateUserLocation, 5000);
+			}, (e) => {
+				console.log("error", e);
+			})
 		}
 	}
 };

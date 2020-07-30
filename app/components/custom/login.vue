@@ -104,13 +104,14 @@ export default {
       if (this.user.email && this.user.password) {
       return loginService.login(this.user)
         .then((response) => {
-          console.log('response====',response);
+          console.log('response====',response.toJSON());
               this.toastMessage(response.content.toJSON().message);
               if (response.content.toJSON().payload !== null) {
                 this.user = {
                   email: "",
                   password: null,
                 };
+                console.log('response====',response.content.toJSON().payload.role);
                 if (response.content.toJSON().payload.role == 1) {
                   this.$navigateTo(Home);
                 } else if (response.content.toJSON().payload.role == 2) {

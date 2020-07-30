@@ -1,4 +1,5 @@
 import Vue from 'nativescript-vue';
+import { isAndroid, isIOS } from "tns-core-modules/platform";
 import Home from './components/Home';
 
 import store from './store/index';
@@ -16,6 +17,10 @@ TNSFontIcon.paths = {
     'ion': './fonts/ionicons.css',
 };
 TNSFontIcon.loadCss();
+
+if (isIOS) {
+    GMSServices.provideAPIKey('AIzaSyBkjr6oE_v2YWk4QyP1bBvv4UrLV1NbpjI');
+}
 
 Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 Vue.filter('fonticon', fonticon);

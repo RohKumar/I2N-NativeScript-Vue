@@ -11,6 +11,8 @@ import { isIOS, isAndroid } from 'tns-core-modules/platform'
 const geolocation = require("nativescript-geolocation");
 const mapsModule = require("nativescript-google-maps-sdk");
 import * as http from "tns-core-modules/http";
+import GeoLocationService from '../../services/geoLocationService';
+const geoLocationService = new GeoLocationService();
 export default {
     data() {
         return {
@@ -116,23 +118,12 @@ export default {
             }
         },
         fetchUsersLocation() {
-            debugger
-            http.request(
-                {
-                    url: "http://172.17.2.113:5000/api/geoLocation",
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" },
-                }).then(
-                    (response) => {
-                        this.roleListByName = response.content
-                            .toJSON()
-                            .payload.map((e) => e.name);
-                        this.formatMarkers(response.content.toJSON().payload);
-                    },
-                    (e) => {
-                    console.log("error", e);
-                }
-            );
+            geoLocationService.fetchAllUsersLocation().then(res => {
+                const result = res.content.toJSON();
+                this.formatMarkers(result)
+            },(e) => {
+                console.log("error", e);
+            })
         },
         formatMarkers(payload) {
             console.log(payload)
