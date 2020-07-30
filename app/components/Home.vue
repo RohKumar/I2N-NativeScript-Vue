@@ -160,6 +160,7 @@
 	import QrModal from "./custom/offerQrModal";
 	import Map from "./custom/map";
 	import ItemDetails from "./ItemDetails";
+	import Login from "./custom/login";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
 
@@ -286,7 +287,7 @@ export default {
 		offer() {
 			this.$showModal(QrModal)
 		},
-		oToLogin() {      
+		goToLogin() {      
 			this.$navigateTo(Login, {});    
 		},
 		showItem(payload) {
