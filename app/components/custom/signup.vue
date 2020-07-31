@@ -30,10 +30,9 @@
           ></DropDown>
 
           <StackLayout class="hr-light" />
-          <label :text="error.role"></label>
+          <label :text="error.countryCode"></label>
         </StackLayout>
         <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top">
-
           <StackLayout class="input-field" col="0">
             <TextField
               ref="tempCountryCode"
@@ -63,7 +62,7 @@
           </StackLayout>
         </GridLayout>
 
-        <StackLayout class="input-field" marginBottom="25">
+        <StackLayout class="input-field">
           <TextField
             class="input"
             hint="Email"
@@ -105,6 +104,31 @@
           ></DropDown>
           <label :text="error.role"></label>
         </StackLayout>
+
+        <StackLayout class="input-field" v-show="isRestrauntOwner">
+          <TextField
+            ref="res-name"
+            class="input"
+            hint="Restraunt Name"
+            v-model="user.restaurantName"
+            returnKeyType="done"
+            fontSize="18"
+          />
+          <StackLayout class="hr-light" />
+        </StackLayout>
+  <StackLayout class="input-field" v-show="isRestrauntOwner">
+          <TextField
+            ref="res-address"
+            class="input"
+            hint="Restraunt Address"
+            v-model="resAddress"
+            returnKeyType="done"
+            fontSize="18"
+            @tap="getAddress()"
+          />
+          <StackLayout class="hr-light" />
+        </StackLayout>
+
         <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       </StackLayout>
       <Label class="login-label sign-up-label" @tap="toggleForm">
@@ -118,7 +142,7 @@
   </Page>
 </template>
 
-<script>
+<script >
 var auth_service_1 = require("../../auth-service");
 import * as Toast from 'nativescript-toast';
 import * as application from "tns-core-modules/application";
@@ -132,6 +156,10 @@ import LoginService from "../../services/loginService";
 import countryCode from "../../assets/json/countryCode.json";
 import Utils from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
+import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
+
+let API_KEY = "AIzaSyAOYKrNk8B72AcOnF9SD3WjcemZHmuUcRY";
+let googlePlacesAutocomplete = new GooglePlacesAutocomplete(API_KEY);
 const loginService = new LoginService();
 configureOAuthProviders();
 
@@ -146,12 +174,17 @@ export default {
       backToLogin: "Back to Login",
       tempCountryCode: null,
       tempContactNumber: null,
+      resAddress: "",
+      addressList: [],
+      isRestrauntOwner: false,
       user: {
         role: null,
         name: "",
         contactNumber: null,
         email: "",
         password: null,
+        restaurantName:"",
+        restaurantAddress:""
       },
       error: {
         username: "",
@@ -177,13 +210,24 @@ export default {
         console.log("error", e);
       }
     );
-    console.log("this.countryCodeList", this.countryCodeList);
+          googlePlacesAutocomplete.search("new ")
+          .then((places) => {
+              console.log(places);
+           }, (error => {
+              console.log(error)
+          }));
+  //   googlePlacesAutocomplete.getPlaceById(place.placeId).then((place) => {
+  //      .then(() => { });
+  //       }, error => {
+  //           console.log(error)
+  //       })     
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
       const index = this.$refs.dropDownList2.nativeView.selectedIndex;
       this.user.role = this.roleList[index].value;
+      this.addTextField(this.roleList[index].value);
       this.error.role = "";
     },
 
@@ -274,9 +318,29 @@ export default {
       toast.show();
     },
     validEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+    addTextField(value) {
+      if (value == 2) {
+        this.isRestrauntOwner = this.isRestrauntOwner == false ? true : false;
+      } else if (value == 1) {
+        this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
+      } else if (value == 3) {
+        this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
+      }
+    },
+  getAddress() {
+    debugger
+      console.log('resAddress',this.resAddress);
+    googlePlacesAutocomplete.search(this.resAddress)
+          .then((places) => {
+            this.addressList = places
+              console.log('places===',JSON.stringify(this.addressList) );
+           }, (error => {
+              console.log('error===',error)
+          }));
+    }
   },
 };
 </script>
