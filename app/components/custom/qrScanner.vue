@@ -33,15 +33,7 @@
       }
     },
     methods: {
-      onScanResult(evt) {
-        console.log(`onScanResult: ${evt.text} (${evt.format})`);
-      },
-      doScanWithBackCamera() {
-        this.scan(false);
-      },
-      doScanWithFrontCamera() {
-        this.scan(true);
-      },
+
       scan(front) {
         new BarcodeScanner().scan({
           cancelLabel: "EXIT. Also, try the volume buttons!", // iOS only, default 'Close'
@@ -74,7 +66,16 @@
               console.log("No scan. " + errorMessage);
             }
         );
-      }
+      },
+      onScanResult(evt) {
+        console.log(`onScanResult: ${evt.text} (${evt.format})`);
+      },
+      doScanWithBackCamera() {
+        this.scan(false);
+      },
+      doScanWithFrontCamera() {
+        this.scan(true);
+      },
     }
   }
 </script>
