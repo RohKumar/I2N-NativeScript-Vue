@@ -121,7 +121,7 @@
             ref="res-address"
             class="input"
             hint="Restraunt Address"
-            v-model="resAddress"
+            v-model="user.restaurantAddress"
             returnKeyType="done"
             fontSize="18"
             @tap="getAddress()"
@@ -178,13 +178,13 @@ export default {
       addressList: [],
       isRestrauntOwner: false,
       user: {
-        role: null,
-        name: "",
-        contactNumber: null,
-        email: "",
-        password: null,
-        restaurantName:"",
-        restaurantAddress:""
+        role: 2,
+        name: "parth",
+        contactNumber: 465476541651,
+        email: "parth34@gmail",
+        password: 12345678,
+        restaurantName:"subway",
+        restaurantAddress:"fategunj"
       },
       error: {
         username: "",
@@ -332,8 +332,8 @@ export default {
     },
   getAddress() {
     debugger
-      console.log('resAddress',this.resAddress);
-    googlePlacesAutocomplete.search(this.resAddress)
+      console.log('resAddress',this.user.restaurantAddress);
+    googlePlacesAutocomplete.search(this.user.restaurantAddress)
           .then((places) => {
             this.addressList = places
               console.log('places===',JSON.stringify(this.addressList) );
