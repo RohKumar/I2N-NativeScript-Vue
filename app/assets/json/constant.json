@@ -1,7 +1,7 @@
 {
    "api": {
       "login": "/user/login",
-      "signUp": "/user",
+      "signUp": "/user/signup",
       "role": "/role",
       "addGeoLocation": "/geoLocation"
    }

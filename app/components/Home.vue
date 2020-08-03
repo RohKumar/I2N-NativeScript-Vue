@@ -181,7 +181,6 @@ export default {
 		}
 	},
 	mounted () {
-		this.saveUserData();
 		this.fetchLocation();
 	},
 	data() {
@@ -327,24 +326,9 @@ export default {
 		about() {
 			this.selectedTab = 3;
 		},
-		saveUserData() {
-			const userData = {
-				contactNumber: "12345",
-				password: "fathullah",
-				isGoogleAuth: false,
-				status: 1,
-				_id: "5f1a57e76ac96d0d1cf993f0",
-				name: "Fathullah Mohammedi",
-				email: "fathullah.mohammedi@rishabhsoft.com",
-				role: 1,
-				createdAt: "2020-07-24T03:39:19.535Z",
-				updatedAt: "2020-07-24T03:40:52.461Z",
-				reward: "5f19983503a2171a743d1d84"
-			}
-			this.$store.commit("save", userData);
-		},
 		fetchLocation() {
 			let that = this
+			that.validateUser();
 			geolocation.isEnabled().then(function(isEnabled) {
             if (!isEnabled) {
                 geolocation.enableLocationRequest(true, true).then(() => {
@@ -388,12 +372,13 @@ export default {
         });
 		},
 		updateUserLocation() {
-			if (this.user && this.location) {
+			if (this.user && this.user._id && this.location) {
 				const payload = {
 					userId: this.user._id,
 					latitude: this.location.latitude,
 					longitude: this.location.longitude
 				};
+				console.log("Home",payload)
 				this.saveLocation(payload);
 			}
 		},
@@ -405,6 +390,11 @@ export default {
 			}, (e) => {
 				console.log("error", e);
 			})
+		},
+		validateUser() {
+			if(this.user === null) {
+				this.goToLogin()
+			}
 		}
 	}
 };

@@ -116,7 +116,7 @@
 
 <script>
 var auth_service_1 = require("../../auth-service");
-var Toast = require("nativescript-toast");
+import * as Toast from 'nativescript-toast';
 import * as application from "tns-core-modules/application";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
@@ -127,6 +127,7 @@ import constant from "../../assets/json/constant.json";
 import LoginService from '../../services/loginService';
 import countryCode from "../../assets/json/countryCode.json";
 import Utils from "../../services/utils";
+import { isIOS, isAndroid } from 'tns-core-modules/platform'
 const loginService = new LoginService();
 configureOAuthProviders();
 
@@ -196,9 +197,10 @@ export default {
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!Utils.validEmail(this.user.email)) {
-        this.error.email = "Email is invalid.";
-      }
+      } 
+      // else if (!Utils.validEmail(this.user.email)) {
+      //   this.error.email = "Email is invalid.";
+      // }
       if (!this.user.password) {
         this.error.password = "Password required.";
       } else if (this.user.password.length < 8) {
@@ -224,9 +226,13 @@ export default {
       );
 
       if (isEmpty) {
-        return loginService.signUp(this.user).then((response) => {
+        loginService.signUp(this.user).then((response) => {
+          const result = response.content.toJSON();
+          console.log('Response Signup', result)
+          if (isAndroid) {
             this.toastMessage(response.content.toJSON().message);
-            if (response.content.toJSON().payload !== null) {
+          }
+            if (result.payload !== null) {
               (this.user = {
                 role: "",
                 name: "",
@@ -260,7 +266,7 @@ export default {
     },
 
     toastMessage(message) {
-      var toast = Toast.makeText(message);
+      const toast = Toast.makeText(message);
       toast.show();
     },
   },
@@ -307,6 +313,7 @@ export default {
   font-size: 10;
 }
 
+
 .btn-primary {
   height: 50;
   margin: 5 5 5 5;
@@ -335,6 +342,8 @@ export default {
   padding: 4;
   width: 100%;
   border: 10;
+  background-color: white;
+  color: black;
   border-color: #000000;
 }
 label {
