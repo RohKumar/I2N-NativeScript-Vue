@@ -10,10 +10,4 @@ export default class LoginService {
     login(user) {
         return this.httpService.post(environment.baseUrl + constant.api.login, user);
     }
-    signUp(user) {
-        return this.httpService.post(environment.baseUrl + constant.api.signUp, user);
-    }
-    getRoll() {
-        return this.httpService.get(environment.baseUrl + constant.api.role);
-    }
 }

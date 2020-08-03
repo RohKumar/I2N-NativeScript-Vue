@@ -128,7 +128,7 @@ export default {
                   this.$navigateTo(GeoTracker);
               }
             },
-            (e) => {}
+            (e) => {console.log(e)}
           );
       }
     },

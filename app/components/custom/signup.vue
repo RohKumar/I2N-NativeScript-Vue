@@ -5,9 +5,10 @@
     backgroundSpanUnderStatusBar="true"
     @loaded="onLoaded"
   >
+  <ScrollView>
     <FlexboxLayout class="page">
-      <StackLayout class="form">
-        <StackLayout class="input-field">
+      <StackLayout class="form" marginBottom="50">
+        <StackLayout class="input-field" height="50">
           <TextField
             ref="username"
             class="input"
@@ -20,7 +21,8 @@
           <StackLayout class="hr-light" />
           <label :text="error.username"></label>
         </StackLayout>
-      <StackLayout class="input-field">
+
+        <StackLayout class="input-field" height="50">
           <DropDown
             ref="dropDownList1"
             selectedIndex="0"
@@ -32,7 +34,7 @@
           <StackLayout class="hr-light" />
           <label :text="error.countryCode"></label>
         </StackLayout>
-        <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top">
+        <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top" height="50">
           <StackLayout class="input-field" col="0">
             <TextField
               ref="tempCountryCode"
@@ -62,7 +64,7 @@
           </StackLayout>
         </GridLayout>
 
-        <StackLayout class="input-field">
+        <StackLayout class="input-field" height="50">
           <TextField
             class="input"
             hint="Email"
@@ -79,7 +81,7 @@
           <label :text="error.email"></label>
         </StackLayout>
 
-        <StackLayout class="input-field" marginBottom="25">
+        <StackLayout class="input-field" height="50">
           <TextField
             ref="password"
             class="input"
@@ -93,7 +95,7 @@
           <label :text="error.password"></label>
         </StackLayout>
 
-        <StackLayout>
+        <StackLayout height="50">
           <DropDown
             ref="dropDownList2"
             selectedIndex="0"
@@ -105,7 +107,7 @@
           <label :text="error.role"></label>
         </StackLayout>
 
-        <StackLayout class="input-field" v-show="isRestrauntOwner">
+        <StackLayout class="input-field" v-show="isRestrauntOwner" height="50">
           <TextField
             ref="res-name"
             class="input"
@@ -114,9 +116,9 @@
             returnKeyType="done"
             fontSize="18"
           />
-          <StackLayout class="hr-light" />
         </StackLayout>
-  <StackLayout class="input-field" v-show="isRestrauntOwner">
+        
+        <StackLayout class="input-field" v-show="isRestrauntOwner">
           <TextField
             ref="res-address"
             class="input"
@@ -124,13 +126,18 @@
             v-model="user.restaurantAddress"
             returnKeyType="done"
             fontSize="18"
-            @tap="getAddress()"
+            @tap="getAddress($event)"
           />
+          <ListView ref="addressLists" id="places_list" for="address in addressList" height="100">
+            <v-template>
+              <!-- Shows the list item label in the default color and style. -->
+              <Label :text="address.description" padding="8"/>
+            </v-template>
+          </ListView>
           <StackLayout class="hr-light" />
         </StackLayout>
-
-        <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       </StackLayout>
+      <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
           <Span :text="backToLogin"></Span>
@@ -139,6 +146,7 @@
 
       <Button text="google Login" @tap="onLoginTap()" class="btn btn-info btn-active" />
     </FlexboxLayout>
+    </ScrollView>
   </Page>
 </template>
 
@@ -146,21 +154,25 @@
 var auth_service_1 = require("../../auth-service");
 import * as Toast from 'nativescript-toast';
 import * as application from "tns-core-modules/application";
+import { Page } from "tns-core-modules/ui/page";
+import * as pages from 'tns-core-modules/ui/page';
+import { TextField } from "tns-core-modules/ui/text-field";
+import { ListView } from "tns-core-modules/ui/list-view";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
 import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
-import LoginService from "../../services/loginService";
+import SignupService from "../../services/signup.service";
 import countryCode from "../../assets/json/countryCode.json";
 import Utils from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
 import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
 
-let API_KEY = "AIzaSyAOYKrNk8B72AcOnF9SD3WjcemZHmuUcRY";
+let API_KEY = "AIzaSyBMVS8sQBb5ex21snLA7elxtCbbvBZlRAs";
 let googlePlacesAutocomplete = new GooglePlacesAutocomplete(API_KEY);
-const loginService = new LoginService();
+const signupService = new SignupService();
 configureOAuthProviders();
 
 export default {
@@ -177,14 +189,15 @@ export default {
       resAddress: "",
       addressList: [],
       isRestrauntOwner: false,
+      places: [],
       user: {
-        role: 2,
+        role: '',
         name: "parth",
         contactNumber: 465476541651,
         email: "parth34@gmail",
         password: 12345678,
         restaurantName:"subway",
-        restaurantAddress:"fategunj"
+        restaurantAddress:""
       },
       error: {
         username: "",
@@ -199,12 +212,13 @@ export default {
 
   mounted() {
     this.countryCodeList = countryCode.map((e) => e.name);
-    return loginService.getRoll(this.user).then(
+    signupService.getRoles(this.user).then(
       (response) => {
-        this.roleListByName = response.content
-          .toJSON()
-          .payload.map((e) => e.name);
+        console.log("Roles list", response.content.toJSON().payload);
         this.roleList = response.content.toJSON().payload;
+        this.roleListByName = response.content.toJSON().payload.map(role => {
+          return role.name;
+        })
       },
       (e) => {
         console.log("error", e);
@@ -213,6 +227,7 @@ export default {
           googlePlacesAutocomplete.search("new ")
           .then((places) => {
               console.log(places);
+              this.places = places;
            }, (error => {
               console.log(error)
           }));
@@ -330,17 +345,19 @@ export default {
         this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
       }
     },
-  getAddress() {
-    debugger
+    getAddress(args) {
+      debugger
       console.log('resAddress',this.user.restaurantAddress);
-    googlePlacesAutocomplete.search(this.user.restaurantAddress)
-          .then((places) => {
-            this.addressList = places
-              console.log('places===',JSON.stringify(this.addressList) );
-           }, (error => {
-              console.log('error===',error)
-          }));
-    }
+      console.log('addressLists',this.$refs.addressLists.nativeView);
+      googlePlacesAutocomplete.search(this.user.restaurantAddress)
+            .then((places) => {
+              this.addressList = places;
+              
+                console.log('places===',JSON.stringify(this.addressList) );
+            }, (error => {
+                console.log('error===',error)
+            }));
+      }
   },
 };
 </script>

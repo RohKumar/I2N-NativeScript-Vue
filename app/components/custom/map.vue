@@ -1,6 +1,7 @@
 <template>
     <Page actionBarHidden="true" backgroundSpanUnderStatusBar="false">
         <StackLayout height="100%" width="100%" >
+            <SearchBar hint="What are you looking for?" v-model="searchPhrase" @submit="onSubmit" textFieldHintColor="gray" marginTop="20" />
             <MapView iosOverflowSafeArea="true" :latitude="latitude" :longitude="longitude" :zoom="zoom" :bearing="bearing" :tilt="tilt" height="100%" @mapReady="onMapReady" @markerSelect="onMarkerSelect" @markerInfoWindowTapped="onMarkerInfoWindowTapped"></MapView>
         </StackLayout>
     </Page>
