@@ -10,6 +10,9 @@ android {
   aaptOptions {
     additionalParameters "--no-version-vectors"
   }
+  configurations {
+    compile.exclude group: 'com.google.zxing'
+  }
   dependencies {
         compile 'com.github.kenglxn.QRGen:android:2.6.0'
         def googlePlayServicesVersion = project.googlePlayServicesVersion

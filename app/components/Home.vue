@@ -26,7 +26,8 @@
         <Image
           col="1"
           row="0"
-          @tap="bell"
+		  
+           @tap="goToQrScanner"
           horizontalAlignment="right"
           class="status-img"
           src="~/assets/images/bell.png"
@@ -161,122 +162,123 @@
 	import Map from "./custom/map";
 	import ItemDetails from "./ItemDetails";
 	import Login from "./custom/login";
-	import GeoLocationService from '../services/geoLocationService';
+  import GeoLocationService from '../services/geoLocationService';
+  import QrScanner from "./custom/qrScanner";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
 	const geoLocationService = new GeoLocationService();
 
 export default {
-	components: {
-		navBottom,
-		Item,
-		Category
-	},
-	computed: {
-		itemsCategory(){
-			return this.category ? this.category.slice().reverse() : [];
-		},
-		user() {
-			return this.$store.getters.user
-		}
-	},
-	mounted () {
-		this.fetchLocation();
-	},
-	data() {
-		return {
-			lastDelY: 0,
-			headerCollapsed: false,
-			selectedTab: 0,
-			selectedTabview: 0,
-			location: {},
-			items: [{
-				name: "Manila Ultimate Tombstone Burger",
-				cover: "~/assets/images/food/burger640.jpg",
-				images: [
-						{src: "~/assets/images/food/burger/burger1.jpg"},
-						{src: "~/assets/images/food/burger/burger2.jpg"},
-						{src: "~/assets/images/food/burger/burger3.jpg"},
-						{src: "~/assets/images/food/burger/burger4.jpg"},
-						{src: "~/assets/images/food/burger/burger5.jpg"},
-						{src: "~/assets/images/food/burger/burger6.jpg"}
-					],
-				category: "Burger",
-				categoryTag: "#2D9CDB",
-				price: "300.00",
-				likes: 987,
-				isLike: false,
-				isFavorite: true,
-				comments: 13,
-				rating: "4.5",
-				description: "a"
-			},
-			{
-				name: "Quezon Chocolate Marble Pancake",
-				cover: "~/assets/images/food/pancake640.jpg",
-				images: [
-					{src: "~/assets/images/food/pancake/pancake1.jpg"},
-					{src: "~/assets/images/food/pancake/pancake2.jpg"},
-					{src: "~/assets/images/food/pancake/pancake3.jpg"},
-					{src: "~/assets/images/food/pancake/pancake4.jpg"},
-					{src: "~/assets/images/food/pancake/pancake5.jpg"},
-					{src: "~/assets/images/food/pancake/pancake6.jpg"}
-				],
-				category: "Pancake",
-				categoryTag: "#e4ce0d",
-				price: "230.00",
-				likes: 891,
-				isLike: true,
-				isFavorite: true,
-				comments: 7,
-				rating: "4.0",
-				description: "a"
-			},
-			{
-				name: "Binondo Black Forest Cake",
-				cover: "~/assets/images/food/cake640.jpg",
-				images: [
-					{src: "~/assets/images/food/cake/cake1.jpg"},
-					{src: "~/assets/images/food/cake/cake2.jpg"},
-					{src: "~/assets/images/food/cake/cake3.jpg"},
-					{src: "~/assets/images/food/cake/cake4.jpg"}
-				],
-				category: "Cake",
-				categoryTag: "#27AE60",
-				price: "300.00",
-				likes: 730,
-				isLike: true,
-				isFavorite: true,
-				comments: 11,
-				rating: "4.0",
-				description: "a"
-			},
-			],
-			category: [
-			{
-				cover: "~/assets/images/food/burger640.jpg",
-				category: "BURGER",
-				count: "13",
-			},
-			{
-				cover: "~/assets/images/food/pancake640.jpg",
-				category: "PANCAKE",
-				count: "5",
-			},
-			{
-				cover: "~/assets/images/food/cake640.jpg",
-				category: "CAKE",
-				count: "9",
-			},
-			{
-				cover: "~/assets/images/food/beer640.jpg",
-				category: "BEER",
-				count: "7",
-			},
-		
-			]
-		};
-	},
+  components: {
+    navBottom,
+    Item,
+    Category,
+  },
+  computed: {
+    itemsCategory() {
+      return this.category ? this.category.slice().reverse() : [];
+    },
+    user() {
+      return this.$store.getters.user;
+    },
+  },
+  mounted() {
+    this.fetchLocation();
+  },
+  data() {
+    return {
+      lastDelY: 0,
+      headerCollapsed: false,
+      selectedTab: 0,
+      selectedTabview: 0,
+      location: {},
+      items: [
+        {
+          name: "Manila Ultimate Tombstone Burger",
+          cover: "~/assets/images/food/burger640.jpg",
+          images: [
+            { src: "~/assets/images/food/burger/burger1.jpg" },
+            { src: "~/assets/images/food/burger/burger2.jpg" },
+            { src: "~/assets/images/food/burger/burger3.jpg" },
+            { src: "~/assets/images/food/burger/burger4.jpg" },
+            { src: "~/assets/images/food/burger/burger5.jpg" },
+            { src: "~/assets/images/food/burger/burger6.jpg" },
+          ],
+          category: "Burger",
+          categoryTag: "#2D9CDB",
+          price: "300.00",
+          likes: 987,
+          isLike: false,
+          isFavorite: true,
+          comments: 13,
+          rating: "4.5",
+          description: "a",
+        },
+        {
+          name: "Quezon Chocolate Marble Pancake",
+          cover: "~/assets/images/food/pancake640.jpg",
+          images: [
+            { src: "~/assets/images/food/pancake/pancake1.jpg" },
+            { src: "~/assets/images/food/pancake/pancake2.jpg" },
+            { src: "~/assets/images/food/pancake/pancake3.jpg" },
+            { src: "~/assets/images/food/pancake/pancake4.jpg" },
+            { src: "~/assets/images/food/pancake/pancake5.jpg" },
+            { src: "~/assets/images/food/pancake/pancake6.jpg" },
+          ],
+          category: "Pancake",
+          categoryTag: "#e4ce0d",
+          price: "230.00",
+          likes: 891,
+          isLike: true,
+          isFavorite: true,
+          comments: 7,
+          rating: "4.0",
+          description: "a",
+        },
+        {
+          name: "Binondo Black Forest Cake",
+          cover: "~/assets/images/food/cake640.jpg",
+          images: [
+            { src: "~/assets/images/food/cake/cake1.jpg" },
+            { src: "~/assets/images/food/cake/cake2.jpg" },
+            { src: "~/assets/images/food/cake/cake3.jpg" },
+            { src: "~/assets/images/food/cake/cake4.jpg" },
+          ],
+          category: "Cake",
+          categoryTag: "#27AE60",
+          price: "300.00",
+          likes: 730,
+          isLike: true,
+          isFavorite: true,
+          comments: 11,
+          rating: "4.0",
+          description: "a",
+        },
+      ],
+      category: [
+        {
+          cover: "~/assets/images/food/burger640.jpg",
+          category: "BURGER",
+          count: "13",
+        },
+        {
+          cover: "~/assets/images/food/pancake640.jpg",
+          category: "PANCAKE",
+          count: "5",
+        },
+        {
+          cover: "~/assets/images/food/cake640.jpg",
+          category: "CAKE",
+          count: "9",
+        },
+        {
+          cover: "~/assets/images/food/beer640.jpg",
+          category: "BEER",
+          count: "7",
+        },
+      ],
+    };
+  },
 	methods: {
 		search(){
 			console.log('search')
@@ -353,17 +355,16 @@ export default {
             } else {
                 geolocation
                     .getCurrentLocation({
-                        timeout: 20000
+                      timeout: 20000,
                     })
-                    .then(location => {
-                        if (!location) {
-                            console.log("Failed to get location!");
-                        } else {
-                            that.location.latitude = location.latitude
-							that.location.longitude = location.longitude
-							that.updateUserLocation();
-                        }
-
+                    .then((location) => {
+                      if (!location) {
+                        console.log("Failed to get location!");
+                      } else {
+                        that.location.latitude = location.latitude;
+                        that.location.longitude = location.longitude;
+                        that.updateUserLocation();
+                      }
                     });
 
             }
@@ -395,9 +396,13 @@ export default {
 			if(this.user === null) {
 				this.goToLogin()
 			}
-		}
-	}
-};
+    },
+    	goToQrScanner() {
+		console.log("qrScanner");
+      this.$navigateTo(QrScanner, {});
+	},
+  }
+}
 </script>
 
 <style>
@@ -451,5 +456,4 @@ export default {
   horizontal-align: left;
   vertical-align: center;
 }
-
 </style>
