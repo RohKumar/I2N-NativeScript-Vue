@@ -51,7 +51,8 @@
 </template>
 
 <script>
-var Toast = require("nativescript-toast");
+import { isIOS, isAndroid } from 'tns-core-modules/platform'
+import * as Toast from 'nativescript-toast';
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
 import Admin from "../custom/admin";
@@ -102,20 +103,25 @@ export default {
       }
 
       if (this.user.email && this.user.password) {
-      return loginService.login(this.user)
+        loginService.login(this.user)
         .then((response) => {
-          console.log('response====',response);
-              this.toastMessage(response.content.toJSON().message);
-              if (response.content.toJSON().payload !== null) {
+          console.log('response====',response.content.toJSON());
+          const result = response.content.toJSON();
+          if (isAndroid) {
+            this.toastMessage(result.message);
+          }
+              if (result.payload) {
                 this.user = {
                   email: "",
                   password: null,
                 };
-                if (response.content.toJSON().payload.role == 1) {
+                this.saveUserData(result.payload);
+                console.log('response====',result.payload.role);
+                if (result.payload.role == 1) {
                   this.$navigateTo(Home);
-                } else if (response.content.toJSON().payload.role == 2) {
+                } else if (result.payload.role == 2) {
                   this.$navigateTo(Admin);
-                } else if (response.content.toJSON().payload.role == 3)
+                } else if (result.payload.role == 3)
                   this.$navigateTo(GeoTracker);
               }
             },
@@ -140,9 +146,13 @@ export default {
     },
 
     toastMessage(message) {
-      var toast = Toast.makeText(message);
+      const toast = Toast.makeText(message);
       toast.show();
     },
+
+    saveUserData(data) {
+			this.$store.commit("save", data);
+		}
   },
 };
 </script>
