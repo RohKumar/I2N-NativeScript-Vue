@@ -183,6 +183,7 @@ export default {
     },
   },
   mounted() {
+    this.validateUser();
     this.fetchLocation();
   },
   data() {
@@ -281,17 +282,15 @@ export default {
   },
 	methods: {
 		search(){
-			console.log('search')
 			this.$navigateTo(Map);
 		},
 		bell(){
-			console.log('bell')
 		},
 		offer() {
 			this.$showModal(QrModal)
 		},
-		goToLogin() {      
-			this.$navigateTo(Login, {});    
+		goToLogin() {
+			this.$navigateTo(Login); 
 		},
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{
@@ -329,8 +328,7 @@ export default {
 			this.selectedTab = 3;
 		},
 		fetchLocation() {
-			let that = this
-			that.validateUser();
+			let that = this;
 			geolocation.isEnabled().then(function(isEnabled) {
             if (!isEnabled) {
                 geolocation.enableLocationRequest(true, true).then(() => {
@@ -379,23 +377,24 @@ export default {
 					latitude: this.location.latitude,
 					longitude: this.location.longitude
 				};
-				console.log("Home",payload)
 				this.saveLocation(payload);
 			}
 		},
 		saveLocation(payload) {
 			geoLocationService.addLocation(payload).then((res) => {
 				const result = res.content.toJSON();
-				console.log('result', res.content.toJSON())
 				// setTimeout(this.updateUserLocation, 5000);
 			}, (e) => {
 				console.log("error", e);
 			})
 		},
 		validateUser() {
-			if(this.user === null) {
-				this.goToLogin()
-			}
+      setTimeout(() => {
+        if(this.user === null) {
+          this.goToLogin()
+			  }
+      }, 0)
+			
     },
     	goToQrScanner() {
 		console.log("qrScanner");

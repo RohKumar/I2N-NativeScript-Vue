@@ -1,38 +1,45 @@
 <template>
-    <GridLayout class="navBottom" height="50" width="100%" row="3" rows="auto"
-        columns="auto,auto,auto,auto">
+    <GridLayout class="navBottom" height="50" width="100%" row="4" rows="auto"
+        columns="auto,auto,auto,auto,auto">
 
         <GridLayout :class="selectedTab==0?'active':''" @tap="home" rows="*,auto"
-            cols="auto" class="nav" col="0" row="0" width="25%">
+            cols="auto" class="nav" col="0" row="0" width="20%">
             <Image :class="selectedTab==0?'active':''" row="0" class="navIcon"
                 :src="selectedTab==0?'~/assets/images/navhomem.png':'~/assets/images/navhome.png'" />
             <Label row="1" v-show="selectedTab==0" text="Home" class="navText"></Label>
         </GridLayout>
         <GridLayout :class="selectedTab==1?'active':''" @tap="cart" rows="*,auto"
-            cols="auto" class="nav" col="1" row="0" width="25%">
+            cols="auto" class="nav" col="1" row="0" width="20%">
             <Image :class="selectedTab==1?'active':''" row="0" class="navIcon"
                 :src="selectedTab==1?'~/assets/images/navcartm.png':'~/assets/images/navcart.png'" />
             <Label row="1" v-show="selectedTab == 1" text="Cart" class="navText"></Label>
         </GridLayout>
         <GridLayout :class="selectedTab==2?'active':''" @tap="history" rows="*,auto"
-            cols="auto" class="nav" col="2" row="0" width="25%">
+            cols="auto" class="nav" col="2" row="0" width="20%">
             <Image :class="selectedTab==2?'active':''" row="0" class="navIcon"
                 :src="selectedTab==2?'~/assets/images/navordersm.png':'~/assets/images/navorders.png'" />
             <Label row="1" v-show="selectedTab == 2" text="History" class="navText"></Label>
         </GridLayout>
 
         <GridLayout :class="selectedTab==3?'active':''" @tap="about" rows="*,auto"
-            cols="auto" class="nav" col="3" row="0" width="25%">
+            cols="auto" class="nav" col="3" row="0" width="20%">
 
             <Image :class="selectedTab==3?'active':''" row="0" class="navIcon"
                 :src="selectedTab==3?'~/assets/images/navusm.png':'~/assets/images/navus.png'" />
             <Label row="1" v-show="selectedTab == 3" text="About" class="navText"></Label>
         </GridLayout>
 
-
+        <GridLayout :class="selectedTab==4?'active':''" @tap="logout" rows="*,auto"
+            cols="auto" class="nav" col="4" row="0" width="20%">
+            <Image :class="selectedTab==4?'active':''" row="0" class="navIcon"
+                src="~/assets/images/logout.png" />
+            <Label row="1" v-show="selectedTab==4" text="Logut" class="navText"></Label>
+        </GridLayout>
     </GridLayout>
 </template>
 <script>
+    import * as ApplicationSettings from "application-settings";
+    import Login from "./login";
     export default {
         data() {
             return {
@@ -51,6 +58,10 @@
             },
             about() {
                 this.selectedTab = 3;
+            },
+            logout() {
+                ApplicationSettings.clear();
+                this.$navigateTo(Login);
             }
         }
     };

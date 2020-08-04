@@ -64,7 +64,7 @@ function tnsOauthLogin(providerType) {
                     (response) => {
                         console.log('response==========', response.content.toJSON());
                         http.request({
-                            url: "http://172.16.9.77:5000/api/user/googleAuthentication", method: "POST",
+                            url: "http://192.168.0.182:5000/api/user/googleAuthentication", method: "POST",
                             content: JSON.stringify({ email: response.content.toJSON().email }), headers: { "Content-Type": "application/json" },
                         })
                             .then(

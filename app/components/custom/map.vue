@@ -120,13 +120,12 @@ export default {
         fetchUsersLocation() {
             geoLocationService.fetchAllUsersLocation().then(res => {
                 const result = res.content.toJSON();
-                this.formatMarkers(result)
+                this.formatMarkers(result.payload)
             },(e) => {
                 console.log("error", e);
             })
         },
         formatMarkers(payload) {
-            console.log(payload)
             payload.forEach(userLocation => {
                 let location = {
                     name: userLocation.name,
