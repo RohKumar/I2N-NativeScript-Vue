@@ -55,7 +55,7 @@
               hint="Contact Number"
               keyboardType="number"
               minlength="10"
-              v-model="tempContactNumber"
+              v-model="contactNumber"
               returnKeyType="done"
               fontSize="18"
             />
@@ -196,7 +196,7 @@ export default {
       signIn: "Sign Up",
       backToLogin: "Back to Login",
       tempCountryCode: null,
-      tempContactNumber: null,
+      contactNumber: null,
       resAddress: "",
       addressList: [],
       isRestrauntOwner: false,
@@ -227,6 +227,7 @@ export default {
 
   mounted() {
     this.countryCodeList = countryCode.map((e) => e.name);
+    this.tempCountryCode = countryCode[0].dial_code;
     signupService.getRoles(this.user).then(
       (response) => {
         this.roleList = response.content.toJSON().payload;
@@ -301,7 +302,7 @@ export default {
     },
 
     register() {
-      this.user.contactNumber = this.tempContactNumber;
+      this.user.contactNumber = this.contactNumber + this.tempCountryCode;
       this.validateLogin();
       const isEmpty = Object.values(this.error).every(
         (x) => x === null || x === ""
