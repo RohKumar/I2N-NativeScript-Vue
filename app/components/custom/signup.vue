@@ -24,7 +24,7 @@
 
         <StackLayout class="input-field" height="50">
           <DropDown
-            ref="dropDownList1"
+            ref="dropDownCountryList"
             selectedIndex="0"
             :items="countryCodeList"
             class="item-drop-down"
@@ -97,7 +97,7 @@
 
         <StackLayout height="50" >
           <DropDown
-            ref="dropDownList2"
+            ref="dropDownList"
             selectedIndex="0"
             hint="Role"
             :items="roleListByName"
@@ -136,6 +136,18 @@
           </ListView>
           <StackLayout class="hr-light" />
         </StackLayout>
+
+        <StackLayout height="50" v-show="isDriver">
+          <DropDown
+            ref="dropDownRestaurantList"
+            selectedIndex="0"
+            hint="Restaurant List"
+            :items="restaurantListName"
+            @selectedIndexChanged="dropDownSelectedRestaurantChanged"
+            class="item-drop-down"
+          ></DropDown>
+        </StackLayout>
+
       </StackLayout>
       <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       <Label class="login-label sign-up-label" @tap="toggleForm">
@@ -161,12 +173,11 @@ import { ListView } from "tns-core-modules/ui/list-view";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
-import Admin from "../custom/admin";
 import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
 import SignupService from "../../services/signup.service";
 import countryCode from "../../assets/json/countryCode.json";
-import { validEmail } from "../../services/utils";
+import { validEmail,toastMessage } from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
 import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
 
@@ -189,7 +200,10 @@ export default {
       resAddress: "",
       addressList: [],
       isRestrauntOwner: false,
+      isDriver: false,
       places: [],
+      restaurantList: [], 
+      restaurantListName: [], 
       user: {
         role: '',
         name: "",
@@ -197,7 +211,8 @@ export default {
         email: "",
         password: null,
         restaurantName:"",
-        restaurantAddress:""
+        restaurantAddress:"",
+        restaurantId:""
       },
       error: {
         username: "",
@@ -223,20 +238,35 @@ export default {
         console.log("error", e);
       }
     );
+     signupService.getRestaurantList().then(
+      (response) => {
+        this.restaurantList = response.content.toJSON().payload
+        this.restaurantListName = response.content.toJSON().payload.map(res => {
+          return res.name;
+        })
+      },
+      (e) => {
+        console.log("error", e);
+      }
+    );
   
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
-      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+      const index = this.$refs.dropDownList.nativeView.selectedIndex;
       this.user.role = this.roleList[index].value;
       this.addTextField(this.roleList[index].value);
       this.error.role = "";
     },
 
     dropDownSelectedCountryChanged() {
-      const index = this.$refs.dropDownList1.nativeView.selectedIndex;
+      const index = this.$refs.dropDownCountryList.nativeView.selectedIndex;
       this.tempCountryCode = countryCode[index].dial_code;
+    },
+    dropDownSelectedRestaurantChanged() {
+      const index = this.$refs.dropDownRestaurantList.nativeView.selectedIndex;
+      this.user.restaurantId = this.restaurantList[index]._id;
     },
 
     validateLogin() {
@@ -271,7 +301,6 @@ export default {
     register() {
       this.user.contactNumber = this.tempContactNumber;
       this.validateLogin();
-
       const isEmpty = Object.values(this.error).every(
         (x) => x === null || x === ""
       );
@@ -279,9 +308,8 @@ export default {
       if (isEmpty) {
         signupService.signUp(this.user).then((response) => {
           const result = response.content.toJSON();
-          console.log('Response Signup', result)
           if (isAndroid) {
-            this.toastMessage(response.content.toJSON().message);
+            toastMessage(response.content.toJSON().message);
           }
             if (result.payload !== null) {
               (this.user = {
@@ -315,23 +343,19 @@ export default {
       };
       this.$navigateTo(Login, {});
     },
-
-    toastMessage(message) {
-      const toast = Toast.makeText(message);
-      toast.show();
-    },
-
     addTextField(value) {
       if (value == 2) {
+        this.isDriver = this.isDriver == true ? false : false;
         this.isRestrauntOwner = this.isRestrauntOwner == false ? true : false;
       } else if (value == 1) {
+        this.isDriver = this.isDriver == true ? false : false;
         this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
       } else if (value == 3) {
         this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
+        this.isDriver = this.isDriver == false ? true : false;
       }
     },
     getAddress(args) {
-
       googlePlacesAutocomplete.search(this.user.restaurantAddress)
             .then((places) => {
               this.addressList = places;
@@ -341,7 +365,7 @@ export default {
       },
       bindToAddress(params) {
         this.user.restaurantAddress =  params;
-      }
+      },
   },
 };
 </script>

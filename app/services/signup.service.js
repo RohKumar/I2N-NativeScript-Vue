@@ -14,4 +14,7 @@ export default class SignupService {
     getRoles() {
         return this.httpService.get(environment.baseUrl + constant.api.role);
     }
+    getRestaurantList() {
+        return this.httpService.get(environment.baseUrl + constant.api.restaurantList);
+    }
 }

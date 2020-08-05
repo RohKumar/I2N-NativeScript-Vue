@@ -54,12 +54,11 @@
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
 import * as Toast from 'nativescript-toast';
 import Home from "../Home";
-import GeoTracker from "../custom/geo-tracker";
-import Admin from "../custom/admin";
+import Tabs from "./tabs";
 import Signup from "../custom/signup";
-
+import GeoTracker from "./geo-tracker";
 import LoginService from '../../services/loginService';
-
+import { validEmail,toastMessage } from "../../services/utils";
 
 const loginService = new LoginService();
 
@@ -70,8 +69,8 @@ export default {
       signUp: "Sign up",
       signAsk: "Don’t have an account?",
       user: {
-        email: "",
-        password: null,
+        email: "parth34@gmail.com",
+        password: 12345678,
       },
       error: {
         email: "",
@@ -98,7 +97,7 @@ export default {
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!this.validEmail(this.user.email)) {
+      } else if (!validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
@@ -112,7 +111,7 @@ export default {
         .then((response) => {
           const result = response.content.toJSON();
           if (isAndroid) {
-            this.toastMessage(result.message);
+            toastMessage(result.message);
           }
               if (result.payload) {
                 this.user = {
@@ -123,7 +122,7 @@ export default {
                 if (result.payload.role == 1) {
                   this.$navigateTo(Home);
                 } else if (result.payload.role == 2) {
-                  this.$navigateTo(Admin);
+                  this.$navigateTo(Tabs);
                 } else if (result.payload.role == 3)
                   this.$navigateTo(GeoTracker);
               }
@@ -132,12 +131,6 @@ export default {
           );
       }
     },
-
-    validEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-
     toggleForm() {
       this.error = {
         username: "",
@@ -146,11 +139,6 @@ export default {
         password: "",
       };
       this.$navigateTo(Signup, {});
-    },
-
-    toastMessage(message) {
-      const toast = Toast.makeText(message);
-      toast.show();
     },
 
     saveUserData(data) {
