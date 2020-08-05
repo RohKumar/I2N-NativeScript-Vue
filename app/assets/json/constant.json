@@ -4,6 +4,7 @@
       "signUp": "/user/signup",
       "role": "/role",
       "addGeoLocation": "/geoLocation",
-      "rewardPoints": "/user/giveRewardPoints"
+      "rewardPoints": "/user/giveRewardPoints",
+      "googleAuthUrl": "/user/googleAuthentication"
    }
 }

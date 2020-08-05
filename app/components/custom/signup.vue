@@ -95,10 +95,11 @@
           <label :text="error.password"></label>
         </StackLayout>
 
-        <StackLayout height="50">
+        <StackLayout height="50" >
           <DropDown
             ref="dropDownList2"
             selectedIndex="0"
+            hint="Role"
             :items="roleListByName"
             v-model="user.role"
             @selectedIndexChanged="dropDownSelectedIndexChanged"
@@ -126,12 +127,11 @@
             v-model="user.restaurantAddress"
             returnKeyType="done"
             fontSize="18"
-            @tap="getAddress($event)"
+            @textChange="getAddress($event)"
           />
-          <ListView ref="addressLists" id="places_list" for="address in addressList" height="100">
+          <ListView v-show="this.user.restaurantAddress.length >=3" ref="addressLists" id="places_list" for="address in addressList" height="100">
             <v-template>
-              <!-- Shows the list item label in the default color and style. -->
-              <Label :text="address.description" padding="8"/>
+              <Label :text="address.description"  @tap="bindToAddress(address.description)" style="color: blue;" padding="8"/>
             </v-template>
           </ListView>
           <StackLayout class="hr-light" />
@@ -166,7 +166,7 @@ import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
 import SignupService from "../../services/signup.service";
 import countryCode from "../../assets/json/countryCode.json";
-import Utils from "../../services/utils";
+import { validEmail } from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
 import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
 
@@ -192,11 +192,11 @@ export default {
       places: [],
       user: {
         role: '',
-        name: "parth",
-        contactNumber: 465476541651,
-        email: "parth34@gmail",
-        password: 12345678,
-        restaurantName:"subway",
+        name: "",
+        contactNumber: null,
+        email: "",
+        password: null,
+        restaurantName:"",
         restaurantAddress:""
       },
       error: {
@@ -214,7 +214,6 @@ export default {
     this.countryCodeList = countryCode.map((e) => e.name);
     signupService.getRoles(this.user).then(
       (response) => {
-        console.log("Roles list", response.content.toJSON().payload);
         this.roleList = response.content.toJSON().payload;
         this.roleListByName = response.content.toJSON().payload.map(role => {
           return role.name;
@@ -224,18 +223,7 @@ export default {
         console.log("error", e);
       }
     );
-          googlePlacesAutocomplete.search("new ")
-          .then((places) => {
-              console.log(places);
-              this.places = places;
-           }, (error => {
-              console.log(error)
-          }));
-  //   googlePlacesAutocomplete.getPlaceById(place.placeId).then((place) => {
-  //      .then(() => { });
-  //       }, error => {
-  //           console.log(error)
-  //       })     
+  
   },
 
   methods: {
@@ -261,7 +249,7 @@ export default {
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!this.validEmail(this.user.email)) {
+      } else if (!validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
@@ -289,7 +277,7 @@ export default {
       );
 
       if (isEmpty) {
-        loginService.signUp(this.user).then((response) => {
+        signupService.signUp(this.user).then((response) => {
           const result = response.content.toJSON();
           console.log('Response Signup', result)
           if (isAndroid) {
@@ -332,10 +320,7 @@ export default {
       const toast = Toast.makeText(message);
       toast.show();
     },
-    validEmail(email) {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
+
     addTextField(value) {
       if (value == 2) {
         this.isRestrauntOwner = this.isRestrauntOwner == false ? true : false;
@@ -346,17 +331,16 @@ export default {
       }
     },
     getAddress(args) {
-      debugger
-      console.log('resAddress',this.user.restaurantAddress);
-      console.log('addressLists',this.$refs.addressLists.nativeView);
+
       googlePlacesAutocomplete.search(this.user.restaurantAddress)
             .then((places) => {
               this.addressList = places;
-              
-                console.log('places===',JSON.stringify(this.addressList) );
             }, (error => {
                 console.log('error===',error)
             }));
+      },
+      bindToAddress(params) {
+        this.user.restaurantAddress =  params;
       }
   },
 };

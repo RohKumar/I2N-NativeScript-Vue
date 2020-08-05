@@ -3,7 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var nativescript_oauth2_1 = require('nativescript-oauth2')
 var providers_1 = require("nativescript-oauth2/providers");
 var http = require('tns-core-modules/http');
+var constant =  require("./assets/json/constant.json");
+var environment = require("./assets/json/environment.json");
 var client = null;
+
 function configureOAuthProviders() {
     var microsoftProvider = configureOAuthProviderMicrosoft();
     var googleProvider = configureOAuthProviderGoogle();
@@ -57,14 +60,13 @@ function tnsOauthLogin(providerType) {
             console.log("back to main page with access token: ");
             console.log(tokenResult);
             http.request({
-                url: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + tokenResult.accessToken, method: "GET",
+                url: environment.googleAuthBaseUrl+"/userinfo?alt=json&access_token=" + tokenResult.accessToken, method: "GET",
                 headers: { "Content-Type": "application/json" },
             })
                 .then(
                     (response) => {
-                        console.log('response==========', response.content.toJSON());
                         http.request({
-                            url: "http://192.168.0.182:5000/api/user/googleAuthentication", method: "POST",
+                            url:environment.baseUrl+constant.api.googleAuthUrl, method: "POST",
                             content: JSON.stringify({ email: response.content.toJSON().email }), headers: { "Content-Type": "application/json" },
                         })
                             .then(
