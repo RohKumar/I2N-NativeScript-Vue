@@ -3,6 +3,7 @@
       "login": "/user/login",
       "signUp": "/user/signup",
       "role": "/role",
-      "addGeoLocation": "/geoLocation"
+      "addGeoLocation": "/geoLocation",
+      "rewardPoints": "/user/giveRewardPoints"
    }
 }

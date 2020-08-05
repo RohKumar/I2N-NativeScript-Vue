@@ -80,8 +80,13 @@ export default {
     };
   },
 
-  mounted() {},
-
+  mounted() {
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
   methods: {
     login() {
       this.error = {
@@ -105,7 +110,6 @@ export default {
       if (this.user.email && this.user.password) {
         loginService.login(this.user)
         .then((response) => {
-          console.log('response====',response.content.toJSON());
           const result = response.content.toJSON();
           if (isAndroid) {
             this.toastMessage(result.message);
@@ -116,7 +120,6 @@ export default {
                   password: null,
                 };
                 this.saveUserData(result.payload);
-                console.log('response====',result.payload.role);
                 if (result.payload.role == 1) {
                   this.$navigateTo(Home);
                 } else if (result.payload.role == 2) {
@@ -152,7 +155,7 @@ export default {
 
     saveUserData(data) {
 			this.$store.commit("save", data);
-		}
+    },
   },
 };
 </script>

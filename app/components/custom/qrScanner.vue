@@ -1,10 +1,8 @@
 <template>
   <Page>
-    <ActionBar title="BarcodeScanner demo"></ActionBar>
+    <ActionBar title=""></ActionBar>
 
     <GridLayout columns="*" rows="auto, auto, auto, auto">
-      <Label row="0" class="message" text="Check the console log for scanned barcodes" textWrap="true"></Label>
-
       <BarcodeScanner
           row="1"
           height="300"
@@ -16,16 +14,19 @@
           v-if="isIOS">
       </BarcodeScanner>
 
-      <Button row="2" class="btn btn-primary btn-rounded-sm" text="back camera, with flip" @tap="doScanWithBackCamera"></Button>
-      <Button row="3" class="btn btn-primary btn-rounded-sm" text="front camera, no flip" @tap="doScanWithFrontCamera"></Button>
+      <Button row="2" class="btn btn-primary btn-rounded-sm" text="Scan" @tap="doScanWithBackCamera"></Button>
 
     </GridLayout>
   </Page>
 </template>
 
 <script>
-  import {isIOS} from "tns-core-modules/platform";
+  import { isIOS, isAndroid } from 'tns-core-modules/platform'
+  import * as Toast from 'nativescript-toast';
   import {BarcodeScanner} from "nativescript-barcodescanner";
+  import RewardsService from '../../services/rewardsService';
+
+  const rewardsService =  new RewardsService();
   export default {
     data() {
       return {
@@ -35,6 +36,7 @@
     methods: {
 
       scan(front) {
+        let that = this;
         new BarcodeScanner().scan({
           cancelLabel: "EXIT. Also, try the volume buttons!", // iOS only, default 'Close'
           cancelLabelBackgroundColor: "#333333", // iOS only, default '#000000' (black)
@@ -54,12 +56,23 @@
               console.log("--- scanned: " + result.text);
               // Note that this Promise is never invoked when a 'continuousScanCallback' function is provided
               setTimeout(function () {
-                // if this alert doesn't show up please upgrade to {N} 2.4.0+
-                alert({
-                  title: "Scan result",
-                  message: "Format: " + result.format + ",\nValue: " + result.text,
-                  okButtonText: "OK"
-                });
+                if (isAndroid) {
+                  that.toastMessage(`onScanResult: ${result.text}`);
+                }
+              // Make api call and give points
+                const reqObj = {
+                  id: result.text,
+                  points: 5
+                };
+                rewardsService.rewardPoints(reqObj).then((res) => {
+                  const response = res.content.toJSON();
+                  that.toastMessage(res.content.toJSON());
+                  if (response.status === 200) {
+                    if (isAndroid) {
+                      that.toastMessage(response.message);
+                    }
+                  }
+                })
               }, 500);
             },
             function (errorMessage) {
@@ -75,6 +88,10 @@
       },
       doScanWithFrontCamera() {
         this.scan(true);
+      },
+      toastMessage(message) {
+        const toast = Toast.makeText(message);
+        toast.show();
       },
     }
   }

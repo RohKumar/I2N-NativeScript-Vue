@@ -12,8 +12,14 @@ import { Image } from "tns-core-modules/ui/image";
 import { QrGenerator } from "nativescript-qr-generator";
 
 export default {
+	
     data() {
         return {};
+	},
+	computed: {
+		user() {
+			return this.$store.getters.user;
+		}
 	},
 	methods: {
 		getRandomString(length) {
@@ -27,7 +33,8 @@ export default {
 		},
 		onImageLoaded(args) {
 			const image = args.object;
-        	const result = new QrGenerator().generate(this.getRandomString(5));
+			console.log(this.user._id)
+        	const result = new QrGenerator().generate(this.user._id);
 			image.imageSource = new ImageSource(result);
 		}
 	}
