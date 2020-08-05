@@ -275,6 +275,7 @@ export default {
         contactnumber: "",
         email: "",
         password: "",
+        role:""
       };
 
       if (!this.user.email) {
@@ -296,6 +297,7 @@ export default {
       if (!this.user.role) {
         this.error.role = "Role required.";
       }
+      
     },
 
     register() {

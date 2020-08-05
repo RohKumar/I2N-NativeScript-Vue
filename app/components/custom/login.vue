@@ -69,8 +69,8 @@ export default {
       signUp: "Sign up",
       signAsk: "Don’t have an account?",
       user: {
-        email: "parth34@gmail.com",
-        password: 12345678,
+        email: "",
+        password: null,
       },
       error: {
         email: "",
