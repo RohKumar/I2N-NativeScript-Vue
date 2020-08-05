@@ -1,0 +1,10 @@
+{
+   "api": {
+      "login": "/user/login",
+      "signUp": "/user/signup",
+      "role": "/role",
+      "addGeoLocation": "/geoLocation",
+      "rewardPoints": "/user/giveRewardPoints",
+      "googleAuthUrl": "/user/googleAuthentication"
+   }
+}
