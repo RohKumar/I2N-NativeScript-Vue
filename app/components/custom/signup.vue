@@ -5,9 +5,10 @@
     backgroundSpanUnderStatusBar="true"
     @loaded="onLoaded"
   >
+  <ScrollView>
     <FlexboxLayout class="page">
-      <StackLayout class="form">
-        <StackLayout class="input-field">
+      <StackLayout class="form" marginBottom="50">
+        <StackLayout class="input-field" height="50">
           <TextField
             ref="username"
             class="input"
@@ -20,9 +21,10 @@
           <StackLayout class="hr-light" />
           <label :text="error.username"></label>
         </StackLayout>
-      <StackLayout class="input-field">
+
+        <StackLayout class="input-field" height="50">
           <DropDown
-            ref="dropDownList1"
+            ref="dropDownCountryList"
             selectedIndex="0"
             :items="countryCodeList"
             class="item-drop-down"
@@ -30,10 +32,9 @@
           ></DropDown>
 
           <StackLayout class="hr-light" />
-          <label :text="error.role"></label>
+          <label :text="error.countryCode"></label>
         </StackLayout>
-        <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top">
-
+        <GridLayout columns="1*,*3*" horizontalAlignment="left" verticalAlignment="top" height="50">
           <StackLayout class="input-field" col="0">
             <TextField
               ref="tempCountryCode"
@@ -54,7 +55,7 @@
               hint="Contact Number"
               keyboardType="number"
               minlength="10"
-              v-model="tempContactNumber"
+              v-model="contactNumber"
               returnKeyType="done"
               fontSize="18"
             />
@@ -63,7 +64,7 @@
           </StackLayout>
         </GridLayout>
 
-        <StackLayout class="input-field" marginBottom="25">
+        <StackLayout class="input-field" height="50">
           <TextField
             class="input"
             hint="Email"
@@ -80,7 +81,7 @@
           <label :text="error.email"></label>
         </StackLayout>
 
-        <StackLayout class="input-field" marginBottom="25">
+        <StackLayout class="input-field" height="50">
           <TextField
             ref="password"
             class="input"
@@ -94,10 +95,11 @@
           <label :text="error.password"></label>
         </StackLayout>
 
-        <StackLayout>
+        <StackLayout height="50" >
           <DropDown
-            ref="dropDownList2"
+            ref="dropDownList"
             selectedIndex="0"
+            hint="Role"
             :items="roleListByName"
             v-model="user.role"
             @selectedIndexChanged="dropDownSelectedIndexChanged"
@@ -105,8 +107,49 @@
           ></DropDown>
           <label :text="error.role"></label>
         </StackLayout>
-        <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
+
+        <StackLayout class="input-field" v-show="isRestrauntOwner" height="50">
+          <TextField
+            ref="res-name"
+            class="input"
+            hint="Restraunt Name"
+            v-model="user.restaurantName"
+            returnKeyType="done"
+            fontSize="18"
+          />
+        </StackLayout>
+        
+        <StackLayout class="input-field" v-show="isRestrauntOwner">
+          <TextField
+            ref="res-address"
+            class="input"
+            hint="Restraunt Address"
+            v-model="user.restaurantAddress"
+            returnKeyType="done"
+            fontSize="18"
+            @textChange="getAddress($event)"
+          />
+          <ListView v-show="this.user.restaurantAddress.length >=3" ref="addressLists" id="places_list" for="address in addressList" height="100">
+            <v-template>
+              <Label :text="address.description"  @tap="bindToAddress(address.description)" style="color: blue;" padding="8"/>
+            </v-template>
+          </ListView>
+          <StackLayout class="hr-light" />
+        </StackLayout>
+
+        <StackLayout height="50" v-show="isDriver">
+          <DropDown
+            ref="dropDownRestaurantList"
+            selectedIndex="0"
+            hint="Restaurant List"
+            :items="restaurantListName"
+            @selectedIndexChanged="dropDownSelectedRestaurantChanged"
+            class="item-drop-down"
+          ></DropDown>
+        </StackLayout>
+
       </StackLayout>
+      <Button :text="signIn" @tap="register" class="btn btn-primary m-t-15" />
       <Label class="login-label sign-up-label" @tap="toggleForm">
         <FormattedString>
           <Span :text="backToLogin"></Span>
@@ -115,24 +158,32 @@
 
       <Button text="google Login" @tap="onLoginTap()" class="btn btn-info btn-active" />
     </FlexboxLayout>
+    </ScrollView>
   </Page>
 </template>
 
-<script>
+<script >
 var auth_service_1 = require("../../auth-service");
 import * as Toast from 'nativescript-toast';
 import * as application from "tns-core-modules/application";
+import { Page } from "tns-core-modules/ui/page";
+import * as pages from 'tns-core-modules/ui/page';
+import { TextField } from "tns-core-modules/ui/text-field";
+import { ListView } from "tns-core-modules/ui/list-view";
 import { configureOAuthProviders, tnsOauthLogin } from "../../auth-service";
 import Home from "../Home";
 import GeoTracker from "../custom/geo-tracker";
-import Admin from "../custom/admin";
 import Login from "../custom/login";
 import constant from "../../assets/json/constant.json";
-import LoginService from "../../services/loginService";
+import SignupService from "../../services/signup.service";
 import countryCode from "../../assets/json/countryCode.json";
-import Utils from "../../services/utils";
+import { validEmail,toastMessage } from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
-const loginService = new LoginService();
+import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
+
+let API_KEY = "AIzaSyBMVS8sQBb5ex21snLA7elxtCbbvBZlRAs";
+let googlePlacesAutocomplete = new GooglePlacesAutocomplete(API_KEY);
+const signupService = new SignupService();
 configureOAuthProviders();
 
 export default {
@@ -145,13 +196,23 @@ export default {
       signIn: "Sign Up",
       backToLogin: "Back to Login",
       tempCountryCode: null,
-      tempContactNumber: null,
+      contactNumber: null,
+      resAddress: "",
+      addressList: [],
+      isRestrauntOwner: false,
+      isDriver: false,
+      places: [],
+      restaurantList: [], 
+      restaurantListName: [], 
       user: {
-        role: null,
+        role: '',
         name: "",
         contactNumber: null,
         email: "",
         password: null,
+        restaurantName:"",
+        restaurantAddress:"",
+        restaurantId:""
       },
       error: {
         username: "",
@@ -166,30 +227,47 @@ export default {
 
   mounted() {
     this.countryCodeList = countryCode.map((e) => e.name);
-    return loginService.getRoll(this.user).then(
+    this.tempCountryCode = countryCode[0].dial_code;
+    signupService.getRoles(this.user).then(
       (response) => {
-        this.roleListByName = response.content
-          .toJSON()
-          .payload.map((e) => e.name);
         this.roleList = response.content.toJSON().payload;
+        this.roleListByName = response.content.toJSON().payload.map(role => {
+          return role.name;
+        })
       },
       (e) => {
         console.log("error", e);
       }
     );
-    console.log("this.countryCodeList", this.countryCodeList);
+     signupService.getRestaurantList().then(
+      (response) => {
+        this.restaurantList = response.content.toJSON().payload
+        this.restaurantListName = response.content.toJSON().payload.map(res => {
+          return res.name;
+        })
+      },
+      (e) => {
+        console.log("error", e);
+      }
+    );
+  
   },
 
   methods: {
     dropDownSelectedIndexChanged() {
-      const index = this.$refs.dropDownList2.nativeView.selectedIndex;
+      const index = this.$refs.dropDownList.nativeView.selectedIndex;
       this.user.role = this.roleList[index].value;
+      this.addTextField(this.roleList[index].value);
       this.error.role = "";
     },
 
     dropDownSelectedCountryChanged() {
-      const index = this.$refs.dropDownList1.nativeView.selectedIndex;
+      const index = this.$refs.dropDownCountryList.nativeView.selectedIndex;
       this.tempCountryCode = countryCode[index].dial_code;
+    },
+    dropDownSelectedRestaurantChanged() {
+      const index = this.$refs.dropDownRestaurantList.nativeView.selectedIndex;
+      this.user.restaurantId = this.restaurantList[index]._id;
     },
 
     validateLogin() {
@@ -198,11 +276,12 @@ export default {
         contactnumber: "",
         email: "",
         password: "",
+        role:""
       };
 
       if (!this.user.email) {
         this.error.email = "Email required.";
-      } else if (!this.validEmail(this.user.email)) {
+      } else if (!validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
@@ -219,22 +298,21 @@ export default {
       if (!this.user.role) {
         this.error.role = "Role required.";
       }
+      
     },
 
     register() {
-      this.user.contactNumber = this.tempContactNumber;
+      this.user.contactNumber = this.contactNumber + this.tempCountryCode;
       this.validateLogin();
-
       const isEmpty = Object.values(this.error).every(
         (x) => x === null || x === ""
       );
 
       if (isEmpty) {
-        loginService.signUp(this.user).then((response) => {
+        signupService.signUp(this.user).then((response) => {
           const result = response.content.toJSON();
-          console.log('Response Signup', result)
           if (isAndroid) {
-            this.toastMessage(response.content.toJSON().message);
+            toastMessage(response.content.toJSON().message);
           }
             if (result.payload !== null) {
               (this.user = {
@@ -268,15 +346,29 @@ export default {
       };
       this.$navigateTo(Login, {});
     },
-
-    toastMessage(message) {
-      const toast = Toast.makeText(message);
-      toast.show();
+    addTextField(value) {
+      if (value == 2) {
+        this.isDriver = this.isDriver == true ? false : false;
+        this.isRestrauntOwner = this.isRestrauntOwner == false ? true : false;
+      } else if (value == 1) {
+        this.isDriver = this.isDriver == true ? false : false;
+        this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
+      } else if (value == 3) {
+        this.isRestrauntOwner = this.isRestrauntOwner == true ? false : false;
+        this.isDriver = this.isDriver == false ? true : false;
+      }
     },
-    validEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
+    getAddress(args) {
+      googlePlacesAutocomplete.search(this.user.restaurantAddress)
+            .then((places) => {
+              this.addressList = places;
+            }, (error => {
+                console.log('error===',error)
+            }));
+      },
+      bindToAddress(params) {
+        this.user.restaurantAddress =  params;
+      },
   },
 };
 </script>

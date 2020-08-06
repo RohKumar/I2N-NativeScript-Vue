@@ -3,7 +3,9 @@
       "login": "/user/login",
       "signUp": "/user/signup",
       "role": "/role",
+      "restaurantList":"/restaurant",
       "addGeoLocation": "/geoLocation",
-      "rewardPoints": "/user/giveRewardPoints"
+      "rewardPoints": "/user/giveRewardPoints",
+      "googleAuthUrl": "/user/googleAuthentication"
    }
 }
