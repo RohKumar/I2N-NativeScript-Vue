@@ -63,6 +63,7 @@ import { validEmail,toastMessage } from "../../services/utils";
 const loginService = new LoginService();
 
 export default {
+  
 
   data() {
     return {
@@ -94,16 +95,17 @@ export default {
         email: "",
         password: "",
       };
-
+ 
       if (!this.user.email) {
         this.error.email = "Email required.";
+        
       } else if (!validEmail(this.user.email)) {
         this.error.email = "Email is invalid.";
       }
       if (!this.user.password) {
         this.error.password = "Password required.";
       } else if (this.user.password.length < 8) {
-        this.error.password = "Password Length Must Be Greater then 8.";
+        this.error.password = "Password Must Be Greater then 8 Charecters.";
       }
 
       if (this.user.email && this.user.password) {
@@ -113,13 +115,16 @@ export default {
           if (isAndroid) {
             toastMessage(result.message);
           }
+         console.log(result.payload.name+'Valid');
               if (result.payload) {
                 this.user = {
                   email: "",
                   password: null,
                 };
+                
                 this.saveUserData(result.payload);
                 if (result.payload.role == 1) {
+                  console.log(result.payload.name+'127');
                   this.$navigateTo(Home);
                 } else if (result.payload.role == 2) {
                   this.$navigateTo(Tabs);

@@ -18,7 +18,7 @@
             cols="auto" class="nav" col="2" row="0" width="20%">
             <Image :class="selectedTab==2?'active':''" row="0" class="navIcon"
                 :src="selectedTab==2?'~/assets/images/navordersm.png':'~/assets/images/navorders.png'" />
-            <Label row="1" v-show="selectedTab == 2" text="History" class="navText"></Label>
+            <Label row="1" v-show="selectedTab == 2" text="Order History" class="navText"></Label>
         </GridLayout>
 
         <GridLayout :class="selectedTab==3?'active':''" @tap="about" rows="*,auto"

@@ -47,7 +47,7 @@
           col="3"
           row="0"
           class="status-profile"
-          src="~/assets/images/me.jpg"
+          src="~/assets/images/user-im.jpg"
         />
       </GridLayout>
 
@@ -164,6 +164,7 @@
 	import Login from "./custom/login";
   import GeoLocationService from '../services/geoLocationService';
   import QrScanner from "./custom/qrScanner";
+  import UserPage from "./custom/user-page";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
 	const geoLocationService = new GeoLocationService();
@@ -280,6 +281,7 @@ export default {
       ],
     };
   },
+ 
 	methods: {
 		search(){
 			this.$navigateTo(Map);
@@ -289,9 +291,7 @@ export default {
 		offer() {
 			this.$showModal(QrModal)
 		},
-		goToLogin() {
-			this.$navigateTo(Login); 
-		},
+	
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{
 				props: {
@@ -316,7 +316,7 @@ export default {
 			this.selectedTabview = 2;
 		},
 		home() {
-			this.selectedTab = 0;
+      this.selectedTab = 0; 
 		},
 		cart() {
 			this.selectedTab = 1;
@@ -396,7 +396,16 @@ export default {
       }, 0)
 			
     },
+    	goToLogin() {
+        if(this.user === null){
+      this.$navigateTo(Login); 
+        }else{
+          this.$navigateTo(UserPage, {});
+          console.log("else part 404");
+        }
+		},
     	goToQrScanner() {
+        console.log(this.user.name);
 		console.log("qrScanner");
       this.$navigateTo(QrScanner, {});
 	},
