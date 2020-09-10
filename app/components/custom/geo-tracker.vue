@@ -2,7 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
  <FlexboxLayout class="page">
-     <Button text="Geo" @tap="onButtonTap" />
+     <label text="Geo Tracker page loaded"/>
  </FlexboxLayout>
 
   </page>

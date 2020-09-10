@@ -23,6 +23,10 @@ if (isIOS) {
 }
 
 Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
+Vue.registerElement(
+    'CardView',
+    () => require('@nstudio/nativescript-cardview').CardView
+  );
 Vue.filter('fonticon', fonticon);
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown);
 Vue.registerElement('BarcodeScanner', () => require('nativescript-barcodescanner').BarcodeScannerView)

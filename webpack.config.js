@@ -287,11 +287,17 @@ module.exports = env => {
             // Remove all files from the out dir.
             new CleanWebpackPlugin(itemsToClean, { verbose: !!verbose }),
             // Copy assets to out dir. Add your own globs as needed.
-            new CopyWebpackPlugin([
-                { from: { glob: "fonts/**" } },
-                { from: { glob: "**/*.+(jpg|png)" } },
-                { from: { glob: "assets/**/*" } },
-            ], { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] }),
+            //new CopyWebpackPlugin([
+              //  { from: { glob: "fonts/**" } },
+               // { from: { glob: "**/*.+(jpg|png)" } },
+               // { from: { glob: "assets/**/*" } },
+           // ], { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] }),
+           new CopyWebpackPlugin({
+            patterns: [
+              { from: "fonts/**", globOptions: { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] } },
+              { from: "**/*.{jpg,png}", globOptions: { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] } },
+            ]
+          }, { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] }), 
             new nsWebpack.GenerateNativeScriptEntryPointsPlugin("bundle"),
             // For instructions on how to set up workers with webpack
             // check out https://github.com/nativescript/worker-loader
