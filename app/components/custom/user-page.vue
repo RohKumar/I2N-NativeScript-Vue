@@ -6,9 +6,28 @@
     <GridLayout class="mainGrid"
     columns="*" 
     rows="auto,auto">
-
+    
     <GridLayout class="tabview"
     row="0"
+    columns="*" 
+    rows="auto,auto">
+
+    <Image
+          stretch="aspectFill"
+          col="0"
+          row="0"
+          class="setting-img"
+          src="~/assets/images/user-im.png"/>
+    <label  row="0" 
+      col="1"
+      class="setting-txt"
+       text="User Name" 
+       @tap="showNameInConsole"
+       ></Label>     
+    
+
+    <GridLayout class="tabview"
+    row="1"
     columns="*" 
     rows="auto, auto, auto, auto,auto,auto">
 
