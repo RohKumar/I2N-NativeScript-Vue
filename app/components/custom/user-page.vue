@@ -3,15 +3,19 @@
     <ActionBar title="User profile">
     
     </ActionBar>
-<GridLayout class="tabview" separatorColor="black" columns="*" rows="auto, auto, auto, auto,auto,auto">
+    <GridLayout class="tabview"
+    columns="*" 
+    rows="auto, auto, auto, auto,auto,auto">
 
-<GridLayout class="first" row="1" backgroundColor="#ffffff"
-        verticalAlignment="top"
-        height="40"
-        width="100%"
-        rows="auto"
-        columns="*,auto">
-      <label  row="1" 
+    <GridLayout class="first" 
+    row="0" 
+    backgroundColor="#ffffff"    
+    
+    width="100%"
+    rows="auto,auto"
+    columns="*,auto">
+
+      <label  row="0" 
       col="0"
       class="status-title"
        text="Payment cards" 
@@ -22,35 +26,160 @@
        horizontalAlignment="right"
           stretch="aspectFill"
           col="1"
-          row="1"
+          row="0"
           class="status-img"
-          src="~/assets/images/user-im.jpg"/>
-</GridLayout>
-<GridLayout class="first" row="2" rows="*" width="100%">
-      <label  row="1" class="textGrid"
+          src="~/assets/images/right-arrow.png"/>
+
+          <label
+          class="small-text"
+          row="1"
+          col="0"
+          text="Add credit or debit card"/>
+      </GridLayout>
+<GridLayout class="first" 
+    row="1" 
+    backgroundColor="#ffffff"    
+    
+    width="100%"
+    rows="auto,auto"
+    columns="*,auto">
+
+      <label  row="0" 
+      col="0"
+      class="status-title"
        text="Address" 
        @tap="showNameInConsole"
        ></Label>
-</GridLayout>
-<GridLayout class="first" row="3" rows="*" width="100%">
-      <label  row="1" class="textGrid"
+       
+       <Image
+       horizontalAlignment="right"
+          stretch="aspectFill"
+          col="1"
+          row="0"
+          class="status-img"
+          src="~/assets/images/right-arrow.png"/>
+
+          <label
+          class="small-text"
+          row="1"
+          col="0"
+          text="Add or remove delivery address"/>
+      </GridLayout>
+<GridLayout class="first" 
+    row="2" 
+    backgroundColor="#ffffff"    
+    
+    width="100%"
+    rows="auto,auto"
+    columns="*,auto">
+
+      <label  row="0" 
+      col="0"
+      class="status-title"
        text="Orders" 
        @tap="showNameInConsole"
        ></Label>
-</GridLayout>
-<GridLayout class="first" row="4" rows="*" width="100%">
-      <label  row="1" class="textGrid"
+       
+       <Image
+       horizontalAlignment="right"
+          stretch="aspectFill"
+          col="1"
+          row="0"
+          class="status-img"
+          src="~/assets/images/right-arrow.png"/>
+
+          <label
+          class="small-text"
+          row="1"
+          col="0"
+          text="Check yor History"/>
+      </GridLayout>
+<GridLayout class="first" 
+    row="3" 
+    backgroundColor="#ffffff"    
+    
+    width="100%"
+    rows="auto,auto"
+    columns="*,auto">
+
+      <label  row="0" 
+      col="0"
+      class="status-title"
        text="Refer Friends" 
        @tap="showNameInConsole"
        ></Label>
-</GridLayout>
-<GridLayout class="first" row="5" rows="*" width="100%">
-      <label  row="1" class="textGrid"
+       
+       <Image
+       horizontalAlignment="right"
+          stretch="aspectFill"
+          col="1"
+          row="0"
+          class="status-img"
+          src="~/assets/images/right-arrow.png"/>
+
+          <label
+          class="small-text-red"
+          row="1"
+          col="0"
+          text="Get $5.0 Free"/>
+      </GridLayout>
+<GridLayout class="first" 
+    row="4" 
+    backgroundColor="#ffffff"    
+    
+    width="100%"
+    rows="auto,auto"
+    columns="*,auto">
+
+      <label  row="0" 
+      col="0"
+      class="status-title"
        text="Reviews" 
        @tap="showNameInConsole"
        ></Label>
-</GridLayout>
+       
+       <Image
+       horizontalAlignment="right"
+          stretch="aspectFill"
+          col="1"
+          row="0"
+          class="status-img"
+          src="~/assets/images/right-arrow.png"/>
 
+          <label
+          class="small-text"
+          row="1"
+          col="0"
+          text="Check your Reviews"/>
+      </GridLayout>
+      <GridLayout class="first" 
+      row="5" 
+      backgroundColor="#ffffff"    
+      width="100%"
+      rows="auto"
+      columns="auto,*,auto">
+
+        <Image
+          stretch="aspectFill"
+          col="0"
+          row="0"
+          class="setting-img"
+          src="~/assets/images/settings-icon.png"/>
+      <label  row="0" 
+      col="1"
+      class="setting-txt"
+       text="Settings" 
+       @tap="showNameInConsole"
+       ></Label>
+       <Image
+       horizontalAlignment="right"
+          stretch="aspectFill"
+          col="2"
+          row="0"
+          class="status-img"
+          src="~/assets/images/right-arrow.png"/>
+      
+      </GridLayout>
 </GridLayout>
    
   
@@ -112,34 +241,54 @@ showNameInConsole(){
     background-color: #bd2122;
     color: #ffffff;
   }
-  .first{
-    border-width: 1;
-  border-color: gray;
-    
+  .tabview{
+     margin-left:15;
+  }
+  .first{ 
+    margin-top: 10;
+    height: 40;
+   margin-left:15;
     margin-right: 15;
   }
- .textGrid{
+ .small-text{
+  color:gray;
+  font-size: 10;
    margin-left: 20;
-   margin-top: 20;
-   padding: 20px;
- }
- .smallText{
+   }
+   .small-text-red{
+  color:red;
+  font-size: 10;
    margin-left: 20;
-   margin-top: 20;
- }
+   }
  .status-title {
   color: black;
-  font-size: 18;
+  font-family: "Areial",sans-serif;
+  font-size: 15;
   margin-left: 15;
-  margin-top: 8;
+  margin-top: 4;
   horizontal-align: left;
   vertical-align: center;
 }
 .status-img {
-  margin-top: 4;
+ margin-top: 4;
   margin-right: 20;
-  width: 30;
-  height: 30;
+  width: 20;
+  height: 20;
 }
-  
+.setting-img{
+  margin-top: 4;
+  margin-left: 15;
+  width: 20;
+  height: 20;
+  horizontal-align: left;
+  vertical-align: center;
+}
+.setting-txt{
+  color: black;
+  font-size: 15;
+  margin-top: 4;
+  margin-left: 2;
+  horizontal-align: left;
+  vertical-align: center;
+}
 </style>

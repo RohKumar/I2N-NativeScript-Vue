@@ -47,7 +47,7 @@
           col="3"
           row="0"
           class="status-profile"
-          src="~/assets/images/user-im.jpg"
+          src="~/assets/images/user-im.png"
         />
       </GridLayout>
 
