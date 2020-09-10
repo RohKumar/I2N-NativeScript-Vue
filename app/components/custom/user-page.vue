@@ -3,7 +3,12 @@
     <ActionBar title="User profile">
     
     </ActionBar>
+    <GridLayout class="mainGrid"
+    columns="*" 
+    rows="auto,auto">
+
     <GridLayout class="tabview"
+    row="0"
     columns="*" 
     rows="auto, auto, auto, auto,auto,auto">
 
@@ -181,6 +186,7 @@
       
       </GridLayout>
 </GridLayout>
+    </GridLayout>
    
   
   </Page>
@@ -243,6 +249,10 @@ showNameInConsole(){
   }
   .tabview{
      margin-left:15;
+     border: 1px solid gray;
+     border-bottom-color: greenyellow;
+-moz-border-radius: 15px;
+border-radius: 15px;
   }
   .first{ 
     margin-top: 10;
