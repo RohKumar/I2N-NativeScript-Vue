@@ -405,7 +405,6 @@ export default {
         }
 		},
     	goToQrScanner() {
-        console.log(this.user.name);
 		console.log("qrScanner");
       this.$navigateTo(QrScanner, {});
 	},

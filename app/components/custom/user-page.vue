@@ -1,30 +1,49 @@
 <template>
   <Page >
-    <ActionBar title="User profile">
-    
+    <ActionBar>
+    <StackLayout orientation="horizontal"
+    ios:horizontalAlignment="center"
+    android:horizontalAlignment="left">
+    <Label text="User Profile" class="action-label"></Label>
+  </StackLayout>
     </ActionBar>
     <GridLayout class="mainGrid"
     columns="*" 
     rows="auto,auto">
     
-    <GridLayout class="tabview"
+    <GridLayout class="firstGrid"
     row="0"
-    columns="*" 
+    columns="auto,*,auto,auto" 
+    width="100%"
     rows="auto,auto">
 
     <Image
           stretch="aspectFill"
           col="0"
           row="0"
-          class="setting-img"
+          class="user-img"
           src="~/assets/images/user-im.png"/>
     <label  row="0" 
-      col="1"
-      class="setting-txt"
-       text="User Name" 
+        col="1"
+        class="setting-txt"
+        :text="mytext" 
+        @tap="showNameInConsole"
+       ></Label>    
+    <Image
+         horizontalAlignment="right"
+          stretch="aspectFill"
+          col="2"
+          row="0"
+          class="edit-img"
+          src="~/assets/images/edit-icon.png"/> 
+    <label  row="0" 
+        col="3"
+        class="edit-text"
+        text="Edit" 
        @tap="showNameInConsole"
-       ></Label>     
-    
+       ></Label>   
+
+    </GridLayout>
 
     <GridLayout class="tabview"
     row="1"
@@ -33,8 +52,8 @@
 
     <GridLayout class="first" 
     row="0" 
-    backgroundColor="#ffffff"    
-    
+    backgroundColor="#ffffff"
+    @tap="onPaymentTap"
     width="100%"
     rows="auto,auto"
     columns="*,auto">
@@ -43,7 +62,6 @@
       col="0"
       class="status-title"
        text="Payment cards" 
-       @tap="showNameInConsole"
        ></Label>
        
        <Image
@@ -92,7 +110,6 @@
 <GridLayout class="first" 
     row="2" 
     backgroundColor="#ffffff"    
-    
     width="100%"
     rows="auto,auto"
     columns="*,auto">
@@ -177,7 +194,7 @@
           text="Check your Reviews"/>
       </GridLayout>
       <GridLayout class="first" 
-      row="5" 
+      row="5" @tap="onSettingTap"
       backgroundColor="#ffffff"    
       width="100%"
       rows="auto"
@@ -193,7 +210,6 @@
       col="1"
       class="setting-txt"
        text="Settings" 
-       @tap="showNameInConsole"
        ></Label>
        <Image
        horizontalAlignment="right"
@@ -213,9 +229,11 @@
 
 <script>
   var auth_service_1 = require("../../auth-service");
-  import { isIOS, isAndroid } from 'tns-core-modules/platform'
+  import { isIOS, isAndroid } from 'tns-core-modules/platform';
   import * as Toast from 'nativescript-toast';
   import Login from "./login";
+  import PayCards from "./payCards";
+  import AccSetting from "./accSettings";
   import { Label } from "tns-core-modules/ui/label";
   import * as ApplicationSettings from "application-settings";
   import RewardsService from '../../services/rewardsService';
@@ -230,24 +248,27 @@
     user() {
       return this.$store.getters.user;
     },
+    
   },
     data() {
-    
+      
       return {
-       
        mytext:"Syed",
       }
     },
 
     methods: {
 showNameInConsole(){
-  
-    console.log(this.user.points)
-    
-      },
+
+  console.log(this.user.points)
+    },
      
-   
-  
+ onPaymentTap(){
+   this.$navigateTo(PayCards, {});
+ },
+ onSettingTap(){
+   this.$navigateTo(AccSetting,{});
+ } ,
  onLogoutTap() {
    
      ApplicationSettings.clear();
@@ -266,16 +287,23 @@ showNameInConsole(){
     background-color: #bd2122;
     color: #ffffff;
   }
-  .tabview{
+  .action-label {
+    color:  #ffffff;
+    font-weight: bold;
+    vertical-align: center;
+}
+  .mainGrid{
      margin-left:15;
-     border: 1px solid gray;
-     border-bottom-color: greenyellow;
--moz-border-radius: 15px;
-border-radius: 15px;
   }
   .first{ 
     margin-top: 10;
     height: 40;
+   margin-left:15;
+    margin-right: 15;
+  }
+  .firstGrid{ 
+    margin-top: 10;
+    height: 60;
    margin-left:15;
     margin-right: 15;
   }
@@ -298,9 +326,31 @@ border-radius: 15px;
   horizontal-align: left;
   vertical-align: center;
 }
+.edit-text {
+  color:#bd2122;
+  font-family: "Areial",sans-serif;
+  font-size: 15;
+  margin-right: 20;
+  margin-top: 4;
+  horizontal-align: left;
+  vertical-align: center;
+}
 .status-img {
  margin-top: 4;
   margin-right: 20;
+  width: 20;
+  height: 20;
+}
+.user-img {
+ margin-top: 4;
+  margin-left: 15;
+  width: 40;
+  height: 40;
+  horizontal-align: left;
+  vertical-align: center;
+}
+.edit-img{
+  margin-top: 4;
   width: 20;
   height: 20;
 }
