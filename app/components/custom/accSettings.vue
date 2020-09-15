@@ -22,7 +22,8 @@
     <label  row="0" 
         col="1"
         class="setting-txt"
-        text="Syed" 
+        :text="mytext" 
+        
         @tap="showNameInConsole"
        ></Label>    
     <Image
@@ -125,16 +126,19 @@ export default {
   data() {
       
       return {
-       mytext:"Syed",
-      }
+       mytext: "",
+      };
     },
-
    computed: {
     user() {
       return this.$store.getters.user;
+      this.mytext=this.user.name;
+    },
+    mounted(){
+      return
+      this.mytext=this.user.name;
     },
     method: {
-     
       }
     } 
   }

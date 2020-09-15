@@ -7,6 +7,8 @@
     <Label text="User Profile" class="action-label"></Label>
   </StackLayout>
     </ActionBar>
+          <FlexboxLayout class="page"> 
+            <StackLayout v-bind:class="getClass()" >
     <GridLayout class="mainGrid"
     columns="*" 
     rows="auto,auto">
@@ -138,7 +140,7 @@
 <GridLayout class="first" 
     row="3" 
     backgroundColor="#ffffff"    
-    
+    @tap="onReferTap"
     width="100%"
     rows="auto,auto"
     columns="*,auto">
@@ -147,7 +149,6 @@
       col="0"
       class="status-title"
        text="Refer Friends" 
-       @tap="showNameInConsole"
        ></Label>
        
        <Image
@@ -222,9 +223,9 @@
       </GridLayout>
 </GridLayout>
     </GridLayout>
-   
-  
-  </Page>
+            </StackLayout>
+      </FlexboxLayout> 
+ </Page>
 </template>
 
 <script>
@@ -237,7 +238,7 @@
   import { Label } from "tns-core-modules/ui/label";
   import * as ApplicationSettings from "application-settings";
   import RewardsService from '../../services/rewardsService';
- 
+  import RefScreen from "./refScreen";
   
   export default {
     
@@ -259,12 +260,20 @@
 
     methods: {
 showNameInConsole(){
-
   console.log(this.user.points)
     },
-     
+  
+  getClass() {
+  return {
+      "container-loading": this.isInitialized,
+      "container-loaded": !this.isInitialized
+   };
+},   
  onPaymentTap(){
    this.$navigateTo(PayCards, {});
+ },
+ onReferTap(){
+   this.$navigateTo(RefScreen,{});
  },
  onSettingTap(){
    this.$navigateTo(AccSetting,{});
@@ -369,5 +378,34 @@ showNameInConsole(){
   margin-left: 2;
   horizontal-align: left;
   vertical-align: center;
+}
+.container-loading {
+  animation-name: loading;
+  animation-fill-mode: forwards;
+  animation-duration: 0.6;
+  animation-iteration-count: 1;
+}
+@keyframes loading {
+  0% {
+    transform: translate(0, 200);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.container-loaded {
+  animation-name: loaded;
+  animation-fill-mode: forwards;
+  animation-duration: 0.6;
+  animation-iteration-count: 1;
+}
+
+@keyframes loaded {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 10);
+  }
 }
 </style>
