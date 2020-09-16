@@ -34,10 +34,7 @@
 
 <script>
     import ItemLike from "./itemLike";
-    import {
-        isIOS,
-        isAndroid
-    } from "tns-core-modules/platform";
+    import { isIOS,isAndroid} from "tns-core-modules/platform";
     export default {
         props: ["item"],
         components: {
