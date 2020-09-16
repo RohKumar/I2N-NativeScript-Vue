@@ -164,7 +164,7 @@
 	import Login from "./custom/login";
   import GeoLocationService from '../services/geoLocationService';
   import QrScanner from "./custom/qrScanner";
-  import UserPage from "./custom/user-page";
+  import UserPage from "./userProfile/user-page";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
 	const geoLocationService = new GeoLocationService();
@@ -405,7 +405,6 @@ export default {
         }
 		},
     	goToQrScanner() {
-		console.log("qrScanner");
       this.$navigateTo(QrScanner, {});
 	},
   }

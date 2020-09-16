@@ -232,15 +232,16 @@
   var auth_service_1 = require("../../auth-service");
   import { isIOS, isAndroid } from 'tns-core-modules/platform';
   import * as Toast from 'nativescript-toast';
-  import Login from "./login";
+  import Login from "../custom/login";
   import PayCards from "./payCards";
   import AccSetting from "./accSettings";
   import { Label } from "tns-core-modules/ui/label";
   import * as ApplicationSettings from "application-settings";
-  import RewardsService from '../../services/rewardsService';
   import RefScreen from "./refScreen";
   
+  
   export default {
+   
     
      mounted() {
             
@@ -257,10 +258,13 @@
        mytext:"Syed",
       }
     },
+    props: {
+            userName: String ,
+    },
 
     methods: {
 showNameInConsole(){
-  console.log(this.user.points)
+  console.log(this.user.name)
     },
   
   getClass() {
@@ -279,12 +283,10 @@ showNameInConsole(){
    this.$navigateTo(AccSetting,{});
  } ,
  onLogoutTap() {
-   
-     ApplicationSettings.clear();
+    ApplicationSettings.clear();
     this.$navigateTo(Login);
      console.log(this.user.name);
-     
-  },
+ },
   
     }
   }

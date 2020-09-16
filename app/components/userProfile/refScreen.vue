@@ -5,7 +5,7 @@
     <GridLayout rows="auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
-        backgroundColor="#d7802c"
+        backgroundColor="#e7933b"
         verticalAlignment="top"
         height="100"
         width="100%"
@@ -134,7 +134,7 @@
     </page>
 </template>
 <script>
-import Login from "./login";
+import Login from "../custom/login";
 import UserPage from "./user-page";
 var auth_service_1 = require("../../auth-service");
 import { isIOS, isAndroid } from 'tns-core-modules/platform';

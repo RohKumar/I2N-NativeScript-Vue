@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Login from "./login";
+import Login from "../custom/login";
 import UserPage from "./user-page";
 var auth_service_1 = require("../../auth-service");
 import { isIOS, isAndroid } from 'tns-core-modules/platform';
