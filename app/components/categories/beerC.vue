@@ -35,7 +35,7 @@
       <GridLayout  row="1" width="100%" backgroundColor="white">
         <ListView ref="listview" separatorColor="transparent" for="beer in beers" :key="index">
           <v-template>
-            <beer :beer="beer" @clicked="showItem(item)" />
+            <beer :beer="beer" @clicked="showItem(beer)" />
           </v-template>
         </ListView>
       </GridLayout>
@@ -47,7 +47,8 @@
     import Item from "../custom/item";
     import Beer  from "./beer";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
-   
+    import ItemDetails from "../ItemDetails";
+
    export default {
     components: {
     Item,
@@ -66,31 +67,65 @@
       
       beers: [
         {
-          name: "Carlton Draught Lager 375mL Bottles",
-          cover: "~/assets/images/beer/carltonD375ml.jpg",
-          category: "6 pack",
+          name: "Craft Hugo Twin Pack",
+          cover: "~/assets/images/food/beer/beer2.jpg",
+          images: [
+            { src: "~/assets/images/food/beer/beer1.jpg" },
+            { src: "~/assets/images/food/beer/beer6.jpg" },
+            { src: "~/assets/images/food/beer/beer3.jpg" },
+            { src: "~/assets/images/food/beer/beer5.jpg" },
+            { src: "~/assets/images/food/beer/beer4.jpg" },
+            { src: "~/assets/images/food/beer/beer8.jpg" },
+          ],
+          category: "2 pack",
           categoryTag: "#2D9CDB",
-          price: "20.49",
+          price: "$20.49",
+          likes: 891,
+          isLike: true,
           isFavorite: true,
-          rating: "4.5",
-          description: "Carlton Draught is a pale lager with a unique resinous hop character, that can best be described as providing the perfect balance between being full-flavoured and thirst quenching. Carlton Draught delivers an uncomplicated beer, with broad taste appeal typical of a classic Australian lager style beer.",
+          comments: 7,
+          rating: "4.0",
+          description: "Craft hugo is a pale lager with .....",
         },
-        {
-            name: "Carlton Draught Lager 375mL Bottles",
-          cover: "~/assets/images/beer/carltonD375ml.jpg",
-          category: "6 pack",
+         {
+          name: "Carlburg 330mL Bottles",
+          cover: "~/assets/images/food/beer/beer9.jpg",
+          images: [
+             { src: "~/assets/images/food/beer/beer8.jpg" },
+            { src: "~/assets/images/food/beer/beer4.jpg" },
+            { src: "~/assets/images/food/beer/beer5.jpg" },
+            { src: "~/assets/images/food/beer/beer3.jpg" },
+            { src: "~/assets/images/food/beer/beer6.jpg" },
+            { src: "~/assets/images/food/beer/beer1.jpg" },
+          ],
+          category: "Large Premium",
           categoryTag: "#2D9CDB",
-          price: "20.49",
+          price: "$48.99",
+          likes: 768,
+          isLike: true,
           isFavorite: true,
+          comments: 7,
           rating: "4.5",
-          description: "Carlton Draught is a pale lager with a unique resinous hop character, that can best be described as providing the perfect balance between being full-flavoured and thirst quenching. Carlton Draught delivers an uncomplicated beer, with broad taste appeal typical of a classic Australian lager style beer.",
+          description: "Carlsberg is a pale lager with .....",
         },
         
       ],
      };
     },
    	methods: {
-		
+		showItem(payload) {
+			this.$navigateTo(ItemDetails,{
+				props: {
+					item: payload
+				},
+				animated: true,
+				transition: {
+					name: "slideTop",
+					duration: 380,
+					curve: "easeIn"
+				}
+			})
+		},
     },
    }
 </script>
