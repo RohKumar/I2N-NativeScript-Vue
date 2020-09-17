@@ -38,15 +38,16 @@
                         :text="item.category" />
                     <Label row="2" col="1" class="item-category" :text="'Average Rate:' + item.rating " />
 
-
-                    <StackLayout row="3" col="1" orientation="horizontal">
+                    <GridLayout row="3" col="1" cols="auto,*">
+                    <StackLayout col="0" orientation="horizontal">
                         <Label class="fa rate" :text="'fa-star' | fonticon" />
                         <Label class="fa rate" :text="'fa-star' | fonticon" />
                         <Label class="fa rate" :text="'fa-star' | fonticon" />
                         <Label class="fa rate" :text="'fa-star' | fonticon" />
                         <Label class="fa rate" :text="'fa-star-half-o' | fonticon" />
                     </StackLayout>
-
+                     <Label horizontalAlignment="right" color="#d51a1a" col="1" class="" :text="item.price " />
+                    </GridLayout>
 
                 </GridLayout>
 
@@ -81,7 +82,7 @@
 
             <StackLayout width="100%" class="lineBreak anim-likes" />
 
-            <Gridlayout rows="auto,*" class="content anim-content" marginTop="15">
+            <Gridlayout rows="auto,*,auto" class="content anim-content" marginTop="15">
 
                 <GridLayout row="0" rows="auto" marginBottom="5" columns="auto, auto">
                     <Label col="0" :text="'fa-tags' | fonticon" class="fa description-icon"
@@ -98,9 +99,10 @@
                                 textWrap="true" :text="description" />
                         </StackLayout>
                     </ScrollView>
+                    
                 </StackLayout>
 
-
+             <Button row="2" text="Add to Cart" verticalAlignment="bottom" @tap="login" class="btn btn-primary m-t-20" />
             </Gridlayout>
 
         </StackLayout>
@@ -387,6 +389,14 @@
         font-size: 14;
         color: #828282;
     }
+    .btn-primary {
+        height: 50;
+        margin: 10 5 15 5;
+        background-color: #d51a1a;
+        border-radius: 5;
+        font-size: 17;
+        font-weight: 600;
+}
 
     .category-icon {
         text-align: center;
