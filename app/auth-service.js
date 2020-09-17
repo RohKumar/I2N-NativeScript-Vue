@@ -91,6 +91,7 @@ function tnsOauthLogout() {
     if (client) {
         client.logout();
     }
+    
 }
 
 exports.tnsOauthLogin = tnsOauthLogin;

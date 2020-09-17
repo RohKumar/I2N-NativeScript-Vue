@@ -33,6 +33,7 @@
         isIOS
       }
     },
+    
     methods: {
 
       scan(front) {
