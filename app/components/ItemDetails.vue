@@ -341,7 +341,6 @@
 
     .description-text {
         font-size: 14;
-        font-weight: bold;
         color: black;
     }
 
