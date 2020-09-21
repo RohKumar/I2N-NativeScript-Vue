@@ -46,7 +46,7 @@
                         <Label class="fa rate" :text="'fa-star' | fonticon" />
                         <Label class="fa rate" :text="'fa-star-half-o' | fonticon" />
                     </StackLayout>
-                     <Label horizontalAlignment="right" color="#d51a1a" col="1" class="" :text="item.price " />
+                     <Label horizontalAlignment="right" color="#d51a1a" col="1" class="def" :text="item.price " />
                     </GridLayout>
 
                 </GridLayout>
@@ -102,7 +102,7 @@
                     
                 </StackLayout>
 
-             <Button row="2" text="Add to Cart" verticalAlignment="bottom" @tap="login" class="btn btn-primary m-t-20" />
+             <Button row="2" text="Add to Cart" verticalAlignment="bottom" @tap="goToCart(item)" class="btn btn-primary m-t-20" />
             </Gridlayout>
 
         </StackLayout>
@@ -110,9 +110,12 @@
 </template>
 
 <script>
+    import MyCart from "./custom/mycart";
     export default {
         props: ["item"],
-        components: {},
+        components: {
+            MyCart,
+        },
         computed: {
             categoryIcon() {
                 switch (this.item.category) {
@@ -294,10 +297,24 @@
             },
             onClickButton() {
                 this.$emit("clicked");
-            }
+            },
+            goToCart(payload){
+                this.$navigateTo(MyCart,{
+				props: {
+					item: payload
+				},
+				animated: true,
+				transition: {
+					name: "slideTop",
+					duration: 380,
+					curve: "easeIn"
+				    }
+                })
+            },
         },
         data() {
             return {
+                cart: this.item,
                 images: null,
                 isLike: false,
                 isHeart: false,
@@ -317,14 +334,13 @@
         margin: 15 0 0 15;
     }
 
-    TextView {
+    .TextView {
         border-width: 1;
         border-color: #ffffff;
     }
 
     .description-text {
         font-size: 14;
-        font-weight: bold;
         color: black;
     }
 
@@ -384,6 +400,10 @@
         font-size: 14;
         font-weight: bold;
     }
+    .def{
+        font-size: 15;
+        font-weight: bold;
+    }
 
     .item-category {
         font-size: 14;
@@ -396,7 +416,7 @@
         border-radius: 5;
         font-size: 17;
         font-weight: 600;
-}
+    }
 
     .category-icon {
         text-align: center;

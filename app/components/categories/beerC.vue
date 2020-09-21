@@ -50,6 +50,8 @@
     import ItemDetails from "../ItemDetails";
 
    export default {
+      props: ["item"],
+        components: {},
     components: {
     Item,
     Beer,
