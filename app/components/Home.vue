@@ -4,7 +4,7 @@
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="white">
                     <StackLayout height="56" style="text-align: center; vertical-align: center;">
-                        <Label text="Syed" />
+                        <Label text="Vivek" />
                     </StackLayout>
                     <StackLayout class="drawer">
                         <Label text="Home" padding="10" />
@@ -15,7 +15,7 @@
                         <Label text="My Cart" padding="10" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-                        <Label text="About Us" padding="10" />
+                        <Label text="About Us" @tap="goToAboutUs" padding="10" />
                         <Label text="Terms & Conditions" padding="10" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
