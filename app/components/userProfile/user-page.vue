@@ -253,17 +253,13 @@
     
   },
     data() {
-      
+      let user=this.$store.getters.user;
       return {
-       mytext:"Syed",
+       mytext:user.name,
       }
     },
-    props: {
-            userName: String ,
-    },
-
     methods: {
-showNameInConsole(){
+  showNameInConsole(){
   console.log(this.user.name)
     },
   

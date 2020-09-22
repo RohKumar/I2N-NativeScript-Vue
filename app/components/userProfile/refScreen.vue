@@ -36,7 +36,7 @@
         text="You've Earned"
         horizontalAlignment="left"  class="small-text"></Label>
         <Label col="0" row="2"
-        text="0 Points" fontWeight="bold"
+        :text="points" fontWeight="bold"
         horizontalAlignment="left"  class="small-points"></Label>
       </GridLayout>
     <StackLayout
@@ -88,7 +88,7 @@
         width="100%"
         rows="auto,auto"
         horizontalAlignment="center"
-        columns="*,*,*,*">
+        columns="*,auto,auto,*">
       <Image
           stretch="aspectFill"
           col="0"
@@ -144,8 +144,11 @@ import * as ApplicationSettings from "application-settings";
 
 
 export default {
-   mounted() {
-            
+   data() {
+      let user=this.$store.getters.user;
+      return{
+        points:user.points
+      }      
      },
    computed: {
     user() {

@@ -47,14 +47,18 @@
     import Item from "./item";
     import Cart from "./cart";
     import Home from "../Home";
+    import navBottom from "./navBottom";
     import Beer  from "../categories/beer";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
+
 
    export default {
          props: ["item"],
     components: {
     ItemDetails,
+    Home,
+    navBottom,
     Item,
     Beer,
     Cart,
@@ -65,6 +69,7 @@
     },
   },
    data() {
+   let user=this.$store.getters.user;
     return {
       lastDelY: 0,
       headerCollapsed: false,
@@ -79,7 +84,8 @@
         },
         
       ],
-     };
+     }
+     
     },
    	methods: {
        home() {
