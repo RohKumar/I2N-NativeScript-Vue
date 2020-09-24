@@ -4,7 +4,7 @@
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="white">
                     <StackLayout height="56" style="text-align: center; vertical-align: center;">
-                        <Label text="Syed" />
+                        <Label :text="lText" />
                     </StackLayout>
                     <StackLayout class="drawer">
                         <Label text="Home" padding="10" />
@@ -15,7 +15,7 @@
                         <Label text="My Cart" padding="10" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-                        <Label text="About Us" padding="10" />
+                        <Label text="About Us"  padding="10" />
                         <Label text="Terms & Conditions" padding="10" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
@@ -193,19 +193,19 @@
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
-  
+
   import Vue from "nativescript-vue";
   import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
     Vue.use(RadSideDrawer);
 
 export default {
-  
   components: {
     navBottom,
     Item,
     Category,
   },
   computed: {
+    
     itemsCategory() {
       return this.category ? this.category.slice().reverse() : [];
     },
@@ -213,13 +213,10 @@ export default {
       return this.$store.getters.user;
     },
   },
-  mounted() {
-    this.validateUser();
-    this.fetchLocation();
-  },
   data() {
     
     return {
+      lText:"",
       lastDelY: 0,
       headerCollapsed: false,
       selectedTab: 0,
@@ -313,7 +310,11 @@ export default {
       ],
     };
   },
- 
+  mounted() {
+    this.validateUser();
+    this.fetchLocation();
+   
+  },
 	methods: {
 		search(){
 			this.$navigateTo(Map);
@@ -433,7 +434,7 @@ export default {
       this.$navigateTo(Login); 
         }else{
           this.$navigateTo(UserPage, {});
-          console.log("else part 404");
+          console.log("Home goToLogin");
         }
 		},
     	goToQrScanner() {
@@ -442,13 +443,16 @@ export default {
      
    onOpenDrawerTap() {
                 this.$refs.drawer.nativeView.showDrawer();
+                this.lText=this.user.name;
   },
     onCloseDrawerTap() {
                 this.$refs.drawer.nativeView.closeDrawer();
   },
   onReferTap(){
    this.$navigateTo(RefScreen,{});
+    
   },
+  
   logout(){
    ApplicationSettings.clear();
     this.$navigateTo(Login);

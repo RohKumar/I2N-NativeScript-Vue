@@ -6,6 +6,8 @@
       "restaurantList":"/restaurant",
       "addGeoLocation": "/geoLocation",
       "rewardPoints": "/user/giveRewardPoints",
-      "googleAuthUrl": "/user/googleAuthentication"
+      "googleAuthUrl": "/user/googleAuthentication",
+      "category":"/category",
+      "item":"/item"
    }
 }

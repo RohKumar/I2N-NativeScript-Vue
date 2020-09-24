@@ -8,7 +8,7 @@
     rows="*,auto">
         <StackLayout row="0" class="form">
             <label class="topLabel"
-            text="No cards found"
+            :text="lText"
             horizontalAlignment="center"/>
         </StackLayout>
 
@@ -19,7 +19,8 @@
             stretch="aspectFill"
             row="0"
             class="centerLabel"
-            src="~/assets/images/addCard.png"/>
+            src="~/assets/images/addCard.png"
+            @tap="onClickI"/>
             <label class="textLabel"
             row="1"
             horizontalAlignment="center"
@@ -42,9 +43,38 @@ import { isIOS, isAndroid } from 'tns-core-modules/platform';
 import * as Toast from 'nativescript-toast';
 import { Label } from "tns-core-modules/ui/label";
 import * as ApplicationSettings from "application-settings";
+import ItemService from "../../services/item.service";
 
+const itemService = new ItemService();
 
 export default {
+   data() {
+    return {
+      lText:"",
+      itemList:[],
+    }
+   }, 
+   mounted(){
+     itemService.getItems().then(
+      (response) => {
+        this.itemList = response.content.toJSON().payload
+        this.itemId = this.itemList.map(items => {
+          return items.item_id+items.item_name;
+
+        })
+      },
+      (e) => {
+        console.log("error", e);
+      }
+    );
+   },
+   methods:{
+     onClickI(){
+       console.log(this.itemList[1].item_name);
+       this.lText=this.itemId;
+       
+     },
+   },
 
   }
   

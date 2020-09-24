@@ -241,9 +241,7 @@
   
   
   export default {
-   
-    
-     mounted() {
+    mounted() {
             
      },
    computed: {

@@ -14,6 +14,7 @@
 </template>
 <script>
     import BeerCategory from "../categories/beerC";
+    import CakeCategory from "../categories/cakeC";
  
     export default {
         props: ["item"],
@@ -31,7 +32,7 @@
                         console.log(this.item.category=="BURGER");
                         break;
                     case "CAKE":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory);
                         break;
                     default:
                         console.log("Default");
