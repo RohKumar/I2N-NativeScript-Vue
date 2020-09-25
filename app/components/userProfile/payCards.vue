@@ -60,8 +60,7 @@ export default {
         this.itemList = response.content.toJSON().payload
         this.itemId = this.itemList.map(items => {
           return items.item_id+items.item_name;
-
-        })
+         })
       },
       (e) => {
         console.log("error", e);

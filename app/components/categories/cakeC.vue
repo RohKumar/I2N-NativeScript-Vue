@@ -65,12 +65,13 @@ const itemService = new ItemService();
     return {
       lastDelY: 0,
       headerCollapsed: false,
-      test:"",
+      itest:[],
       items:[{
           item_id:"",
           item_name:"",
           item_image:"",
           item_price:"",
+          category_id:"",
           Flag:"",
       }],
      };
@@ -81,7 +82,8 @@ const itemService = new ItemService();
     }, 
   },
   created(){
-      this.items=this.fetchData();
+      // this.items=this.fetchData();
+
   },
   mounted(){
         this.fetchData();
@@ -105,14 +107,19 @@ const itemService = new ItemService();
       (response) => {
         this.itemList = response.content.toJSON().payload
         this.items=this.itemList;
-        return this.itemList;
+        this.items.map(items => {
+          console.log(items.item_id+items.item_name);
+         })
       },
       (e) => {
         console.log("error", e);
-        return [];
           }
      );
     },
+      onTTap(){
+     
+          
+      }
       
     },
    }
