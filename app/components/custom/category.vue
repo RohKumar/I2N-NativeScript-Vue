@@ -18,6 +18,9 @@
  
     export default {
         props: ["item"],
+        components: {
+            CakeCategory,
+        },
         methods: {
             onClickButton(data) {
                 this.$emit("clicked", data.id);
@@ -32,7 +35,7 @@
                         console.log(this.item.category=="BURGER");
                         break;
                     case "CAKE":
-                        this.$navigateTo(CakeCategory);
+                        this.$navigateTo(CakeCategory,{ context: { propsData: { category: "Cake" } }});
                         break;
                     default:
                         console.log("Default");
