@@ -1,14 +1,11 @@
+
 <template>
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="white">
                     <StackLayout height="56" style="text-align: center; vertical-align: center;">
-<<<<<<< HEAD
                         <Label :text="lText" />
-=======
-                        <Label text="Vivek" />
->>>>>>> 077e9664602f1d44606ef7c5a8489ea1963dbfb5
                     </StackLayout>
                     <StackLayout class="drawer">
                         <Label text="Home" padding="10" />
@@ -19,11 +16,7 @@
                         <Label text="My Cart" padding="10" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-<<<<<<< HEAD
                         <Label text="About Us"  padding="10" />
-=======
-                        <Label text="About Us" @tap="goToAboutUs" padding="10" />
->>>>>>> 077e9664602f1d44606ef7c5a8489ea1963dbfb5
                         <Label text="Terms & Conditions" padding="10" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
@@ -56,7 +49,7 @@
         <Image
           col="1"
           row="0"
-		  
+      
            @tap="goToQrScanner"
           horizontalAlignment="right"
           class="status-img"
@@ -182,24 +175,25 @@
   </page>
 </template>
 <script>
-	// import { SwissArmyKnife } from "nativescript-swiss-army-knife";
-	import { isIOS, isAndroid } from 'tns-core-modules/platform'
-	const appSettings = require("application-settings");
-	const geolocation = require("nativescript-geolocation");
-	import * as http from "tns-core-modules/http";
-	import navBottom from "./custom/navBottom";
-	import Item from "./custom/item";
-	import Category from "./custom/category";
-	import QrModal from "./custom/offerQrModal";
-	import Map from "./custom/map";
-	import ItemDetails from "./ItemDetails";
-	import Login from "./custom/login";
+  // import { SwissArmyKnife } from "nativescript-swiss-army-knife";
+  import { isIOS, isAndroid } from 'tns-core-modules/platform'
+  const appSettings = require("application-settings");
+  const geolocation = require("nativescript-geolocation");
+  import * as http from "tns-core-modules/http";
+  import navBottom from "./custom/navBottom";
+  import Item from "./custom/item";
+  import Category from "./custom/category";
+  import QrModal from "./custom/offerQrModal";
+  import Map from "./custom/map";
+  import ItemDetails from "./ItemDetails";
+  import Login from "./custom/login";
   import GeoLocationService from '../services/geoLocationService';
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
-	const gestures = require("ui/gestures"); 
-	const app = require("application");
+  import CakeC from "./categories/cakeC";
+  const gestures = require("ui/gestures"); 
+  const app = require("application");
   const geoLocationService = new GeoLocationService();
 
   import Vue from "nativescript-vue";
@@ -211,6 +205,7 @@ export default {
     navBottom,
     Item,
     Category,
+    CakeC
   },
   computed: {
     
@@ -323,54 +318,54 @@ export default {
     this.fetchLocation();
    
   },
-	methods: {
-		search(){
-			this.$navigateTo(Map);
-		},
-		bell(){
-		},
-		offer() {
-			this.$showModal(QrModal)
-		},
-	
-		showItem(payload) {
-			this.$navigateTo(ItemDetails,{
-				props: {
-					item: payload
-				},
-				animated: true,
-				transition: {
-					name: "slideTop",
-					duration: 380,
-					curve: "easeIn"
-				}
-			})
-		},
-		
-		popular() {
-			this.selectedTabview = 0;
-		},
-		showCategory() {
-			this.selectedTabview = 1;
-		},
-		showPromos() {
-			this.selectedTabview = 2;
-		},
-		home() {
+  methods: {
+    search(){
+      this.$navigateTo(Map);
+    },
+    bell(){
+    },
+    offer() {
+      this.$showModal(QrModal)
+    },
+  
+    showItem(payload) {
+      this.$navigateTo(ItemDetails,{
+        props: {
+          item: payload
+        },
+        animated: true,
+        transition: {
+          name: "slideTop",
+          duration: 380,
+          curve: "easeIn"
+        }
+      })
+    },
+    
+    popular() {
+      this.selectedTabview = 0;
+    },
+    showCategory() {
+      this.selectedTabview = 1;
+    },
+    showPromos() {
+      this.selectedTabview = 2;
+    },
+    home() {
       this.selectedTab = 0; 
-		},
-		cart() {
-			this.selectedTab = 1;
-		},
-		history() {
-			this.selectedTab = 2;
-		},
-		about() {
-			this.selectedTab = 3;
-		},
-		fetchLocation() {
-			let that = this;
-			geolocation.isEnabled().then(function(isEnabled) {
+    },
+    cart() {
+      this.selectedTab = 1;
+    },
+    history() {
+      this.selectedTab = 2;
+    },
+    about() {
+      this.selectedTab = 3;
+    },
+    fetchLocation() {
+      let that = this;
+      geolocation.isEnabled().then(function(isEnabled) {
             if (!isEnabled) {
                 geolocation.enableLocationRequest(true, true).then(() => {
                     geolocation
@@ -382,8 +377,8 @@ export default {
                                 console.log("Failed to get location!");
                             } else {
                                 that.location.latitude = location.latitude
-								that.location.longitude = location.longitude
-								that.updateUserLocation();
+                that.location.longitude = location.longitude
+                that.updateUserLocation();
                             }
                         });
                 }, (e) => {
@@ -410,42 +405,42 @@ export default {
         }, function(e) {
             console.log("Error: " + (e.message || e));
         });
-		},
-		updateUserLocation() {
-			if (this.user && this.user._id && this.location) {
-				const payload = {
-					userId: this.user._id,
-					latitude: this.location.latitude,
-					longitude: this.location.longitude
-				};
-				this.saveLocation(payload);
-			}
-		},
-		saveLocation(payload) {
-			geoLocationService.addLocation(payload).then((res) => {
-				const result = res.content.toJSON();
-				// setTimeout(this.updateUserLocation, 5000);
-			}, (e) => {
-				console.log("error", e);
-			})
-		},
-		validateUser() {
+    },
+    updateUserLocation() {
+      if (this.user && this.user._id && this.location) {
+        const payload = {
+          userId: this.user._id,
+          latitude: this.location.latitude,
+          longitude: this.location.longitude
+        };
+        this.saveLocation(payload);
+      }
+    },
+    saveLocation(payload) {
+      geoLocationService.addLocation(payload).then((res) => {
+        const result = res.content.toJSON();
+        // setTimeout(this.updateUserLocation, 5000);
+      }, (e) => {
+        console.log("error", e);
+      })
+    },
+    validateUser() {
       setTimeout(() => {
         if(this.user === null) {
           this.goToLogin()
-			  }
+        }
       }, 0)
-			
+      
     },
-    	goToLogin() {
+      goToLogin() {
         if(this.user === null){
       this.$navigateTo(Login); 
         }else{
           this.$navigateTo(UserPage, {});
           console.log("Home goToLogin");
         }
-		},
-    	goToQrScanner() {
+    },
+      goToQrScanner() {
       this.$navigateTo(QrScanner, {});
   },
      
