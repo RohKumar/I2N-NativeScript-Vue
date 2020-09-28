@@ -15,7 +15,7 @@
                         <Label text="My Cart" padding="10" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-                        <Label text="About Us" @tap="goToAboutUs" padding="10" />
+                        <Label text="About Us" @tap="goToaboutUs" padding="10" />
                         <Label text="Terms & Conditions" padding="10" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
@@ -190,6 +190,7 @@
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
+  import aboutUs from "./userProfile/AboutUs";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
@@ -448,6 +449,9 @@ export default {
   },
   onReferTap(){
    this.$navigateTo(RefScreen,{});
+  },
+  goToaboutUs(){
+    this.$navigateTo(aboutUs,{});
   },
   logout(){
    ApplicationSettings.clear();

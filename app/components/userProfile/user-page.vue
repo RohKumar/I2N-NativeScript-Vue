@@ -92,7 +92,7 @@
       col="0"
       class="status-title"
        text="Address" 
-       @tap="showNameInConsole"
+       @tap="onAddressTap"
        ></Label>
        
        <Image
@@ -120,7 +120,7 @@
       col="0"
       class="status-title"
        text="Orders" 
-       @tap="showNameInConsole"
+       @tap="onMyOrders"
        ></Label>
        
        <Image
@@ -234,6 +234,8 @@
   import * as Toast from 'nativescript-toast';
   import Login from "../custom/login";
   import PayCards from "./payCards";
+  import MyOrders from "./ordersScreen";
+  import MyAddress from "./addressScreen";
   import AccSetting from "./accSettings";
   import { Label } from "tns-core-modules/ui/label";
   import * as ApplicationSettings from "application-settings";
@@ -272,9 +274,15 @@
  onPaymentTap(){
    this.$navigateTo(PayCards, {});
  },
+ onMyOrders(){
+   this.$navigateTo(MyOrders, {});
+ },
  onReferTap(){
    this.$navigateTo(RefScreen,{});
  },
+ onAddressTap(){
+   this.$navigateTo(MyAddress, {});
+ } ,
  onSettingTap(){
    this.$navigateTo(AccSetting,{});
  } ,
