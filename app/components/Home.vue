@@ -190,6 +190,7 @@
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
+  import CakeC from "./categories/cakeC";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
@@ -203,6 +204,7 @@ export default {
     navBottom,
     Item,
     Category,
+    CakeC
   },
   computed: {
     

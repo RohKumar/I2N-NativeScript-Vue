@@ -50,16 +50,19 @@
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
     import ItemService from "../../services/item.service";
-
+    import Category from "../custom/category";
+    import Home from "../Home";
 const itemService = new ItemService();
 
    export default {
-      props: ["item"],
-        components: {},
+      props: ["item","category"],
+       
     components: {
     Item,
     Beer,
     Cake,
+    Category,
+    Home,
   }, 
   data() {
     return {
@@ -106,10 +109,10 @@ const itemService = new ItemService();
             itemService.getItems().then(
       (response) => {
         this.itemList = response.content.toJSON().payload
-        this.items=this.itemList;
-        this.items.map(items => {
-          console.log(items.item_id+items.item_name);
-         })
+        let myList=this.itemList.filter(items =>items.category_id=='2');
+      console.log(myList.map(items => {
+          return items.item_id+items.item_name;}))
+          this.items= myList;
       },
       (e) => {
         console.log("error", e);
@@ -117,11 +120,9 @@ const itemService = new ItemService();
      );
     },
       onTTap(){
-     
-          
-      }
-      
+     console.log(this.category);
     },
+    }
    }
 </script>
 <style scoped>
