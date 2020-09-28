@@ -21,7 +21,7 @@
           src="~/assets/images/back.png"
         />
 
-        <Label col="0" row="0" text="Cake" @tap="onTTap" horizontalAlignment="center" class="status-title"></Label>
+        <Label col="0" row="0" text="Menu"  @tap="onTTap" horizontalAlignment="center" class="status-title"></Label>
         
         <Image
           col="1"
@@ -55,7 +55,7 @@
 const itemService = new ItemService();
 
    export default {
-      props: ["item","category"],
+      props: ["item",'category'],
        
     components: {
     Item,
@@ -105,11 +105,30 @@ const itemService = new ItemService();
 				}
 			})
         },
+        
         fetchData(){
+          let catID=1;
+          switch (this.category) {
+            case "Beer":
+              catID=1;
+              break;
+            case "Cake":
+              catID=2;
+              break;
+            case "Pancake":
+              catID=3;
+              break;
+            case "Burger":
+              catID=4;
+              break;
+            default:
+              catID=1;
+              break;
+          }
             itemService.getItems().then(
       (response) => {
         this.itemList = response.content.toJSON().payload
-        let myList=this.itemList.filter(items =>items.category_id=='2');
+        let myList=this.itemList.filter(items =>items.category_id==catID);
       console.log(myList.map(items => {
           return items.item_id+items.item_name;}))
           this.items= myList;
@@ -118,7 +137,9 @@ const itemService = new ItemService();
         console.log("error", e);
           }
      );
-    },
+     },
+     
+    
       onTTap(){
      console.log(this.category);
     },

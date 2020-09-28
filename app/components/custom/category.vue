@@ -26,16 +26,16 @@
                 this.$emit("clicked", data.id);
                  switch (this.item.category) {
                     case "BURGER":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory,{props: { category: "Burger" } });
                         break;
                     case "BEER":
                        this.$navigateTo(BeerCategory);
                         break;
                     case "PANCAKE":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory,{props: { category: "Pancake" } });
                         break;
                     case "CAKE":
-                        this.$navigateTo(CakeCategory,{ context: { propsData: { category: "Cake" } }});
+                        this.$navigateTo(CakeCategory,{props: { category: "Cake" } });
                         break;
                     default:
                         console.log("Default");
