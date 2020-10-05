@@ -44,6 +44,7 @@ import * as Toast from 'nativescript-toast';
 import { Label } from "tns-core-modules/ui/label";
 import * as ApplicationSettings from "application-settings";
 import ItemService from "../../services/item.service";
+import addCardsVue from './addCards.vue';
 
 const itemService = new ItemService();
 
@@ -69,8 +70,10 @@ export default {
    },
    methods:{
      onClickI(){
-       console.log(this.itemList[1].item_name);
-       this.lText=this.itemId;
+      /* console.log(this.itemList[1].item_name);
+       this.lText=this.itemId;*/
+       this.$navigateTo(addCardsVue,{});
+       console.log("Hello from addCards");
        
      },
    },
