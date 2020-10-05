@@ -1,4 +1,3 @@
-
 <template>
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     
@@ -215,6 +214,9 @@ export default {
     user() {
       return this.$store.getters.user;
     },
+    orderList(){
+      return this.$store.getters.orderList;
+    }
   },
   data() {
     
@@ -314,7 +316,7 @@ export default {
     };
   },
   mounted() {
-    this.validateUser();
+  // this.validateUser();
     this.fetchLocation();
    
   },
@@ -436,6 +438,7 @@ export default {
         if(this.user === null){
       this.$navigateTo(Login); 
         }else{
+          console.log(this.orderList);
           this.$navigateTo(UserPage, {});
           console.log("Home goToLogin");
         }
