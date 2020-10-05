@@ -4,11 +4,7 @@
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="white">
                     <StackLayout height="56" style="text-align: center; vertical-align: center;">
-<<<<<<< HEAD
                         <Label :text="lText" />
-=======
-                        <Label text="Vivek" />
->>>>>>> 077e9664602f1d44606ef7c5a8489ea1963dbfb5
                     </StackLayout>
                     <StackLayout class="drawer">
                         <Label text="Home" padding="10" />
@@ -19,11 +15,7 @@
                         <Label text="My Cart" padding="10" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-<<<<<<< HEAD
                         <Label text="About Us"  padding="10" />
-=======
-                        <Label text="About Us" @tap="goToAboutUs" padding="10" />
->>>>>>> 077e9664602f1d44606ef7c5a8489ea1963dbfb5
                         <Label text="Terms & Conditions" padding="10" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
@@ -222,6 +214,9 @@ export default {
     user() {
       return this.$store.getters.user;
     },
+    orderList(){
+      return this.$store.getters.orderList;
+    }
   },
   data() {
     
@@ -321,7 +316,7 @@ export default {
     };
   },
   mounted() {
-    this.validateUser();
+  // this.validateUser();
     this.fetchLocation();
    
   },
@@ -443,6 +438,7 @@ export default {
         if(this.user === null){
       this.$navigateTo(Login); 
         }else{
+          console.log(this.orderList);
           this.$navigateTo(UserPage, {});
           console.log("Home goToLogin");
         }
