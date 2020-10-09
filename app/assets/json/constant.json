@@ -8,6 +8,9 @@
       "rewardPoints": "/user/giveRewardPoints",
       "googleAuthUrl": "/user/googleAuthentication",
       "category":"/category",
-      "item":"/item"
+      "item":"/item",
+      "order":"/order",
+      "deleteOne":"/order/deleteOne",
+      "deleteAll": "/order/deleteAll"
    }
 }

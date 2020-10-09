@@ -214,9 +214,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-    orderList(){
-      return this.$store.getters.orderList;
-    }
   },
   data() {
     
@@ -242,7 +239,7 @@ export default {
           ],
           category: "Burger",
           categoryTag: "#2D9CDB",
-          price: "$300.00",
+          price: 300,
           likes: 987,
           isLike: false,
           isFavorite: true,
@@ -263,7 +260,7 @@ export default {
           ],
           category: "Pancake",
           categoryTag: "#e4ce0d",
-          price: "$230.00",
+          price: 230,
           likes: 891,
           isLike: true,
           isFavorite: true,
@@ -282,7 +279,7 @@ export default {
           ],
           category: "Cake",
           categoryTag: "#27AE60",
-          price: "$300.00",
+          price: 300,
           likes: 730,
           isLike: true,
           isFavorite: true,
@@ -316,7 +313,7 @@ export default {
     };
   },
   mounted() {
-  // this.validateUser();
+    this.validateUser();
     this.fetchLocation();
    
   },
@@ -438,7 +435,6 @@ export default {
         if(this.user === null){
       this.$navigateTo(Login); 
         }else{
-          console.log(this.orderList);
           this.$navigateTo(UserPage, {});
           console.log("Home goToLogin");
         }
