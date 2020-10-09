@@ -1,8 +1,30 @@
 <template>
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
-    <!-- @loaded="onLoaded" -->
-
-    <GridLayout rows="auto,auto,*,auto" columns="auto">
+    
+            <RadSideDrawer ref="drawer">
+                <StackLayout ~drawerContent backgroundColor="white">
+                    <StackLayout height="56" style="text-align: center; vertical-align: center;">
+                        <Label :text="lText" />
+                    </StackLayout>
+                    <StackLayout class="drawer">
+                        <Label text="Home" padding="10" />
+                        <Label text="Featured" padding="10" />
+                        <StackLayout width="100%" marginTop="10" class="line" />
+                        <Label text="Family Packs / Catering" padding="10" />
+                        <Label text="Amazing food offers" padding="10" fontWeight="bold" color="white" backgroundColor="#bd2122" />
+                        <Label text="My Cart" padding="10" />
+                        <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
+                        <StackLayout width="100%" marginTop="10" class="line" />
+                        <Label text="About Us"  padding="10" />
+                        <Label text="Terms & Conditions" padding="10" />
+                        <Label text="Privacy Policy" padding="10" />
+                        <Label text="Help & Support" padding="10" />
+                        <Label text="Logout" @tap="logout" padding="10" />
+                    </StackLayout>
+                    <Label text="Close" color="lightgray" padding="10" style="horizontal-align: center"
+                        @tap="onCloseDrawerTap" />
+                </StackLayout>
+    <GridLayout rows="auto,auto,*,auto" columns="auto" ~mainContent @swipe="onOpenDrawerTap">
       <GridLayout
         row="0"
         ref="navStatusBar"
@@ -14,7 +36,7 @@
         rows="auto"
         columns="*,auto,auto,auto"
       >
-        <Label col="0" row="0" text="Home" class="status-title"></Label>
+        <Label col="0" row="0" text="Home" @tap="onOpenDrawerTap"  class="status-title"></Label>
         <Image
           col="0"
           row="0"
@@ -35,7 +57,7 @@
         <Image
           col="2"
           row="0"
-          @tap="offer"
+          @tap="goToTest"
           horizontalAlignment="right"
           class="status-img"
           src="~/assets/images/offer.png"
@@ -146,7 +168,9 @@
       <GridLayout v-show="selectedTabview == 2" row="2" width="100%" backgroundColor="white"></GridLayout>
 
       <navBottom row="3" />
-    </GridLayout>
+     </GridLayout>   
+            </RadSideDrawer>
+    
   </page>
 </template>
 <script>
@@ -165,17 +189,25 @@
   import GeoLocationService from '../services/geoLocationService';
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
+  import RefScreen from "./userProfile/refScreen";
+  import CakeC from "./categories/cakeC";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
-	const geoLocationService = new GeoLocationService();
+  const geoLocationService = new GeoLocationService();
+
+  import Vue from "nativescript-vue";
+  import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
+    Vue.use(RadSideDrawer);
 
 export default {
   components: {
     navBottom,
     Item,
     Category,
+    CakeC
   },
   computed: {
+    
     itemsCategory() {
       return this.category ? this.category.slice().reverse() : [];
     },
@@ -183,17 +215,16 @@ export default {
       return this.$store.getters.user;
     },
   },
-  mounted() {
-    this.validateUser();
-    this.fetchLocation();
-  },
   data() {
+    
     return {
+      lText:"",
       lastDelY: 0,
       headerCollapsed: false,
       selectedTab: 0,
       selectedTabview: 0,
       location: {},
+      
       items: [
         {
           name: "Manila Ultimate Tombstone Burger",
@@ -208,7 +239,7 @@ export default {
           ],
           category: "Burger",
           categoryTag: "#2D9CDB",
-          price: "300.00",
+          price: 300,
           likes: 987,
           isLike: false,
           isFavorite: true,
@@ -229,7 +260,7 @@ export default {
           ],
           category: "Pancake",
           categoryTag: "#e4ce0d",
-          price: "230.00",
+          price: 230,
           likes: 891,
           isLike: true,
           isFavorite: true,
@@ -248,7 +279,7 @@ export default {
           ],
           category: "Cake",
           categoryTag: "#27AE60",
-          price: "300.00",
+          price: 300,
           likes: 730,
           isLike: true,
           isFavorite: true,
@@ -281,7 +312,11 @@ export default {
       ],
     };
   },
- 
+  mounted() {
+    this.validateUser();
+    this.fetchLocation();
+   
+  },
 	methods: {
 		search(){
 			this.$navigateTo(Map);
@@ -401,12 +436,30 @@ export default {
       this.$navigateTo(Login); 
         }else{
           this.$navigateTo(UserPage, {});
-          console.log("else part 404");
+          console.log("Home goToLogin");
         }
 		},
     	goToQrScanner() {
       this.$navigateTo(QrScanner, {});
-	},
+  },
+     
+   onOpenDrawerTap() {
+                this.$refs.drawer.nativeView.showDrawer();
+                this.lText=this.user.name;
+  },
+    onCloseDrawerTap() {
+                this.$refs.drawer.nativeView.closeDrawer();
+  },
+  onReferTap(){
+   this.$navigateTo(RefScreen,{});
+    
+  },
+  
+  logout(){
+   ApplicationSettings.clear();
+    this.$navigateTo(Login);
+    }
+  
   }
 }
 </script>
@@ -461,5 +514,14 @@ export default {
   margin-top: 8;
   horizontal-align: left;
   vertical-align: center;
+}
+.drawer{
+  font-size: 14;
+}
+.line {
+        height: 0.5;
+        border: none;
+        color: #e0e0e0;
+        background-color: #e0e0e0;
 }
 </style>

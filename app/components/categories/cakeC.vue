@@ -21,8 +21,8 @@
           src="~/assets/images/back.png"
         />
 
-        <Label col="0" row="0" text="Beer"  horizontalAlignment="center" class="status-title"></Label>
-    
+        <Label col="0" row="0" text="Menu"  @tap="onTTap" horizontalAlignment="center" class="status-title"></Label>
+        
         <Image
           col="1"
           row="0"
@@ -33,10 +33,10 @@
         />
       </GridLayout>
       <GridLayout  row="1" width="100%" backgroundColor="white">
-        <ListView ref="listview" separatorColor="transparent" for="beer in beers" :key="index">
-          <v-template>
-            <beer :beer="beer" @clicked="showItem(beer)" />
-          </v-template>
+        <ListView ref="listview" separatorColor="transparent" for="item in items" :key="index">
+        <v-template>
+            <cake :item="item"  />   
+        </v-template>
         </ListView>
       </GridLayout>
     </GridLayout>
@@ -46,75 +46,52 @@
 <script>
     import Item from "../custom/item";
     import Beer  from "./beer";
+    import Cake from "./cake";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
+    import ItemService from "../../services/item.service";
+    import Category from "../custom/category";
+    import Home from "../Home";
+const itemService = new ItemService();
 
    export default {
-      props: ["item"],
-        components: {},
+      props: ["item",'category'],
+       
     components: {
     Item,
     Beer,
-  },
-  computed: {
-    
-    user() {
-      return this.$store.getters.user;
-    },
-  },
-   data() {
+    Cake,
+    Category,
+    Home,
+  }, 
+  data() {
     return {
       lastDelY: 0,
       headerCollapsed: false,
-      
-      beers: [
-        {
-          name: "Craft Hugo Twin Pack",
-          cover: "~/assets/images/food/beer/beer2.jpg",
-          images: [
-            { src: "~/assets/images/food/beer/beer1.jpg" },
-            { src: "~/assets/images/food/beer/beer6.jpg" },
-            { src: "~/assets/images/food/beer/beer3.jpg" },
-            { src: "~/assets/images/food/beer/beer5.jpg" },
-            { src: "~/assets/images/food/beer/beer4.jpg" },
-            { src: "~/assets/images/food/beer/beer8.jpg" },
-          ],
-          category: "2 pack",
-          categoryTag: "#2D9CDB",
-          price: "$20.49",
-          likes: 891,
-          isLike: true,
-          isFavorite: true,
-          comments: 7,
-          rating: "4.0",
-          description: "Craft hugo is a pale lager with .....",
-        },
-         {
-          name: "Carlburg 330mL Bottles",
-          cover: "~/assets/images/food/beer/beer9.jpg",
-          images: [
-             { src: "~/assets/images/food/beer/beer8.jpg" },
-            { src: "~/assets/images/food/beer/beer4.jpg" },
-            { src: "~/assets/images/food/beer/beer5.jpg" },
-            { src: "~/assets/images/food/beer/beer3.jpg" },
-            { src: "~/assets/images/food/beer/beer6.jpg" },
-            { src: "~/assets/images/food/beer/beer1.jpg" },
-          ],
-          category: "Large Premium",
-          categoryTag: "#2D9CDB",
-          price: "$48.99",
-          likes: 768,
-          isLike: true,
-          isFavorite: true,
-          comments: 7,
-          rating: "4.5",
-          description: "Carlsberg is a pale lager with .....",
-        },
-        
-      ],
+      itest:[],
+      items:[{
+          item_id:"",
+          item_name:"",
+          item_image:"",
+          item_price:"",
+          category_id:"",
+          Flag:"",
+      }],
      };
     },
-   	methods: {
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }, 
+  },
+  created(){
+      // this.items=this.fetchData();
+
+  },
+  mounted(){
+        this.fetchData();
+   },
+    methods: {
 		showItem(payload) {
 			this.$navigateTo(ItemDetails,{
 				props: {
@@ -127,8 +104,46 @@
 					curve: "easeIn"
 				}
 			})
-		},
+        },
+        
+        fetchData(){
+          let catID=1;
+          switch (this.category) {
+            case "Beer":
+              catID=1;
+              break;
+            case "Cake":
+              catID=2;
+              break;
+            case "Pancake":
+              catID=3;
+              break;
+            case "Burger":
+              catID=4;
+              break;
+            default:
+              catID=1;
+              break;
+          }
+            itemService.getItems().then(
+      (response) => {
+        this.itemList = response.content.toJSON().payload
+        let myList=this.itemList.filter(items =>items.category_id==catID);
+      console.log(myList.map(items => {
+          return items.item_id+items.item_name;}))
+          this.items= myList;
+      },
+      (e) => {
+        console.log("error", e);
+          }
+     );
+     },
+     
+    
+      onTTap(){
+     console.log(this.category);
     },
+    }
    }
 </script>
 <style scoped>

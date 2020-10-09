@@ -14,24 +14,28 @@
 </template>
 <script>
     import BeerCategory from "../categories/beerC";
+    import CakeCategory from "../categories/cakeC";
  
     export default {
         props: ["item"],
+        components: {
+            CakeCategory,
+        },
         methods: {
             onClickButton(data) {
                 this.$emit("clicked", data.id);
                  switch (this.item.category) {
                     case "BURGER":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory,{props: { category: "Burger" } });
                         break;
                     case "BEER":
-                       this.$navigateTo(BeerCategory);
+                       this.$navigateTo(CakeCategory,{props: { category: "Beer" } });
                         break;
                     case "PANCAKE":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory,{props: { category: "Pancake" } });
                         break;
                     case "CAKE":
-                        console.log(this.item.category=="BURGER");
+                        this.$navigateTo(CakeCategory,{props: { category: "Cake" } });
                         break;
                     default:
                         console.log("Default");

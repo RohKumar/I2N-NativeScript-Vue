@@ -39,6 +39,8 @@
 </template>
 <script>
     import * as ApplicationSettings from "application-settings";
+    import MyCart from "./mycart";
+    import Ref from "../userProfile/refScreen";
     import Login from "./login";
     export default {
         data() {
@@ -52,6 +54,7 @@
             },
             cart() {
                 this.selectedTab = 1;
+                this.$navigateTo(MyCart,{});
             },
             history() {
                 this.selectedTab = 2;

@@ -124,23 +124,21 @@ import * as ApplicationSettings from "application-settings";
 
 export default {
   data() {
-      
+      let user=this.$store.getters.user;
       return {
-       mytext: "",
+       mytext: user.name,
       };
     },
    computed: {
     user() {
       return this.$store.getters.user;
-      this.mytext=this.user.name;
     },
+   },
     mounted(){
-      return
-      this.mytext=this.user.name;
     },
-    method: {
+    methods: {
       }
-    } 
+    
   }
 
 </script>

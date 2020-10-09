@@ -5,15 +5,15 @@
         <GridLayout width="100%" columns="auto,*,auto" rows="auto" verticalAlignment="center">
             
             <Image row="0" col="0" stretch="aspectFill" class="card-img" @tap="onClickButton()"
-                :src="beer.cover" />
+                :src="item.item_image" />
             
             <GridLayout row="0" col="1"  columns="auto," rows="auto,auto,auto,auto" class="details"
-                verticalAlignment="center">
+                >
                 <Label row="0" col="0" class="item-name" textwrap="true"
-                    verticalAlignment="bottom" horizontalAlignment="left"
-                    :text="beer.name" />
+                    verticalAlignment="Top" horizontalAlignment="left"
+                    :text="item.item_name" />
                 
-                    <Label row="1" col="0" class="item-category" textwrap="true"
+                    <!-- <Label row="1" col="0" class="item-category" textwrap="true"
                         verticalAlignment="top" horizontalAlignment="left"
                         :text="beer.category" />
                      <GridLayout row="2" col="0" columns="auto,auto" rows="auto" class=""
@@ -24,16 +24,16 @@
                      </GridLayout>
                        <StackLayout row="3" col="0" >
                     <Textview editable="false" class="item-category"
-                                textWrap="true"  verticalAlignment="bottom" horizontalAlignment="left"
+                                  verticalAlignment="bottom" horizontalAlignment="left"
                     :text="beer.description" />
-                       </StackLayout>
+                       </StackLayout> -->
             </GridLayout>
 
             <GridLayout row="0" col="2" columns="auto," rows="auto,auto" class=""
                 verticalAlignment="left">
                 <Label row="0" col="0" class="item-name" color="red" textwrap="true"
                     verticalAlignment="bottom" horizontalAlignment="center"
-                    :text="beer.price" />
+                    :text="item.item_price" />
                 <Button row="1" col="0"   class="addLabel" @tap="onClickButton()"
                     verticalAlignment="bottom" horizontalAlignment="center"
                     text="ADD" />
@@ -57,7 +57,7 @@
     import ItemLike from "../custom/itemLike";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     export default {
-        props: ["beer"],
+        props: ["item"],
            components: {
             ItemLike
         },

@@ -2,43 +2,28 @@
     <StackLayout class="main">
 
         <StackLayout class="content">
-        <GridLayout width="100%" columns="auto,*,auto" rows="auto" verticalAlignment="center">
+        <GridLayout width="100%" columns="auto,auto,auto" rows="auto" verticalAlignment="center">
             
             <Image row="0" col="0" stretch="aspectFill" class="card-img" @tap="onClickButton()"
-                :src="beer.cover" />
+                :src="cart.cover" />
             
-            <GridLayout row="0" col="1"  columns="auto," rows="auto,auto,auto,auto" class="details"
-                verticalAlignment="center">
-                <Label row="0" col="0" class="item-name" textwrap="true"
-                    verticalAlignment="bottom" horizontalAlignment="left"
-                    :text="beer.name" />
+            <GridLayout row="0" col="1" width="170" columns="auto," rows="auto,auto,auto" class="details">
+                <Label row="0" col="0" width= "170" class="item-name" textwrap="true"
+                     horizontalAlignment="left"
+                    :text="cart.name" />
                 
                     <Label row="1" col="0" class="item-category" textwrap="true"
-                        verticalAlignment="top" horizontalAlignment="left"
-                        :text="beer.category" />
-                     <GridLayout row="2" col="0" columns="auto,auto" rows="auto" class=""
-                verticalAlignment="center">   
-                    <Label col="0" row="0" class="fa rating-icon" :text="'fa-star' | fonticon" />
-                    <Label col="1" row="0" class="rating-value item-category"
-                        :text="beer.rating" />
-                     </GridLayout>
-                       <StackLayout row="3" col="0" >
-                    <Textview editable="false" class="item-category"
-                                textWrap="true"  verticalAlignment="bottom" horizontalAlignment="left"
-                    :text="beer.description" />
-                       </StackLayout>
+                        horizontalAlignment="left"
+                        :text="cart.price" />
+                     
+                    <Label row="2" col="0" class="item-name" horizontalAlignment="left"
+                        :text="cart.category" />
+                     
             </GridLayout>
 
-            <GridLayout row="0" col="2" columns="auto," rows="auto,auto" class=""
-                verticalAlignment="left">
-                <Label row="0" col="0" class="item-name" color="red" textwrap="true"
-                    verticalAlignment="bottom" horizontalAlignment="center"
-                    :text="beer.price" />
-                <Button row="1" col="0"   class="addLabel" @tap="onClickButton()"
-                    verticalAlignment="bottom" horizontalAlignment="center"
-                    text="ADD" />
-                    
-            </GridLayout>
+                <Button row="0" col="2"  class="addLabel" @tap="onClickButton()"
+                    horizontalAlignment="right" verticalAlignment="top"
+                    text="Delete" />
 
         </GridLayout>
             <StackLayout width="100%" marginTop="5" class="line" />
@@ -54,10 +39,10 @@
 </template>
 
 <script>
-    import ItemLike from "../custom/itemLike";
+    import ItemLike from "./itemLike";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     export default {
-        props: ["beer"],
+        props: ["cart"],
            components: {
             ItemLike
         },
@@ -183,29 +168,7 @@
     };
 </script>
 <style scoped>
-    .item-category {
-        font-size: 12;
-        color: #828282;
-    }
-
-    .rating-icon {
-        padding-top: 3;
-        color: #FFE900;
-        font-size: 12;
-    }
-
-    .rating-value {
-        margin-left: 5;
-    }
-
-    .liked-active {
-        color: #4080FF;
-    }
-
-    .heart-active {
-        color: #b51213;
-    }
-
+    
     .default {
         color: #828282;
     }
@@ -214,7 +177,7 @@
         color:white;
         padding: 7;
         height: 20;
-        margin: 8 2 4 2;
+        margin: 8 2 4 15;
         background-color: #d51a1a;
         border-radius: 8;
         font-weight: 600;
@@ -227,40 +190,17 @@
         padding: 5 0 5 0;
     }
 
-    .like-icon {
-        vertical-align: bottom;
-        height: 30;
-        font-size: 16;
-        margin-right: 2;
-        padding: 5 5 5 5;
-    }
-
     .item-name {
         font-size: 12;
+    }
+    .item-category {
+        margin-top:5;
+        font-size: 12;
+        color: #bd2122;
         font-weight: bold;
     }
-
-    .item-category {
-        font-size: 12;
-        color: #828282;
-    }
-
-    .category-icon {
-        text-align: center;
-        padding-top: 5;
-        color: white;
-        border-color: white;
-        vertical-align: center;
-        font-size: 25;
-        border-width: 1;
-        border-radius: 50%;
-        margin-top: 4;
-        margin-right: 15;
-        width: 40;
-        height: 40;
-    }
     .details{
-        margin-left: 4;   
+        margin-left: 14;   
     }
     .content {
         margin-left: 16;

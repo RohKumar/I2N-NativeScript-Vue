@@ -3,7 +3,7 @@
     <ActionBar>
     <StackLayout orientation="horizontal"
     ios:horizontalAlignment="center"
-    android:horizontalAlignment="left">
+    android:horizontalAlignment="center">
     <Label text="User Profile" class="action-label"></Label>
   </StackLayout>
     </ActionBar>
@@ -83,7 +83,7 @@
 <GridLayout class="first" 
     row="1" 
     backgroundColor="#ffffff"    
-    
+    @tap="onAddressTap"
     width="100%"
     rows="auto,auto"
     columns="*,auto">
@@ -92,7 +92,7 @@
       col="0"
       class="status-title"
        text="Address" 
-       @tap="showNameInConsole"
+       
        ></Label>
        
        <Image
@@ -135,7 +135,8 @@
           class="small-text"
           row="1"
           col="0"
-          text="Check yor History"/>
+          text="Check Your History"
+          />
       </GridLayout>
 <GridLayout class="first" 
     row="3" 
@@ -238,12 +239,10 @@
   import { Label } from "tns-core-modules/ui/label";
   import * as ApplicationSettings from "application-settings";
   import RefScreen from "./refScreen";
-  
+  import UserAddress from "./userAddress";
   
   export default {
-   
-    
-     mounted() {
+    mounted() {
             
      },
    computed: {
@@ -253,17 +252,13 @@
     
   },
     data() {
-      
+      let user=this.$store.getters.user;
       return {
-       mytext:"Syed",
+       mytext:user.name,
       }
     },
-    props: {
-            userName: String ,
-    },
-
     methods: {
-showNameInConsole(){
+  showNameInConsole(){
   console.log(this.user.name)
     },
   
@@ -273,6 +268,10 @@ showNameInConsole(){
       "container-loaded": !this.isInitialized
    };
 },   
+onAddressTap(){
+  this.$navigateTo(UserAddress,{});
+  console.log("Hello from address page");
+},
  onPaymentTap(){
    this.$navigateTo(PayCards, {});
  },

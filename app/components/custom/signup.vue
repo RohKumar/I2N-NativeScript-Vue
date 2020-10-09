@@ -314,6 +314,7 @@ export default {
           if (isAndroid) {
             toastMessage(response.content.toJSON().message);
           }
+          console.log(response.content.toJSON().message);
             if (result.payload !== null) {
               (this.user = {
                 role: "",
