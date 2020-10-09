@@ -102,7 +102,9 @@
                     
                 </StackLayout>
 
-             <Button row="2" text="Add to Cart" verticalAlignment="bottom" @tap="goToCart(item)" class="btn btn-primary m-t-20" />
+             <Button row="2" ref="addButton" text="Add to Cart" verticalAlignment="bottom" @tap="addToCart(item)" class="btn btn-primary m-t-20" />
+            <Button row="2" ref="shopButton" text="Continue Shopping" horizontalAlignment="left" width=40% verticalAlignment="bottom" @tap="continueShopping()" visibility="hidden" class="btn btn-secondary m-t-20" />
+             <Button row="2" ref="goToButton" text="Goto Cart" horizontalAlignment="right" width=40% verticalAlignment="bottom" @tap="goToCart()" visibility="hidden" class="btn btn-secondary m-t-20" />
             </Gridlayout>
 
         </StackLayout>
@@ -111,12 +113,19 @@
 
 <script>
     import MyCart from "./custom/mycart";
+    import Home from "./Home";
+    import OrderService from "../services/order.service";
+
+    const orderService = new OrderService();
     export default {
         props: ["item"],
         components: {
             MyCart,
         },
         computed: {
+            user() {
+            return this.$store.getters.user;
+                 },
             categoryIcon() {
                 switch (this.item.category) {
                     case "Burger":
@@ -138,26 +147,65 @@
             }
         },
         created() {
-            this.images = [{
-                    src: "~/assets/images/food/pancake640.jpg"
-                },
-                {
-                    src: "~/assets/images/food/pancake640.jpg"
-                },
-                {
-                    src: "~/assets/images/food/pancake640.jpg"
-                },
-                {
-                    src: "~/assets/images/food/pancake640.jpg"
-                }
-            ];
             this.isLike = this.item.isLike;
             this.isHeart = this.item.isFavorite;
         },
         mounted() {},
+        data() {
+            return {
+                cart: this.item,
+                images: null,
+                isLike: false,
+                isHeart: false,
+                description: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+				\nRatione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+				\nNesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi!
+				\nRatione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+				\nNesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi!	`
+            };
+        },
         methods: {
-            onLoaded() {
+            onClickButton() {
+                this.$emit("clicked");
+            },
+            addToCart(order){
+                let addButton = this.$refs.addButton.nativeView;
+                let goToButton =this.$refs.goToButton.nativeView;
+                let shopButton = this.$refs.shopButton.nativeView;
+                addButton.visibility="collapsed"
+                goToButton.visibility="visible"
+                shopButton.visibility="visible"
+                    let myorder ={
+                   // item_id:"",
+                    itemName:order.name,
+                    itemImage:order.cover,
+                    itemCategory:order.category,
+                    price:order.price,
+                    userID:this.user._id,     
+                }
+                this.addOrderData(myorder);  
+            },
+            addOrderData(myorder){
+                console.log(myorder)
+                orderService.addOrder(myorder).then((response) => {
+                const result = response.content.toJSON();
+                if (isAndroid) {
+                toastMessage(response.content.toJSON().message);
+                }
+                console.log(response.content.toJSON().message);
+                },
+                (e) => {
+                console.log("error", e);
+                });
+            },
+            continueShopping(){
+                this.$navigateTo(Home,{});
+            },
+             onLoaded() {
                 // this.animateFrom()
+            },
+            goToCart(){
+                this.$navigateTo(MyCart,{})
             },
             animateFrom() {
                 let cover = this.$refs.cover.nativeView;
@@ -295,36 +343,7 @@
                 this.animateFavorite();
                 this.isHeart = !this.isHeart;
             },
-            onClickButton() {
-                this.$emit("clicked");
-            },
-            goToCart(payload){
-                this.$navigateTo(MyCart,{
-				props: {
-					item: payload
-				},
-				animated: true,
-				transition: {
-					name: "slideTop",
-					duration: 380,
-					curve: "easeIn"
-				    }
-                })
-            },
         },
-        data() {
-            return {
-                cart: this.item,
-                images: null,
-                isLike: false,
-                isHeart: false,
-                description: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-				\nRatione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-				\nNesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi!
-				\nRatione maiores, veritatis nesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-				\nNesciunt sint dolorum sequi dicta omnis dolor blanditiis, ipsam officiis commodi temporibus quas non nobis tempore saepe necessitatibus quasi!	`
-            };
-        }
     };
 </script>
 <style scoped>
@@ -415,6 +434,15 @@
         background-color: #d51a1a;
         border-radius: 5;
         font-size: 17;
+        font-weight: 600;
+    }
+    .btn-secondary {
+        height: 50;
+        margin: 10 5 15 5;
+        background-color: #d51a1a;
+        border-radius: 5;
+        font-size: 12;
+        color: white;
         font-weight: 600;
     }
 

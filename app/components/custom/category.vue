@@ -29,7 +29,7 @@
                         this.$navigateTo(CakeCategory,{props: { category: "Burger" } });
                         break;
                     case "BEER":
-                       this.$navigateTo(BeerCategory);
+                       this.$navigateTo(CakeCategory,{props: { category: "Beer" } });
                         break;
                     case "PANCAKE":
                         this.$navigateTo(CakeCategory,{props: { category: "Pancake" } });
