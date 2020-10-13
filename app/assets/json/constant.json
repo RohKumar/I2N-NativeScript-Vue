@@ -10,6 +10,7 @@
       "category":"/category",
       "item":"/item",
       "order":"/order",
+      "location":"/location",
       "deleteOne":"/order/deleteOne",
       "deleteAll": "/order/deleteAll"
    }

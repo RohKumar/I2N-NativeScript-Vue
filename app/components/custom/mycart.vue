@@ -74,7 +74,7 @@
        </GridLayout>
         <StackLayout row ="4" width="100%" marginTop="20" class="line" />
     </GridLayout>
-    <Button  text="ORDER NOW" verticalAlignment="center"  horizontalAlignment="bottom"  class="btn btn-primary m-t-20" />
+    <Button  text="ORDER NOW" verticalAlignment="center"  horizontalAlignment="bottom"  @tap="goToCheckout()" class="btn btn-primary m-t-20" />
 </StackLayout>
     </page>
 </template>
@@ -88,6 +88,8 @@
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
     import OrderService from "../../services/order.service";
+    import Checkout from "./checkout";
+    import Dialog from 'tns-core-modules/ui/dialogs';
 
     const orderService = new OrderService();
 
@@ -139,12 +141,15 @@
             this.$navigateTo(Home);
             console.log()
             },
+
             fetchData(){
               let uiD=this.user._id;
               console.log(uiD)
+
               orderService.getOrders().then(
               (response) => {
               console.log(response.content.toJSON().message)
+
               const orderList = response.content.toJSON().payload
               let tempList = orderList;
               const uList=tempList.filter(orders =>orders.userID==uiD);
@@ -173,7 +178,15 @@
                 price:item.price,
                 userID:item.userID
               }
+              confirm({
+                title: "Delete Item",
+                message: "Are you sure?",
+                okButtonText: "Delete",
+                cancelButtonText: "Cancel"
+                }).then(result => {
+              if(result){
               console.log(delItem)
+
               orderService.deleteOne(delItem).then((response) => {
                 console.log(response.content.toJSON().message);
                 },
@@ -181,6 +194,11 @@
                 console.log("error", e);
                 });
                 this.fetchData();
+              }
+              });
+            },
+            goToCheckout(){
+              this.$navigateTo(Checkout);
             }
     },
    }
