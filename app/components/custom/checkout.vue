@@ -2,7 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
 <StackLayout class="main" verticalAlignment="top">
-    <!-- <GridLayout rows="auto,auto,auto,auto" columns="auto">
+    <GridLayout rows="auto,auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
         backgroundColor="#ffffff"
@@ -28,15 +28,10 @@
     <Label text="Sunshine West,Melbourne,Vic3020" class="small-text"/>
     <StackLayout width="100%" marginTop="5" class="line" />
     
-    <Label marginTop="8" text="Payment Type"/>
-      </StackLayout> -->
-
-    <RadioGroup  [(value)]="dataBoundVariable">
-        <RadioButton text="Selection 1"></RadioButton>
-        <RadioButton text="Selection 2"></RadioButton>
-        <RadioButton text="Selection 3"></RadioButton>
-    </RadioGroup>
-      <!-- </GridLayout> -->
+    <Label marginTop="8" text="Order Conformation"/>
+      </StackLayout>
+      
+      </GridLayout>
     </StackLayout>
     </page>
 </template>

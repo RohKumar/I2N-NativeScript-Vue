@@ -168,6 +168,7 @@
             onClickButton() {
                 this.$emit("clicked");
             },
+
             addToCart(order){
                 let addButton = this.$refs.addButton.nativeView;
                 let goToButton =this.$refs.goToButton.nativeView;
@@ -175,6 +176,7 @@
                 addButton.visibility="collapsed"
                 goToButton.visibility="visible"
                 shopButton.visibility="visible"
+                
                     let myorder ={
                    // item_id:"",
                     itemName:order.name,
@@ -185,8 +187,11 @@
                 }
                 this.addOrderData(myorder);  
             },
+
+
             addOrderData(myorder){
                 console.log(myorder)
+
                 orderService.addOrder(myorder).then((response) => {
                 const result = response.content.toJSON();
                 if (isAndroid) {
