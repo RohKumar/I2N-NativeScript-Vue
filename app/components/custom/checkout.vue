@@ -2,7 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
 <StackLayout class="main" verticalAlignment="top">
-    <GridLayout rows="auto,580,auto,auto,auto,auto" columns="auto">
+    <GridLayout rows="auto,auto,220,auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
         backgroundColor="#ffffff"
@@ -20,11 +20,18 @@
             class="status-img"
           src="~/assets/images/back.png"
         />
-
-        <Label col="0" row="0" text="My Cart"  horizontalAlignment="center" class="title"></Label>
-    
+        <Label col="0" row="0" text="Checkout"  horizontalAlignment="center" class="title"></Label>
       </GridLayout>
-      <GridLayout  row="1" width="100%" backgroundColor="white">
+      <StackLayout row ="1" width="100%" class="first">
+    <Label text="Address" verticalAlignment="left" width="100%" />
+    <Label :text="userName" fontWeight="bold" class="small-text"/>
+    <Label text="1 Example Street" class="small-text" />
+    <Label text="Sunshine West,Melbourne,Vic3020" class="small-text"/>
+    <StackLayout width="100%" marginTop="5" class="line" />
+    
+    <Label marginTop="8" text="Order Conformation"/>
+      </StackLayout>
+       <GridLayout  row="2" width="100%" backgroundColor="white">
         <ListView ref="listview" separatorColor="transparent" for="item in cart" :key="index">
         <v-template>
        <StackLayout class="main">
@@ -35,23 +42,19 @@
             <Image row="0" col="0"  stretch="aspectFill" class="card-img" @tap="onClickButton()"
                 :src="item.itemImage" />
             
-            <GridLayout row="0" col="1" width="170" columns="auto," rows="auto,auto,auto" class="details">
+            <GridLayout row="0" col="1" width="170" columns="auto," rows="auto,auto" class="details">
                 <Label row="0" col="0" width= "170" class="item-name" textwrap="true"
                      horizontalAlignment="left"
                     :text="item.itemName" />
-                
-                    <Label row="1" col="0" class="item-category" textwrap="true"
-                        horizontalAlignment="left"
-                        :text="item.price" />
                      
-                    <Label row="2" col="0" class="item-name" horizontalAlignment="left"
+                    <Label row="1" col="0" class="item-name" horizontalAlignment="left"
                         :text="item.itemCategory" />
                      
             </GridLayout>
 
                 <Button row="0" col="2"  class="addLabel" @tap="onDeleteButton(item)"
                     horizontalAlignment="right" verticalAlignment="top"
-                    text="Delete" />
+                    :text="item.price "/>
 
         </GridLayout>
             <StackLayout width="100%" marginTop="5" class="line" />
@@ -67,62 +70,59 @@
     </v-template>
     </ListView>
       </GridLayout>
-      <StackLayout row ="2" width="100%"  marginBottom="5" class="line" />
-       <GridLayout row ="3" verticalAlignment="center"  cols="auto,*" width="100%" >
-       <Label col="0" text="Order Total" horizontalAlignment="left" class="content" />
-       <Label col="1" :text="toatlPrice"  horizontalAlignment="right" class="pcontent" />
+      <StackLayout row ="3" width="100%"  marginBottom="1" class="line" />
+       <GridLayout row ="4" rows="auto,auto,auto" verticalAlignment="center"  cols="auto,*" width="100%" >
+       <Label row="0" col="0" text="No of Items"  marginLeft="16" horizontalAlignment="left" class="small-text" />
+       <Label row="0" col="1" :text="totalItems"  marginRight="30" horizontalAlignment="right" class="small-text" /> 
+       <Label row="1" col="0" text="Order Total"  marginLeft="16" horizontalAlignment="left" class="content" />
+       <Label row="1" col="1" :text="toatlPrice"  marginRight="30" horizontalAlignment="right" class="content" />
+       <Label row="2" col="0" text="Reward Points" horizontalAlignment="left" marginLeft="16" class="small-text"/>
+       <Label row="2" col="1" :text="rewards"  horizontalAlignment="right" marginRight="30" class="small-text" />
        </GridLayout>
-        <StackLayout row ="4" width="100%" marginTop="20" class="line" />
+       <StackLayout row ="5" class="first">
+        <StackLayout width="100%" class="line" />
+          <Label marginTop="14" text="Select Payment Type"/>
+        <DropDown
+            marginTop="8"
+            fontWeight="bold"
+            ref="dropDownPaymentType"
+            selectedIndex="0"
+            hint="Payment Type"
+            :items="payments"
+            class="item-drop-down"
+          ></DropDown>
+        </StackLayout>
     </GridLayout>
-    <Button  text="ORDER NOW" verticalAlignment="center"  horizontalAlignment="bottom"  @tap="goToCheckout()" class="btn btn-primary m-t-20" />
-</StackLayout>
+    
+    </StackLayout>
     </page>
 </template>
 
 <script>
-    import Item from "./item";
-    import Cart from "./cart";
     import Home from "../Home";
-    import navBottom from "./navBottom";
-    import Beer  from "../categories/beer";
-    import { isIOS,isAndroid} from "tns-core-modules/platform";
-    import ItemDetails from "../ItemDetails";
     import OrderService from "../../services/order.service";
-    import Checkout from "./checkout";
-    import Dialog from 'tns-core-modules/ui/dialogs';
+    const orderSerVice = new OrderService();
 
-    const orderService = new OrderService();
-
-   export default {
-         props: ["item"],
-    components: {
-    ItemDetails,
-    Home,
-    navBottom,
-    Item,
-    Beer,
-    Cart,
-  },
-  mounted(){
-        this.fetchData();
-   },
-  computed: {
+    export default{
+    
+    computed: {
     user() {
       return this.$store.getters.user;
     },
-    orderList(){
-      return this.$store.getters.orderList;
-    },
-  },
-   data() {
-   let user=this.$store.getters.user;
-   let orderList=this.$store.getters.orderList;
-   
-    return {
+     },
+      mounted(){
+        this.fetchData();
+      },
+        data(){
+          return {
       lastDelY: 0,
       headerCollapsed: false,
       images:"/assets/images/food/pancake640.jpg",
+      totalItems:0,
       toatlPrice:0,
+      rewards:0,
+      userName:"",
+      payments:["MasterCard","BankTransfer","B-Pay"],
       cart: [
         {
           _id:"",
@@ -133,20 +133,19 @@
           userID:"",
         },  
       ],
-     }
-     
-    },
-   	methods: {
+      }
+        },     
+        methods: {
             home() {
             this.$navigateTo(Home);
             console.log()
             },
 
             fetchData(){
-              let uiD=this.user._id;
-              console.log(uiD)
-
-              orderService.getOrders().then(
+              
+              let uiD = this.user._id;
+              this.userName = this.user.name;
+              orderSerVice.getOrders().then(
               (response) => {
               console.log(response.content.toJSON().message)
 
@@ -154,6 +153,8 @@
               let tempList = orderList;
               const uList=tempList.filter(orders =>orders.userID==uiD);
               this.cart= uList;
+              let totalItem = uList.length;
+              this.totalItems = totalItem;
 
               let priceArray=uList.map(items => {
                   return items.price;})
@@ -162,59 +163,30 @@
                     tprice+=priceArray[x]
                   }
                 this.toatlPrice=tprice+"$";
+                this.rewards = tprice/10;
               },
               (e) => {
               console.log("error", e);
               }
               );
-            },
-            onDeleteButton(item){
-              const delItem={
-                _id:item._id,
-                itemName:item.itemName,
-                itemImage:item.itemImage,
-                itemCategory:item.itemCategory,
-                price:item.price,
-                userID:item.userID
-              }
-              confirm({
-                title: "Delete Item",
-                message: "Are you sure?",
-                okButtonText: "Delete",
-                cancelButtonText: "Cancel"
-                }).then(result => {
-              if(result){
-              console.log(delItem)
-
-              orderService.deleteOne(delItem).then((response) => {
-                console.log(response.content.toJSON().message);
-                },
-                (e) => {
-                console.log("error", e);
-                });
-                this.fetchData();
-              }
-              });
-            },
-            goToCheckout(){
-              this.$navigateTo(Checkout);
             }
-    },
-   }
+        }
+    }
+
 </script>
+
 <style scoped>
     .title{
         color: #bd2122;
         font-weight: bold;
     }
-    .content{
-        margin-left: 16;
-        font-size: 14;
-        color: #bd2122;
-        font-weight: bold;
+    .first{ 
+    margin-top: 10;
+   margin-left:15;
+    margin-right: 15;
+    font-size: 15;
     }
-    .pcontent{
-        margin-right: 30;
+    .content{
         font-size: 14;
         color: #bd2122;
         font-weight: bold;
@@ -277,7 +249,7 @@
         margin-left: 16;
         margin-right: 16;
         margin-bottom: 3;
-        margin-top: 16;
+        margin-top: 8;
     }
     .card-img {
         width: 80;
@@ -298,4 +270,19 @@
         color: #e0e0e0;
         background-color: #e0e0e0;
     }
+    .small-text{
+  color:gray;
+  font-size: 12;
+   margin-left: 20;
+   }
+   .item-drop-down {
+  font-size: 15;
+  height: 25;
+  padding: 4;
+  width: 100%;
+  border: 10;
+  background-color: white;
+  color: black;
+  border-color: #000000;
+}
 </style>
