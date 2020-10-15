@@ -153,7 +153,6 @@
               const orderList = response.content.toJSON().payload
               let tempList = orderList;
               const uList=tempList.filter(orders =>orders.userID==uiD);
-              console.log(uList)
               this.cart= uList;
 
               let priceArray=uList.map(items => {
@@ -162,7 +161,7 @@
                   for(let x=0;x<priceArray.length;x++){
                     tprice+=priceArray[x]
                   }
-                this.toatlPrice=tprice;
+                this.toatlPrice=tprice+"$";
               },
               (e) => {
               console.log("error", e);
