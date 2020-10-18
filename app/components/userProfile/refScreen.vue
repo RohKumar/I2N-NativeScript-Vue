@@ -53,7 +53,7 @@
     class="ref-text">
        </Label>
        <Label textWrap="true" horizontalAlignment="center"
-    text="1 Point=$1.00" color="grey"
+    text="100 Point=$1.00" color="grey"
     class="ref-text">
        </Label>
         <Label textWrap="true" horizontalAlignment="center"

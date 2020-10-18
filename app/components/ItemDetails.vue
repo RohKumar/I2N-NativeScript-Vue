@@ -190,8 +190,6 @@
 
 
             addOrderData(myorder){
-                console.log(myorder)
-
                 orderService.addOrder(myorder).then((response) => {
                 const result = response.content.toJSON();
                 if (isAndroid) {
