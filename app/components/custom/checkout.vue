@@ -2,7 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
 <StackLayout class="main" verticalAlignment="top">
-    <GridLayout rows="auto,auto,220,auto,auto,auto" columns="auto">
+    <GridLayout rows="auto,auto,220,auto,auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
         backgroundColor="#ffffff"
@@ -93,7 +93,7 @@
           ></DropDown>
         </StackLayout>
     </GridLayout>
-    
+    <Button text="PayOut" marginTop="190" verticalAlignment="bottom" class="btn btn-primary m-t-20" />
     </StackLayout>
     </page>
 </template>
@@ -163,7 +163,8 @@
                     tprice+=priceArray[x]
                   }
                 this.toatlPrice=tprice+"$";
-                this.rewards = tprice/10;
+                let temp = tprice/10;
+                this.rewards = temp.toFixed(2);
               },
               (e) => {
               console.log("error", e);
@@ -249,7 +250,7 @@
         margin-left: 16;
         margin-right: 16;
         margin-bottom: 3;
-        margin-top: 8;
+        margin-top: 5;
     }
     .card-img {
         width: 80;
@@ -271,18 +272,26 @@
         background-color: #e0e0e0;
     }
     .small-text{
-  color:gray;
-  font-size: 12;
-   margin-left: 20;
+        color:gray;
+        font-size: 12;
+        margin-left: 20;
    }
    .item-drop-down {
-  font-size: 15;
-  height: 25;
-  padding: 4;
-  width: 100%;
-  border: 10;
-  background-color: white;
-  color: black;
-  border-color: #000000;
-}
+      font-size: 15;
+      height: 25;
+      padding: 4;
+      width: 100%;
+      border: 10;
+      background-color: white;
+      color: black;
+      border-color: #000000;
+    }
+    .btn-primary {
+        height: 50;
+        margin: 10 5 15 5;
+        background-color: #d51a1a;
+        border-radius: 5;
+        font-size: 17;
+        font-weight: 600;
+    }
 </style>
