@@ -12,7 +12,7 @@
                     class="fa close" fontSize="24" />
             </GridLayout>
 
-            <ScrollView class="anim-images" orientation="horizontal">
+         <!--   <ScrollView class="anim-images" orientation="horizontal">
                 <StackLayout orientation="horizontal" class="">
                     <GridLayout v-for="image in item.images" rows="auto"
                         columns="*">
@@ -20,7 +20,7 @@
                             stretch="aspectFill" />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>
+            </ScrollView>   -->
 
             <GridLayout rows="auto,auto,auto,auto" columns="auto" class="content">
 
