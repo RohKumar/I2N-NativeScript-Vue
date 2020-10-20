@@ -21,7 +21,7 @@
           src="~/assets/images/back.png"
         />
 
-        <Label col="0" row="0" text="Cake" @tap="onTTap" horizontalAlignment="center" class="status-title"></Label>
+        <Label col="0" row="0" text="Menu"  @tap="onTTap" horizontalAlignment="center" class="status-title"></Label>
         
         <Image
           col="1"
@@ -50,16 +50,19 @@
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
     import ItemService from "../../services/item.service";
-
+    import Category from "../custom/category";
+    import Home from "../Home";
 const itemService = new ItemService();
 
    export default {
-      props: ["item"],
-        components: {},
+      props: ["item",'category'],
+       
     components: {
     Item,
     Beer,
     Cake,
+    Category,
+    Home,
   }, 
   data() {
     return {
@@ -102,26 +105,45 @@ const itemService = new ItemService();
 				}
 			})
         },
+        
         fetchData(){
+          let catID=1;
+          switch (this.category) {
+            case "Beer":
+              catID=1;
+              break;
+            case "Cake":
+              catID=2;
+              break;
+            case "Pancake":
+              catID=3;
+              break;
+            case "Burger":
+              catID=4;
+              break;
+            default:
+              catID=1;
+              break;
+          }
             itemService.getItems().then(
       (response) => {
         this.itemList = response.content.toJSON().payload
-        this.items=this.itemList;
-        this.items.map(items => {
-          console.log(items.item_id+items.item_name);
-         })
+        let myList=this.itemList.filter(items =>items.category_id==catID);
+      console.log(myList.map(items => {
+          return items.item_id+items.item_name;}))
+          this.items= myList;
       },
       (e) => {
         console.log("error", e);
           }
      );
-    },
-      onTTap(){
+     },
      
-          
-      }
-      
+    
+      onTTap(){
+     console.log(this.category);
     },
+    }
    }
 </script>
 <style scoped>

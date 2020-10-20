@@ -16,8 +16,8 @@
                         horizontalAlignment="left"
                         :text="cart.price" />
                      
-                    <Label row="2" col="0" class="rating-value item-category"
-                        :text="cart.rating" />
+                    <Label row="2" col="0" class="item-name" horizontalAlignment="left"
+                        :text="cart.category" />
                      
             </GridLayout>
 

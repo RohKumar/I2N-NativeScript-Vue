@@ -9,6 +9,7 @@ export default class HttpService {
           });
     }
     post(url,data) {
+        console.log(url)
         let headers = this.createRequestHeader();
         return http.request({
             url,
