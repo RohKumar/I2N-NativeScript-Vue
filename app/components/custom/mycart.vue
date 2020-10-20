@@ -32,7 +32,7 @@
         <StackLayout class="content">
         <GridLayout  columns="auto,auto,auto" rows="auto" verticalAlignment="center">
             
-            <Image row="0" col="0"  stretch="aspectFill" class="card-img" @tap="onClickButton()"
+            <Image row="0" col="0"  stretch="aspectFill" class="card-img"
                 :src="item.itemImage" />
             
             <GridLayout row="0" col="1" width="170" columns="auto," rows="auto,auto,auto" class="details">
@@ -84,7 +84,6 @@
     import Cart from "./cart";
     import Home from "../Home";
     import navBottom from "./navBottom";
-    import Beer  from "../categories/beer";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
     import OrderService from "../../services/order.service";
@@ -100,7 +99,6 @@
     Home,
     navBottom,
     Item,
-    Beer,
     Cart,
   },
   mounted(){
@@ -162,6 +160,7 @@
                   for(let x=0;x<priceArray.length;x++){
                     tprice+=priceArray[x]
                   }
+                  tprice = tprice.toFixed(2);
                 this.toatlPrice=tprice;
               },
               (e) => {

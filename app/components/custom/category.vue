@@ -13,29 +13,28 @@
 
 </template>
 <script>
-    import BeerCategory from "../categories/beerC";
-    import CakeCategory from "../categories/cakeC";
+    import CategoryItem from "../categories/categoryItem";
  
     export default {
         props: ["item"],
         components: {
-            CakeCategory,
+            CategoryItem,
         },
         methods: {
             onClickButton(data) {
                 this.$emit("clicked", data.id);
                  switch (this.item.category) {
                     case "BURGER":
-                        this.$navigateTo(CakeCategory,{props: { category: "Burger" } });
+                        this.$navigateTo(CategoryItem,{props: { category: "Burger" } });
                         break;
                     case "BEER":
-                       this.$navigateTo(CakeCategory,{props: { category: "Beer" } });
+                       this.$navigateTo(CategoryItem,{props: { category: "Beer" } });
                         break;
                     case "PANCAKE":
-                        this.$navigateTo(CakeCategory,{props: { category: "Pancake" } });
+                        this.$navigateTo(CategoryItem,{props: { category: "Pancake" } });
                         break;
                     case "CAKE":
-                        this.$navigateTo(CakeCategory,{props: { category: "Cake" } });
+                        this.$navigateTo(CategoryItem,{props: { category: "Cake" } });
                         break;
                     default:
                         console.log("Default");

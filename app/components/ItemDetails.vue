@@ -271,7 +271,7 @@
                 });
             },
             close() {
-                this.$navigateBack();
+                this.$navigateTo(Home);
             },
             animateLike() {
                 let imgLogo = this.$refs.like.nativeView;

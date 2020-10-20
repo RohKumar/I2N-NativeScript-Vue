@@ -35,8 +35,8 @@
       <GridLayout  row="1" width="100%" backgroundColor="white">
         <ListView ref="listview" separatorColor="transparent" for="item in items" :key="index">
         <v-template>
-            <cake :item="item"  />   
-        </v-template>
+            <item :item="item" @clicked="showItem(item)" />
+          </v-template>
         </ListView>
       </GridLayout>
     </GridLayout>
@@ -45,22 +45,18 @@
 
 <script>
     import Item from "../custom/item";
-    import Beer  from "./beer";
-    import Cake from "./cake";
     import { isIOS,isAndroid} from "tns-core-modules/platform";
     import ItemDetails from "../ItemDetails";
-    import ItemService from "../../services/item.service";
+    import MenuService from "../../services/menu.service";
     import Category from "../custom/category";
     import Home from "../Home";
-const itemService = new ItemService();
+const menuService = new MenuService();
 
    export default {
       props: ["item",'category'],
        
     components: {
     Item,
-    Beer,
-    Cake,
     Category,
     Home,
   }, 
@@ -69,14 +65,22 @@ const itemService = new ItemService();
       lastDelY: 0,
       headerCollapsed: false,
       itest:[],
-      items:[{
-          item_id:"",
-          item_name:"",
-          item_image:"",
-          item_price:"",
-          category_id:"",
-          Flag:"",
-      }],
+      items: [
+        {
+          name: "",
+          cover: "",
+          //images:{},
+          category: "",
+          categoryTag: "",
+          price: 0,
+          likes: 0,
+          isLike: '',
+          isFavorite:'',
+          comments:'',
+          rating: '',
+          description: "",
+        },
+        ],
      };
     },
   computed: {
@@ -125,12 +129,10 @@ const itemService = new ItemService();
               catID=1;
               break;
           }
-            itemService.getItems().then(
+            menuService.getMenu().then(
       (response) => {
         this.itemList = response.content.toJSON().payload
         let myList=this.itemList.filter(items =>items.category_id==catID);
-      console.log(myList.map(items => {
-          return items.item_id+items.item_name;}))
           this.items= myList;
       },
       (e) => {

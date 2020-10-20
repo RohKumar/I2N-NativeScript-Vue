@@ -190,7 +190,7 @@
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
-  import CakeC from "./categories/cakeC";
+  import CategoryItem from "./categories/categoryItem";
   import MenuService from "../services/menu.service";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
@@ -206,7 +206,7 @@ export default {
     navBottom,
     Item,
     Category,
-    CakeC
+    CategoryItem
   },
   
   computed: {
@@ -230,7 +230,6 @@ export default {
       
       items: [
         {
-
           name: "",
           cover: "",
           //images:{},
@@ -243,68 +242,6 @@ export default {
           comments:'',
           rating: '',
           description: "",
-
-         /*
-          name: "Manila Ultimate Tombstone Burger",
-          cover: "~/assets/images/food/burger640.jpg",
-          images: [
-            { src: "~/assets/images/food/burger/burger1.jpg" },
-            { src: "~/assets/images/food/burger/burger2.jpg" },
-            { src: "~/assets/images/food/burger/burger3.jpg" },
-            { src: "~/assets/images/food/burger/burger4.jpg" },
-            { src: "~/assets/images/food/burger/burger5.jpg" },
-            { src: "~/assets/images/food/burger/burger6.jpg" },
-          ],
-          category: "Burger",
-          categoryTag: "#2D9CDB",
-          price: 300,
-          likes: 987,
-          isLike: false,
-          isFavorite: true,
-          comments: 13,
-          rating: "4.5",
-          description: "a",
-        },
-        {
-          name: "Quezon Chocolate Marble Pancake",
-          cover: "~/assets/images/food/pancake640.jpg",
-          images: [
-            { src: "~/assets/images/food/pancake/pancake1.jpg" },
-            { src: "~/assets/images/food/pancake/pancake2.jpg" },
-            { src: "~/assets/images/food/pancake/pancake3.jpg" },
-            { src: "~/assets/images/food/pancake/pancake4.jpg" },
-            { src: "~/assets/images/food/pancake/pancake5.jpg" },
-            { src: "~/assets/images/food/pancake/pancake6.jpg" },
-          ],
-          category: "Pancake",
-          categoryTag: "#e4ce0d",
-          price: 230,
-          likes: 891,
-          isLike: true,
-          isFavorite: true,
-          comments: 7,
-          rating: "4.0",
-          description: "a",
-        },
-        {
-          name: "Binondo Black Forest Cake",
-          cover: "~/assets/images/food/cake640.jpg",
-          images: [
-            { src: "~/assets/images/food/cake/cake1.jpg" },
-            { src: "~/assets/images/food/cake/cake2.jpg" },
-            { src: "~/assets/images/food/cake/cake3.jpg" },
-            { src: "~/assets/images/food/cake/cake4.jpg" },
-          ],
-          category: "Cake",
-          categoryTag: "#27AE60",
-          price: 300,
-          likes: 730,
-          isLike: true,
-          isFavorite: true,
-          comments: 11,
-          rating: "4.0",
-          description: "a",
-        },*/
         },
         ],
       category: [
@@ -344,7 +281,6 @@ export default {
                 console.log(response.content.toJSON().message);
 
                 const menuItems=response.content.toJSON().payload;
-               console.log(menuItems);
                 this.items=menuItems;
                 },
                 (e) => {
