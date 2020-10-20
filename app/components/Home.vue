@@ -191,9 +191,11 @@
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
   import CakeC from "./categories/cakeC";
+  import MenuService from "../services/menu.service";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
+  const menuService = new MenuService();
 
   import Vue from "nativescript-vue";
   import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
@@ -206,6 +208,7 @@ export default {
     Category,
     CakeC
   },
+  
   computed: {
     
     itemsCategory() {
@@ -227,6 +230,21 @@ export default {
       
       items: [
         {
+
+          name: "",
+          cover: "",
+          //images:{},
+          category: "",
+          categoryTag: "",
+          price: 0,
+          likes: 0,
+          isLike: '',
+          isFavorite:'',
+          comments:'',
+          rating: '',
+          description: "",
+
+         /*
           name: "Manila Ultimate Tombstone Burger",
           cover: "~/assets/images/food/burger640.jpg",
           images: [
@@ -286,8 +304,9 @@ export default {
           comments: 11,
           rating: "4.0",
           description: "a",
+        },*/
         },
-      ],
+        ],
       category: [
         {
           cover: "~/assets/images/food/burger640.jpg",
@@ -315,9 +334,24 @@ export default {
   mounted() {
     this.validateUser();
     this.fetchLocation();
+    this.fetchPopularItems();
    
   },
 	methods: {
+    fetchPopularItems()
+    {
+      menuService.getMenu().then((response) => {
+                console.log(response.content.toJSON().message);
+
+                const menuItems=response.content.toJSON().payload;
+               console.log(menuItems);
+                this.items=menuItems;
+                },
+                (e) => {
+                console.log("error", e);
+                });
+    },
+
 		search(){
 			this.$navigateTo(Map);
 		},
