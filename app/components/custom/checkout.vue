@@ -170,6 +170,10 @@
               console.log("error", e);
               }
               );
+            },
+            onPaymnetTap(){
+              
+
             }
         }
     }

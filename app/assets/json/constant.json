@@ -12,6 +12,7 @@
       "order":"/order",
       "location":"/location",
       "deleteOne":"/order/deleteOne",
-      "deleteAll": "/order/deleteAll"
+      "deleteAll": "/order/deleteAll",
+      "payment" : "/payment"
    }
 }
