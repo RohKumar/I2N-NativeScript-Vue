@@ -181,7 +181,7 @@ import { validEmail,toastMessage } from "../../services/utils";
 import { isIOS, isAndroid } from 'tns-core-modules/platform'
 import { GooglePlacesAutocomplete } from 'nativescript-google-places-autocomplete';
 
-let API_KEY = "AIzaSyBMVS8sQBb5ex21snLA7elxtCbbvBZlRAs";
+let API_KEY = "AIzaSyAo5TDtdF5YVlvQ-6QrNh2GZIG9q_xrRbA";
 let googlePlacesAutocomplete = new GooglePlacesAutocomplete(API_KEY);
 const signupService = new SignupService();
 configureOAuthProviders();

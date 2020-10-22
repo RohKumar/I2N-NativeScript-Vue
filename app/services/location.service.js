@@ -7,9 +7,9 @@ export default class LocationService {
         this.httpService = new HttpService();
     }
 
-    // addLocation(order) {
-    //     return this.httpService.post(environment.baseUrl + constant.api.order, order);
-    // }
+    addLocation(address) {
+        return this.httpService.post(environment.baseUrl + constant.api.location, address);
+    }
     getAllLocation() {
         return this.httpService.get(environment.baseUrl + constant.api.location);
     }

@@ -10,9 +10,8 @@
                         <Label text="Home" padding="10" />
                         <Label text="Featured" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-                        <Label text="Family Packs / Catering" padding="10" />
-                        <Label text="Amazing food offers" padding="10" fontWeight="bold" color="white" backgroundColor="#bd2122" />
-                        <Label text="My Cart" padding="10" />
+                        <Label text="Amazing food offers" padding="10" fontWeight="bold" color="white" backgroundColor="#bd2122"  @tap="showPromos"/>
+                        <Label text="My Cart" padding="10" @tap="onCartTap" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
                         <Label text="About Us"  padding="10" />
@@ -190,8 +189,11 @@
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
+  import Mycart from "./custom/mycart";
   import CategoryItem from "./categories/categoryItem";
   import MenuService from "../services/menu.service";
+  import Promos from "./custom/promos";
+  import * as ApplicationSettings from "application-settings";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
@@ -318,7 +320,8 @@ export default {
 			this.selectedTabview = 1;
 		},
 		showPromos() {
-			this.selectedTabview = 2;
+      this.selectedTabview = 2;
+      this.$navigateTo(Promos);
 		},
 		home() {
       this.selectedTab = 0; 
@@ -421,10 +424,11 @@ export default {
                 this.$refs.drawer.nativeView.closeDrawer();
   },
   onReferTap(){
-   this.$navigateTo(RefScreen,{});
-    
+   this.$navigateTo(RefScreen,{});  
   },
-  
+  onCartTap(){
+    this.$navigateTo(Mycart)
+  },
   logout(){
    ApplicationSettings.clear();
     this.$navigateTo(Login);

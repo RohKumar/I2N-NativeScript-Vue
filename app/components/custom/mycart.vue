@@ -2,7 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
 <StackLayout class="main" verticalAlignment="top">
-    <GridLayout rows="auto,480,auto,auto,auto,auto" columns="auto">
+    <GridLayout rows="auto,580,auto,auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
         backgroundColor="#ffffff"
@@ -151,7 +151,6 @@
               const orderList = response.content.toJSON().payload
               let tempList = orderList;
               const uList=tempList.filter(orders =>orders.userID==uiD);
-              console.log(uList)
               this.cart= uList;
 
               let priceArray=uList.map(items => {

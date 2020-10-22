@@ -113,6 +113,7 @@
     row="2" 
     backgroundColor="#ffffff"    
     width="100%"
+    @tap="onOrderTap"
     rows="auto,auto"
     columns="*,auto">
 
@@ -120,7 +121,7 @@
       col="0"
       class="status-title"
        text="Orders" 
-       @tap="showNameInConsole"
+       @tap="onOrderTap"
        ></Label>
        
        <Image
@@ -240,6 +241,7 @@
   import * as ApplicationSettings from "application-settings";
   import RefScreen from "./refScreen";
   import UserAddress from "./userAddress";
+  import MyCart from "../custom/mycart";
   
   export default {
     mounted() {
@@ -277,6 +279,9 @@ onAddressTap(){
  },
  onReferTap(){
    this.$navigateTo(RefScreen,{});
+ },
+ onOrderTap(){
+   this.$navigateTo(MyCart);
  },
  onSettingTap(){
    this.$navigateTo(AccSetting,{});
