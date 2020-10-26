@@ -84,9 +84,9 @@ const menuService = new MenuService();
      };
     },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    }, 
+    // user() {
+    //   return this.$store.getters.user;
+    // }, 
   },
   created(){
       // this.items=this.fetchData();
