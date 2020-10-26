@@ -13,6 +13,7 @@
       "location":"/location",
       "deleteOne":"/order/deleteOne",
       "deleteAll": "/order/deleteAll",
-      "menu": "/menu"
+      "menu": "/menu",
+      "promo":"/promo"
    }
 }

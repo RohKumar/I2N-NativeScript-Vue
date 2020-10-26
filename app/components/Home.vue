@@ -169,20 +169,21 @@
            <GridLayout 
                     row=0
                     columns=auto
-                    rows=auto,auto>
-               <TextField row=0 class="promoTextField" text="enter promo code" />
-               <Button row=1 class="promoButton"  text="Apply Code" @tap="codeApply"/>
+                    rows=auto,auto,auto>
+               <TextField row=0 class="promoTextField" hint="enter promo code" v-model="code" />
+               <Button row=1 ref="codeButton" class="promoButton"  text="Apply Code" @tap="checkCode"/>
+               <Label row=1 ref="codeDescription" visibility="hidden" class="descriptionLabel" :text="description"/>
            </GridLayout>
 
             <GridLayout 
                     row=1
                     columns=*
                     rows=auto,auto,auto,auto,auto>
-               <Label row=0  class="claimedLabel" text="Claimed"  />
+               <Label row=0  class="claimedLabel" text="Available Promotions"  />
                 <Button row=1  class="claimedButton" text="$20 off"/>
                 <Button row=2  class="claimedButton" text="free delivery"/>
                 <Button row=3  class="claimedButton" text="$10 off"/>
-                <Button row=4  class="claimedButton" text="free delivery"/>
+                <Button row=4 ref="newPromo"  class="claimedButton" visibility="hidden" :text="description"/>
            </GridLayout> 
            
              <GridLayout 
@@ -224,11 +225,13 @@
   import Mycart from "./custom/mycart";
   import CategoryItem from "./categories/categoryItem";
   import MenuService from "../services/menu.service";
+  import PromoService from "../services/promo.service";
   import * as ApplicationSettings from "application-settings";
 	const gestures = require("ui/gestures"); 
 	const app = require("application");
   const geoLocationService = new GeoLocationService();
   const menuService = new MenuService();
+  const promoService = new PromoService();
 
   import Vue from "nativescript-vue";
   import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
@@ -260,6 +263,8 @@ export default {
       selectedTab: 0,
       selectedTabview: 0,
       location: {},
+      code:"",
+      description:"",
       
       items: [
         {
@@ -308,6 +313,51 @@ export default {
    
   },
 	methods: {
+    checkCode()
+    {
+        let enteredCode = this.code;
+        console.log(enteredCode);
+        promoService.getPromo().then((response) => {
+                console.log(response.content.toJSON().message);
+                const promosList=response.content.toJSON().payload;
+                 let tempList = promosList;
+              const uList=tempList.filter(promo =>promo.code==enteredCode);
+              //console.log( uList[0].description);
+              if(uList.length !=0)
+              {
+                this.description = uList[0].description;
+                let newPromo = this.$refs.newPromo.nativeView;
+                newPromo.visibility = "visible";
+                /* this.description = uList[0].description;
+                 let codeButton = this.$refs.codeButton.nativeView;
+                 let codeDescription = this.$refs.codeDescription.nativeView;
+                 codeButton.visibility = "collapsed";
+                 codeDescription.visibility = "visible";  */
+
+                 alert({
+                    title: "Success",
+                    message: "Code Applied Successfully",
+                    okButtonText: "ok"
+                    }).then(() => {
+                    console.log("Alert dialog closed");
+                    });
+              }  
+              else
+              {
+                alert({
+                    title: "Error",
+                    message: "Enter valid code",
+                    okButtonText: "Ok"
+                    }).then(() => {
+                    console.log("Alert dialog closed");
+                    });
+              }        
+                },
+                (e) => {
+                console.log("error", e);
+                });
+    },
+
     fetchPopularItems()
     {
       menuService.getMenu().then((response) => {
@@ -550,6 +600,10 @@ export default {
       font-size: 18;
     margin-top: 30;
     margin-left: 10;
+  }
+  .descriptionLabel
+  {
+    font-size: 15;
   }
   .savingsGrid
   {
