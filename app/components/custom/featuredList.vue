@@ -7,10 +7,10 @@
          <ListView ref="listview" separatorColor="transparent"  for="item in items" :key="index">
              <v-template>
                  <GridLayout class="itemList" rows="auto auto auto" columns="*">
-                    <Image row=0 stretch="aspectFill" class="card-img" :src="item.item_image"/>
+                    <Image row=0 stretch="aspectFill" class="card-img" :src="item.cover"/>
                     <GridLayout row="1" class="itemValues" rows="auto auto" columns="* auto">
-                        <Label row=0 col=0 :text="item.item_name" />
-                        <Label row=0 col=1 :text="item.item_price" />
+                        <Label row=0 col=0 :text="item.name" />
+                        <Label row=0 col=1 :text="item.price" />
                     </GridLayout>
                  </GridLayout>
              </v-template>
@@ -24,9 +24,9 @@
 <script>
     import Item from "./item";
     import ItemDetails from "../ItemDetails";
-import ItemService from "../../services/item.service";
+import MenuService from "../../services/menu.service";
 
-const itemService = new ItemService();
+const menuService = new MenuService();
 export default {
   components: {
       Item
@@ -42,11 +42,10 @@ export default {
     return {
   
         items:[{
-                item_id:"",
-                item_name:"",
-                item_image:"",
-                item_price:"",
-                category_id:"",
+                name:"",
+                cover:"",
+                price:"",
+                category:"",
                 isFeatured:"",
                 Flag:""
         }],
@@ -58,7 +57,7 @@ export default {
       fetchFeaturedItems()
       {
           let value="Y";
-          itemService.getItems().then((response) => {
+          menuService.getMenu().then((response) => {
                 console.log(response.content.toJSON().message);
 
                 const featuredItems=response.content.toJSON().payload;
