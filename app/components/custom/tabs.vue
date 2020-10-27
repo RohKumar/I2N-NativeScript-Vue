@@ -1,11 +1,14 @@
 <template>
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
 <TabView id="tabViewContainer">
+    <TabViewItem title="Categories" >
+            <Frame id="Menu" ><Menu/></Frame> 
+    </TabViewItem>
+    <TabViewItem title="Items">
+            <Frame id="showItems" ><Items/></Frame>
+    </TabViewItem>
     <TabViewItem title="Map" >
                 <Frame id="Category" ><Map/></Frame> 
-    </TabViewItem>
-    <TabViewItem title="Menu" >
-            <Frame id="Menu" ><Menu/></Frame> 
     </TabViewItem>
 </TabView>
   </page>
@@ -13,10 +16,12 @@
 <script>
 import Menu from "./Menu";
 import Map from "./map";
+import Items from "./showItems";
 export default {
   components: {
       Menu,
       Map,
+      Items,
   },
   computed: {
 
