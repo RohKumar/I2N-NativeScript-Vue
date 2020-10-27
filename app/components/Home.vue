@@ -8,7 +8,7 @@
                     </StackLayout>
                     <StackLayout class="drawer">
                         <Label text="Home" padding="10" />
-                        <Label text="Featured" padding="10" />
+                        <Label text="Featured" @tap="onFeaturedTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
                         <Label text="Amazing food offers" padding="10" fontWeight="bold" color="white" backgroundColor="#bd2122"  @tap="showPromos"/>
                         <Label text="My Cart" padding="10" @tap="onCartTap" />
@@ -221,6 +221,7 @@
   import GeoLocationService from '../services/geoLocationService';
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
+  import FeaturePage from "./custom/featuredList";
   import RefScreen from "./userProfile/refScreen";
   import Mycart from "./custom/mycart";
   import CategoryItem from "./categories/categoryItem";
@@ -505,6 +506,9 @@ export default {
   },
   onReferTap(){
    this.$navigateTo(RefScreen,{});  
+  },
+  onFeaturedTap(){
+   this.$navigateTo(FeaturePage,{});
   },
   onCartTap(){
     this.$navigateTo(Mycart)
