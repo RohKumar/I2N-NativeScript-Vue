@@ -108,13 +108,9 @@
     user() {
       return this.$store.getters.user;
     },
-    orderList(){
-      return this.$store.getters.orderList;
-    },
   },
    data() {
    let user=this.$store.getters.user;
-   let orderList=this.$store.getters.orderList;
    
     return {
       lastDelY: 0,

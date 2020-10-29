@@ -223,6 +223,7 @@
   import UserPage from "./userProfile/user-page";
   import FeaturePage from "./custom/featuredList";
   import RefScreen from "./userProfile/refScreen";
+  import Tabs from "./custom/tabs";
   import Mycart from "./custom/mycart";
   import CategoryItem from "./categories/categoryItem";
   import MenuService from "../services/menu.service";
@@ -481,7 +482,11 @@ export default {
       setTimeout(() => {
         if(this.user === null) {
           this.goToLogin()
-			  }
+        }
+        else if(this.user.role == 2)
+        {
+          this.$navigateTo(Tabs);
+        }
       }, 0)
 			
     },
