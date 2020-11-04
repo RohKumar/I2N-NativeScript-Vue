@@ -7,7 +7,7 @@ export default class MenuService {
         this.httpService = new HttpService();
     }
 
-    addMenuItem(item) 
+    addItem(item) 
     {
          return this.httpService.post(environment.baseUrl + constant.api.menu, item);
      }
