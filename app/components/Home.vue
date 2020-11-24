@@ -15,7 +15,7 @@
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
                         <StackLayout width="100%" marginTop="10" class="line" />
                         <Label text="About Us"  padding="10" />
-                        <Label text="Terms & Conditions" padding="10" />
+                        <Label text="Terms & Conditions" padding="10" @tap="onTapTnc" />
                         <Label text="Privacy Policy" padding="10" />
                         <Label text="Help & Support" padding="10" />
                         <Label text="Logout" @tap="logout" padding="10" />
@@ -222,6 +222,7 @@
   import UserPage from "./userProfile/user-page";
   import RefScreen from "./userProfile/refScreen";
   import Mycart from "./custom/mycart";
+  import Tnc from "./custom/TermsandConditions";
   import CategoryItem from "./categories/categoryItem";
   import MenuService from "../services/menu.service";
   import * as ApplicationSettings from "application-settings";
@@ -455,6 +456,9 @@ export default {
   },
   onReferTap(){
    this.$navigateTo(RefScreen,{});  
+  },
+  onTapTnc(){
+    this.$navigateTo(Tnc,{});
   },
   onCartTap(){
     this.$navigateTo(Mycart)
