@@ -93,7 +93,7 @@
           ></DropDown>
         </StackLayout>
     </GridLayout>
-    <Button text="PayOut" marginTop="190" verticalAlignment="bottom" class="btn btn-primary m-t-20" />
+    <Button text="PayOut" marginTop="190" verticalAlignment="bottom" @tap="onPaymnetTap(cart)" class="btn btn-primary m-t-20" />
     </StackLayout>
     </page>
 </template>
@@ -101,6 +101,7 @@
 <script>
     import Home from "../Home";
     import OrderService from "../../services/order.service";
+import paymentVue from './payment.vue';
     const orderSerVice = new OrderService();
 
     export default{
@@ -171,8 +172,8 @@
               }
               );
             },
-            onPaymnetTap(){
-              
+            onPaymnetTap(cart){
+              this.$navigateTo(paymentVue, { props: { cart: cart } });
 
             }
         }
