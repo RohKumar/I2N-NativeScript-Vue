@@ -13,11 +13,12 @@
                         <Label text="Amazing food offers" padding="10" fontWeight="bold" color="white" backgroundColor="#bd2122"  @tap="showPromos"/>
                         <Label text="My Cart" padding="10" @tap="onCartTap" />
                         <Label text="Refer & Earn" @tap="onReferTap" padding="10" />
+                        <Label text="search" padding="10" @tap="onSearchTap" />
                         <StackLayout width="100%" marginTop="10" class="line" />
-                        <Label text="About Us"  padding="10" />
+                        <Label text="About Us" @tap="onAboutTap"  padding="10" />
                         <Label text="Terms & Conditions" padding="10" />
-                        <Label text="Privacy Policy" padding="10" />
-                        <Label text="Help & Support" padding="10" />
+                        <Label text="Help & Support" @tap="onHelpTap" padding="10" />
+                        <Label text="Geo-Tracker" @tap="onGeoTap" padding="10" />
                         <Label text="Logout" @tap="logout" padding="10" />
                     </StackLayout>
                     <Label text="Close" color="lightgray" padding="10" style="horizontal-align: center"
@@ -222,6 +223,11 @@
   import QrScanner from "./custom/qrScanner";
   import UserPage from "./userProfile/user-page";
   import FeaturePage from "./custom/featuredList";
+  import About from "./custom/aboutUs";
+  import Help from "./custom/help";
+  import search from "./custom/driverMap";
+  import geo from "./custom/geo-tracker";
+  import tracker from "./custom/locationTracking";
   import RefScreen from "./userProfile/refScreen";
   import Mycart from "./custom/mycart";
   import CategoryItem from "./categories/categoryItem";
@@ -510,8 +516,21 @@ export default {
   onFeaturedTap(){
    this.$navigateTo(FeaturePage,{});
   },
+  onAboutTap(){
+    this.$navigateTo(About,{});
+  },
+  onHelpTap(){
+    this.$navigateTo(Help,{})
+  },
   onCartTap(){
     this.$navigateTo(Mycart)
+  },
+  onSearchTap(){
+    this.$navigateTo(search,{})
+  },
+  onGeoTap(){
+
+    this.$navigateTo(tracker,{});
   },
   logout(){
    ApplicationSettings.clear();
