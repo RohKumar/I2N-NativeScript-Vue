@@ -14,6 +14,7 @@
       "deleteOne":"/order/deleteOne",
       "deleteAll": "/order/deleteAll",
       "menu": "/menu",
-      "promo":"/promo"
+      "promo":"/promo",
+      "restaurantDetals": "/rDetails"
    }
 }

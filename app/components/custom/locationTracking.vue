@@ -2,6 +2,7 @@
   <Page androidStatusBarBackground="#474747">
     <ActionBar title="Realtime  Location"/>
     <StackLayout>
+      <SearchBar hint="What are you looking for?" v-model="searchPhrase" @submit="onSubmit" textFieldHintColor="gray" marginTop="20" />
       <WrapLayout  horizontalAlignment="center">
         <Button class="options" @tap="getDirections">Get Directions</Button>
         <Button class="options" @tap="clearRoute">Clear Route</Button>
@@ -31,19 +32,22 @@
 import * as permissions from 'nativescript-permissions';
 import * as platform from 'platform';
 import MapsHelper from "../MapsHelper";
+import RestaurantDetailsService from "../../services/restaurantDetails.service";
+const ResDetailService = new RestaurantDetailsService();
 
 export default {
   data() {
       /* returning data specific to the template part and permissions */
       return {
       origin: { latitude: 0, longitude: 0 },
-      destination: { latitude: -37.81809309726681, longitude: 144.96706179833646 },
+      destination: { latitude: -37.797114, longitude: 144.877142 },
       journeyDetails: "Journey: Not started yet!",
       allowExecution: false,
       journeyStarted: false,
       mapView: null,
       zoom: 17,
-      APIKEY: "AIzaSyD6OLAPMw3oymKhym1fDfdpxGLfrDNDjcs"
+      APIKEY: "AIzaSyD6OLAPMw3oymKhym1fDfdpxGLfrDNDjcs",
+      searchPhrase: '',
     }
   },
   created: function() {
@@ -65,6 +69,79 @@ export default {
   },
   methods: {
     /* defining 6 methods used as event handlers in our template */
+    getRestaurantAddress(){
+
+      
+      ResDetailService.getAllRestaurantDetails().then((response) => {
+                console.log(response.content.toJSON().message);
+
+                const restaurantAddresses=response.content.toJSON().payload;
+                let tempList = restaurantAddresses;
+               /* if(tempList.length !=0)
+                {
+                  console.log(tempList[0].latitude);
+                  console.log(tempList[0].longitude);
+                }*/
+              const uList=tempList.filter(match =>match.name==search.text);
+               if(uList.length !=0)
+                {
+                  console.log(uList[0].latitude);
+                  console.log(uList[0].longitude);
+                  
+                }
+             // this.addresses=uList;
+             // console.log(this.addresses);
+                },
+                (e) => {
+                console.log("error", e);
+                });
+
+    },
+    onSubmit(args){
+      const search = args.object;
+     
+      console.log(search.text);
+       ResDetailService.getAllRestaurantDetails().then((response) => {
+                console.log(response.content.toJSON().message);
+
+                const restaurantAddresses=response.content.toJSON().payload;
+                let tempList = restaurantAddresses;
+               /* if(tempList.length !=0)
+                {
+                  console.log(tempList[0].latitude);
+                  console.log(tempList[0].longitude);
+                }*/
+                let temp=search.text.toLowerCase();
+              const uList=tempList.filter(match =>match.name.toLowerCase()==temp);
+             
+
+               if(uList.length !=0)
+                {
+                this.destination.latitude=uList[0].latitude;
+                this.destination.longitude=uList[0].longitude;
+                }
+                else{
+                  console.log("Please check the spelling or try someother restauarants");
+                  alert({
+                    title: "Error",
+                    message: "Please check the spelling or try someother restauarants",
+                    okButtonText: "Ok"
+                    }).then(() => {
+                    console.log("Alert dialog closed");
+                    });
+                     this.destination.latitude=0;
+                this.destination.longitude=0;
+                }
+             // this.addresses=uList;
+             // console.log(this.addresses);
+                },
+                (e) => {
+                console.log("error", e);
+                });
+
+      
+
+    },
     mapReady(args) {
       /* get the mapView instance */
       this.mapView = args.object;
@@ -98,6 +175,7 @@ export default {
     },
     getDirections() {
        
+       this.getRestaurantAddress();
       /* hit Directions API - as origin and destination coordinates are set */
       this.hitDirectionsAPI().then(response => {
         /* draw route from encoded polyline points */
@@ -117,6 +195,8 @@ export default {
     clearRoute() {
       /* remove route drawn between locations on map */
       this.mapView.removeAllPolylines();
+       this.destination.latitude=0;
+                this.destination.longitude=0;
     },
     startJourney() {
       /* hide my location indicator and button */
