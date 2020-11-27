@@ -2,6 +2,7 @@
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
 <StackLayout class="main" verticalAlignment="top">
+  <Button  text="ORDER NOW" verticalAlignment="center"  horizontalAlignment="bottom"  @tap="goToCheckout()" class="btn btn-primary m-t-20" />
     <GridLayout rows="auto,580,auto,auto,auto,auto" columns="auto">
       <GridLayout
         row="0"
@@ -74,7 +75,7 @@
        </GridLayout>
         <StackLayout row ="4" width="100%" marginTop="20" class="line" />
     </GridLayout>
-    <Button  text="ORDER NOW" verticalAlignment="center"  horizontalAlignment="bottom"  @tap="goToCheckout()" class="btn btn-primary m-t-20" />
+    
 </StackLayout>
     </page>
 </template>

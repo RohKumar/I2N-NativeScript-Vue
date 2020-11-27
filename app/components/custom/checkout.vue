@@ -1,6 +1,7 @@
 <template>
   <page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
     <!-- @loaded="onLoaded" -->
+<ScrollView scrollBarIndicatorVisible="false">
 <StackLayout class="main" verticalAlignment="top">
     <GridLayout rows="auto,auto,220,auto,auto,auto,auto" columns="auto">
       <GridLayout
@@ -27,10 +28,12 @@
     <Label :text="userName" fontWeight="bold" class="small-text"/>
     <Label text="1 Example Street" class="small-text" />
     <Label text="Sunshine West,Melbourne,Vic3020" class="small-text"/>
+
     <StackLayout width="100%" marginTop="5" class="line" />
     
     <Label marginTop="8" text="Order Conformation"/>
       </StackLayout>
+      
        <GridLayout  row="2" width="100%" backgroundColor="white">
         <ListView ref="listview" separatorColor="transparent" for="item in cart" :key="index">
         <v-template>
@@ -95,6 +98,7 @@
     </GridLayout>
     <Button text="PayOut" marginTop="190" verticalAlignment="bottom" @tap="onPaymnetTap(cart)" class="btn btn-primary m-t-20" />
     </StackLayout>
+</ScrollView>
     </page>
 </template>
 
