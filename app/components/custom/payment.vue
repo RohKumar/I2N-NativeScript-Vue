@@ -163,7 +163,7 @@ export default {
         },
     },
     created() {
-        this.stripeObj = new Stripe('pk_live_51HIjyZCqZt8HTd8OSlOW4zP5kqeAx4Du71OrEMKrO4fiHcTyhoBwI1BFCQWTRsATw4eO1TGC9z20BAAlj7NTdYNz00vh3KDyYT'); //public test key
+        this.stripeObj = new Stripe('pk_test_51HIjyZCqZt8HTd8OYF37KUod1SYh2Y0H68zwxDJifK2EhozQHVj790xHGVSLgSxG9csLHu9CRGWib0puTdoAnYrK00US7mGxmSS'); //public test key
     }
 };
 </script>
