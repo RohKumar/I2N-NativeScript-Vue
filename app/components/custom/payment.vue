@@ -192,7 +192,7 @@ export default {
 }
 
 .buy-button {
-    height: 30;
+    height: 50;
     background-color: rgb(51, 51, 206);
     color: white;
     border-radius: 5;
@@ -201,7 +201,7 @@ export default {
 }
 
 .cancel-button {
-    height: 30;
+    height: 50;
     background-color: rgb(179, 31, 31);
     color: white;
     border-radius: 5;
