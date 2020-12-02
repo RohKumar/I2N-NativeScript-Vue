@@ -1,4 +1,5 @@
 <template>
+
     <StackLayout class="main">
 
         <StackLayout class="content">
@@ -36,6 +37,7 @@
 
 
     </StackLayout>
+    </ScrollView>
 </template>
 
 <script>
