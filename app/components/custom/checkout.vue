@@ -38,6 +38,9 @@
         <ListView ref="listview" separatorColor="transparent" for="item in cart" :key="index">
         <v-template>
        <StackLayout class="main">
+       <Button row="0" col="2"  class="addLabel" @tap="onDeleteButton(item)"
+                    horizontalAlignment="right" verticalAlignment="top"
+                    :text="item.price "/>
 
         <StackLayout class="content">
         <GridLayout  columns="auto,auto,auto" rows="auto" verticalAlignment="center">
@@ -55,9 +58,7 @@
                      
             </GridLayout>
 
-                <Button row="0" col="2"  class="addLabel" @tap="onDeleteButton(item)"
-                    horizontalAlignment="right" verticalAlignment="top"
-                    :text="item.price "/>
+                
 
         </GridLayout>
             <StackLayout width="100%" marginTop="5" class="line" />
@@ -228,8 +229,8 @@ import paymentVue from './payment.vue';
         font-size: 12;
         color:white;
         padding: 7;
-        height: 20;
-        margin: 8 2 4 15;
+        height: 30;
+        margin: 8 2 4 1;
         background-color: #d51a1a;
         border-radius: 8;
         font-weight: 600;
