@@ -27,17 +27,24 @@
     
       </GridLayout>
       <GridLayout  row="1" width="100%" backgroundColor="white">
+      
         <ListView ref="listview" separatorColor="transparent" for="item in cart" :key="index">
         <v-template>
        <StackLayout class="main">
+       <Button row="0" col="2"  class="deleteButton" @tap="onDeleteButton(item)"
+                    horizontalAlignment="right" verticalAlignment="top"
+                    text="Delete"/>
 
         <StackLayout class="content">
+        
         <GridLayout  columns="auto,auto,auto" rows="auto" verticalAlignment="center">
+        
             
             <Image row="0" col="0"  stretch="aspectFill" class="card-img"
                 :src="item.itemImage" />
             
             <GridLayout row="0" col="1" width="170" columns="auto," rows="auto,auto,auto" class="details">
+            
                 <Label row="0" col="0" width= "170" class="item-name" textwrap="true"
                      horizontalAlignment="left"
                     :text="item.itemName" />
@@ -48,12 +55,13 @@
                      
                     <Label row="2" col="0" class="item-name" horizontalAlignment="left"
                         :text="item.itemCategory" />
+                       
                      
             </GridLayout>
+            
 
-                <Button row="0" col="2"  class="addLabel" @tap="onDeleteButton(item)"
-                    horizontalAlignment="right" verticalAlignment="top"
-                    text="Delete" />
+                
+                    
 
         </GridLayout>
             <StackLayout width="100%" marginTop="5" class="line" />
@@ -241,15 +249,26 @@
        .default {
         color: #828282;
     }
-    .addLabel{
+    .deleteButton{
         font-size: 12;
         color:white;
-        padding: 7;
-        height: 20;
-        margin: 8 2 4 15;
+        padding: 2;
+        height: 30;
+        margin: 8 2 4 25;
         background-color: #d51a1a;
         border-radius: 8;
-        font-weight: 600;
+        font-weight: 800;
+    }
+    .addLabel{
+      font-size: 12;
+        color:white;
+        padding: 2;
+        height: 30;
+        margin: auto;
+        background-color: #d51a1a;
+        border-radius: 8;
+        font-weight: 800;
+
     }
     .layout {
         vertical-align: bottom;
