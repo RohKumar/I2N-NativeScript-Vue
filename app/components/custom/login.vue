@@ -56,7 +56,7 @@ import * as Toast from 'nativescript-toast';
 import Home from "../Home";
 import Tabs from "./tabs";
 import Signup from "../custom/signup";
-import GeoTracker from "./geo-tracker";
+import Restaurant from "../restaurantProfile/restaurantpage";
 import LoginService from '../../services/loginService';
 import { validEmail,toastMessage } from "../../services/utils";
 
@@ -116,6 +116,7 @@ export default {
             toastMessage(result.message);
           }
          console.log(result.payload.name+'Valid');
+         console.log(result.payload.role+'Valid');
               if (result.payload) {
                 this.user = {
                   email: "",
@@ -126,10 +127,11 @@ export default {
                 if (result.payload.role == 1) {
                   console.log(result.payload.name+'127');
                   this.$navigateTo(Home);
-                } else if (result.payload.role == 2) {
+                } else if (result.payload.role == 3) {
                   this.$navigateTo(Tabs);
-                } else if (result.payload.role == 3)
-                  this.$navigateTo(GeoTracker);
+                } else if (result.payload.role == 2)
+                  this.$navigateTo(Restaurant);
+              
               }
             },
             (e) => {console.log(e)}

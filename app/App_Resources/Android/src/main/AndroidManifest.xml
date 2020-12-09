@@ -21,7 +21,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:path="/" android:scheme="com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu"/>
+                <data android:path="/auth" android:scheme="com.googleusercontent.apps.501330881809-46kurcsnil882pp245qfkat4ifjppkr1"/>
             </intent-filter>
             
         </activity>

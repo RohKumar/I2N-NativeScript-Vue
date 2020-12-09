@@ -69,7 +69,7 @@ export default {
                 
             },
             stripeObj: null,
-            tot:10,
+            tot:100,
         };
     },
     props: {
@@ -98,10 +98,12 @@ export default {
                     console.log(err);
                 }
             }
+            
             if (isAndroid) {
                 let newcard = ccview.android.getCard() //null if invalid
                 if (newcard && newcard.validateCard()) {
-                    cardobj = new Card(newcard.getNumber().toString(), Number(newcard.getExpMonth()), Number(newcard.getExpYear()), newcard.getCVC().toString())
+                    cardobj = new Card(newcard.getNumber().toString(), Number(newcard.getExpMonth()), Number(newcard.getExpYear()), newcard.getCvc().toString())
+                    console.log(cardobj);
                     this.stripeObj.createToken(cardobj, (error, token) => {
                         if (!error) {
                             that.submitStripePayment(token.id, that.buyer.email, that.total).then(() => {
@@ -136,15 +138,15 @@ export default {
                             alert("Sorry, we were unable to reach our payment server. Try again later")
                         })
                     } else {
-                        console.log("Error creating token!")
+                       console.log("Error creating token!")
                         console.log(error);
                         alert("Sorry, we were unable to reach our payment server. Try again later")
                     }
                 })
             } else {
                 alert("Sorry, credit card is not valid")
-            }
-        },
+            } 
+        }, 
         submitStripePayment(token, email, amount) {
             let charge = {};
             // return firebase.firestore.collection("Payments").add({
