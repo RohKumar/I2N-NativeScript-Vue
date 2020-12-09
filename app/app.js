@@ -10,6 +10,8 @@ import store from './store/index';
 
 
 import { TNSFontIcon, fonticon } from './nativescript-fonticon';
+import {configureOAuthProviders} from "./auth-service";
+configureOAuthProviders();
 
 TNSFontIcon.debug = false;
 TNSFontIcon.paths = {
