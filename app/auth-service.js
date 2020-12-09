@@ -17,9 +17,9 @@ exports.configureOAuthProviders = configureOAuthProviders;
 function configureOAuthProviderGoogle() {
     var googleProviderOptions = {
         openIdSupport: "oid-full",
-        clientId: "990767074610-num24b8pb9fqnse32ku32ep4d153q4gu.apps.googleusercontent.com",
-        redirectUri: "com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu:/auth",
-        urlScheme: "com.googleusercontent.apps.990767074610-num24b8pb9fqnse32ku32ep4d153q4gu",
+        clientId: "501330881809-46kurcsnil882pp245qfkat4ifjppkr1.apps.googleusercontent.com",
+        redirectUri: "com.googleusercontent.apps.501330881809-46kurcsnil882pp245qfkat4ifjppkr1:/auth",
+        urlScheme: "com.googleusercontent.apps.501330881809-46kurcsnil882pp245qfkat4ifjppkr1",
         scopes: ["email"]
     };
     var googleProvider = new providers_1.TnsOaProviderGoogle(googleProviderOptions);
