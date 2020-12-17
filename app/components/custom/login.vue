@@ -56,7 +56,7 @@ import * as Toast from 'nativescript-toast';
 import Home from "../Home";
 import Tabs from "./tabs";
 import Signup from "../custom/signup";
-import Restaurant from "../restaurantProfile/restaurantpage";
+import Restaurant from "./restaurantDashboard";
 import LoginService from '../../services/loginService';
 import { validEmail,toastMessage } from "../../services/utils";
 

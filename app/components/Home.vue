@@ -18,6 +18,7 @@
                         <Label text="About Us" @tap="onAboutTap"  padding="10" />
                         <Label text="Terms & Conditions" padding="10" @tap="onTapTnc" />
                         <Label text="Help & Support" @tap="onHelpTap" padding="10" />
+                        <Label text="Restaurant" @tap="onRestaurantTap" padding="10" />
                         <Label text="Geo-Tracker" @tap="onGeoTap" padding="10" />
                         <Label text="Logout" @tap="logout" padding="10" />
                     </StackLayout>
@@ -225,6 +226,7 @@
   import FeaturePage from "./custom/featuredList";
   import About from "./custom/aboutUs";
   import Help from "./custom/help";
+  import Dashboard from "./custom/restaurantDashboard";
   import Tnc from "./custom/TermsandConditions";
   import search from "./custom/driverMap";
   import geo from "./custom/geo-tracker";
@@ -527,6 +529,9 @@ export default {
   },
   onHelpTap(){
     this.$navigateTo(Help,{})
+  },
+  onRestaurantTap(){
+    this.$navigateTo(Dashboard,{});
   },
   onTapTnc(){
     this.$navigateTo(Tnc,{});
